@@ -1,11 +1,15 @@
+using System;
+using Mono.Cecil.Cil;
 using Unity.Cinemachine;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PlayerCamera m_playerCamera;
+    [SerializeField] private Transform m_playerCameraRoot;
+    [SerializeField] private CinemachineCamera m_playerCamera;
     [SerializeField] private PlayerInputReader m_playerInput;
     [SerializeField] private Rigidbody m_rigidBody;
     [SerializeField] private CapsuleCollider m_capsuleCollider;
@@ -19,9 +23,9 @@ public class Player : MonoBehaviour
 
     [Header("Crouch")]
 
-    private int _walkHeight = 2;
+    private const int _walkHeight = 2;
     private Vector3 _walkCenter = Vector3.zero;
-    private int _crouchHeight = 1;
+    private const int _crouchHeight = 1;
 
     private Vector3 _crouchCenter = new Vector3(0, -0.5f, 0);
 
@@ -36,14 +40,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float _SprintSpeed = 10f;
     [SerializeField] private float _RotateSpeed = 0.2f;
 
-
-    private const float _rotation_threshold = 0.01f;
-
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Confined;
         Cursor.lockState = CursorLockMode.Locked;
-
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -57,17 +57,26 @@ public class Player : MonoBehaviour
         _isCrouching = m_playerInput.crouch;
 
         CheckGround();
-        Crouch();
+    }
 
+    void LateUpdate()
+    {
 
     }
     void FixedUpdate()
     {
         Rotate();
         Move();
+        Crouch();
         Jump();
 
+    }
 
+
+    private void Rotate()
+    {
+        Quaternion cameraRotation = Quaternion.Euler(new Vector3(0, m_playerCamera.transform.eulerAngles.y, 0));
+        transform.rotation = Quaternion.Slerp(transform.rotation, cameraRotation, Time.smoothDeltaTime * _RotateSpeed);
 
     }
 
@@ -76,21 +85,10 @@ public class Player : MonoBehaviour
         float targetSpeed = _isSprinting ? _SprintSpeed : _WalkSpeed;
         if (_moveDirection == Vector2.zero) targetSpeed = 0;
         Vector3 inputDirection = new Vector3(_moveDirection.x, 0f, _moveDirection.y).normalized;
-        Vector3 targetDirection = Quaternion.Euler(0.0f, m_playerCamera.GetCinemachineCamera().transform.eulerAngles.y, 0.0f) * inputDirection;
+        Vector3 targetDirection = Quaternion.Euler(0.0f, m_playerCamera.transform.eulerAngles.y, 0.0f) * inputDirection;
         m_rigidBody.MovePosition(m_rigidBody.position + targetDirection.normalized * targetSpeed * Time.fixedDeltaTime);
     }
 
-    private void Rotate()
-    {
-
-        float targetYaw = _lookDirection.x * _RotateSpeed * Time.deltaTime;
-        float targetPitch = _lookDirection.y * _RotateSpeed * Time.deltaTime;
-
-        Vector3 inputRotation = new Vector3(targetPitch, targetYaw, 0f);
-        Quaternion targetRotation = Quaternion.Euler(inputRotation);
-        m_rigidBody.MoveRotation(targetRotation);
-
-    }
 
     private void Jump()
     {
@@ -109,8 +107,26 @@ public class Player : MonoBehaviour
 
     private void Crouch()
     {
+
+        float _cameraHeightVelocity = 0f;
+        float _targetCameraHeight;
+        float _cameraTransitionSpeed = 5f;
         m_capsuleCollider.height = _isCrouching ? _crouchHeight : _walkHeight;
         m_capsuleCollider.center = _isCrouching ? _crouchCenter : _walkCenter;
+
+        // float heightDiff = _isCrouching ? 0 : 1;
+        // _targetCameraHeight = transform.position.y + (_isCrouching ? _crouchCenter.y : _walkCenter.y);
+
+        // // Smooth interpolation for camera position
+        // float currentCameraY = m_playerCameraRoot.transform.position.y;
+        // float smoothedHeight = Mathf.SmoothDamp(currentCameraY, _targetCameraHeight, ref _cameraHeightVelocity, 1f / _cameraTransitionSpeed);
+
+        // m_playerCameraRoot.transform.position = new Vector3(
+        //     m_playerCameraRoot.transform.position.x,
+        //     smoothedHeight,
+        //     m_playerCameraRoot.transform.position.z
+
+        // );
 
 
     }
@@ -120,6 +136,7 @@ public class Player : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - m_groundedOffset, transform.position.z), m_groundedRadius);
+        Gizmos.DrawRay(transform.position, Vector3.forward);
+
     }
 }
