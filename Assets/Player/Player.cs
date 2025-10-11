@@ -2,48 +2,68 @@ using System;
 using Mono.Cecil.Cil;
 using Unity.Cinemachine;
 using Unity.Collections;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Transform m_playerCameraRoot;
-    [SerializeField] private CinemachineCamera m_playerCamera;
     [SerializeField] private PlayerInputReader m_playerInput;
     [SerializeField] private Rigidbody m_rigidBody;
     [SerializeField] private CapsuleCollider m_capsuleCollider;
 
+    [Header("Camera")]
+
+    [SerializeField] private Transform m_playerCameraRoot;
+    [SerializeField] private CinemachineCamera m_playerCamera;
+    private const float _normalFOV = 60;
+    private const float _sprintFOV = 80;
+
+    private const float _targetPitchRange = 180;
+    private const float _targetYawRange = 90;
+
     [Header("Jump and Gravity")]
 
-    [SerializeField] private bool Grounded;
+    [SerializeField] private bool _isGrounded;
     [SerializeField] private float m_groundedOffset = .95f;
     [SerializeField] private float m_groundedRadius = .28f;
     [SerializeField] private LayerMask m_groundedLayers;
 
     [Header("Crouch")]
+    private const int _capsuleWalkHeight = 2;
+    private const int _capsuleCrouchHeight = 1;
 
-    private const int _walkHeight = 2;
+    [SerializeField] private float _walkHeight;
+    [SerializeField] private float _crouchHeight;
+
     private Vector3 _walkCenter = Vector3.zero;
-    private const int _crouchHeight = 1;
-
     private Vector3 _crouchCenter = new Vector3(0, -0.5f, 0);
+    [SerializeField] private float _cameraVelocity;
+    [SerializeField] private float _cameraTransitionSpeed = 3f;
 
+    // inputs
     private Vector2 _moveDirection;
     private Vector2 _lookDirection;
     private bool _isSprinting;
     private bool _isCrouching;
     private bool _isJumping;
 
+    [Header("Variables")]
     [SerializeField] private float _JumpHeight = 5f;
     [SerializeField] private float _WalkSpeed = 3f;
     [SerializeField] private float _SprintSpeed = 10f;
     [SerializeField] private float _RotateSpeed = 0.2f;
-
+    private Vector3 spherePosition;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        _walkHeight = m_playerCameraRoot.transform.position.y;
+        _crouchHeight = _walkHeight / 2f;
+
+
     }
 
     // Update is called once per frame
@@ -59,12 +79,10 @@ public class Player : MonoBehaviour
         CheckGround();
     }
 
-    void LateUpdate()
-    {
 
-    }
     void FixedUpdate()
     {
+        Debug.Log($"current velocity {m_rigidBody.linearVelocity}");
         Rotate();
         Move();
         Crouch();
@@ -75,15 +93,19 @@ public class Player : MonoBehaviour
 
     private void Rotate()
     {
-        Quaternion cameraRotation = Quaternion.Euler(new Vector3(0, m_playerCamera.transform.eulerAngles.y, 0));
-        transform.rotation = Quaternion.Slerp(transform.rotation, cameraRotation, Time.smoothDeltaTime * _RotateSpeed);
-
+        float targetPitch = _lookDirection.x * _RotateSpeed * Time.fixedDeltaTime;
+        targetPitch = Mathf.Clamp(targetPitch, -_targetPitchRange, _targetPitchRange);
+        this.transform.localRotation *= Quaternion.Euler(0f, targetPitch, 0f);
     }
 
     private void Move()
     {
         float targetSpeed = _isSprinting ? _SprintSpeed : _WalkSpeed;
         if (_moveDirection == Vector2.zero) targetSpeed = 0;
+
+        float targetFOV = _isSprinting ? _sprintFOV : _normalFOV;
+        m_playerCamera.Lens.FieldOfView = Mathf.Lerp(a: m_playerCamera.Lens.FieldOfView, b: targetFOV, Time.fixedDeltaTime);
+
         Vector3 inputDirection = new Vector3(_moveDirection.x, 0f, _moveDirection.y).normalized;
         Vector3 targetDirection = Quaternion.Euler(0.0f, m_playerCamera.transform.eulerAngles.y, 0.0f) * inputDirection;
         m_rigidBody.MovePosition(m_rigidBody.position + targetDirection.normalized * targetSpeed * Time.fixedDeltaTime);
@@ -93,7 +115,9 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         // if on the ground can jump
-        if (Grounded && _isJumping)
+        // if in air can jump while stamina is still full 
+        // while in air termin velocity is slower than forces tha pushes down 
+        if (_isGrounded && _isJumping)
         {
             m_rigidBody.AddForce(Vector3.up * _JumpHeight, ForceMode.Impulse);
         }
@@ -101,32 +125,30 @@ public class Player : MonoBehaviour
 
     private void CheckGround()
     {
-        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - m_groundedOffset, transform.position.z);
-        Grounded = Physics.CheckSphere(spherePosition, m_groundedRadius, m_groundedLayers);
+        spherePosition = new Vector3(transform.position.x, transform.position.y - m_groundedOffset, transform.position.z);
+        _isGrounded = Physics.CheckSphere(spherePosition, m_groundedRadius, m_groundedLayers);
     }
 
     private void Crouch()
     {
+        // if not grounded --> slam 
 
-        float _cameraHeightVelocity = 0f;
-        float _targetCameraHeight;
-        float _cameraTransitionSpeed = 5f;
-        m_capsuleCollider.height = _isCrouching ? _crouchHeight : _walkHeight;
-        m_capsuleCollider.center = _isCrouching ? _crouchCenter : _walkCenter;
+        m_capsuleCollider.height = _isCrouching ? _capsuleCrouchHeight : _capsuleWalkHeight;
+        m_capsuleCollider.center = _isGrounded && _isCrouching ? _crouchCenter : _walkCenter;
 
-        // float heightDiff = _isCrouching ? 0 : 1;
-        // _targetCameraHeight = transform.position.y + (_isCrouching ? _crouchCenter.y : _walkCenter.y);
+        // Smooth interpolation for camera position
+        float currentHeight = m_playerCameraRoot.localPosition.y;
+        float _targetCameraHeight = _isCrouching ? _crouchHeight : _walkHeight;
+        float smoothedHeight = Mathf.SmoothDamp(currentHeight, _targetCameraHeight, ref _cameraVelocity, Time.fixedDeltaTime * _cameraTransitionSpeed);
 
-        // // Smooth interpolation for camera position
-        // float currentCameraY = m_playerCameraRoot.transform.position.y;
-        // float smoothedHeight = Mathf.SmoothDamp(currentCameraY, _targetCameraHeight, ref _cameraHeightVelocity, 1f / _cameraTransitionSpeed);
+        m_playerCameraRoot.localPosition = new Vector3(
+            m_playerCameraRoot.localPosition.x,
+            smoothedHeight,
+            m_playerCameraRoot.localPosition.z
 
-        // m_playerCameraRoot.transform.position = new Vector3(
-        //     m_playerCameraRoot.transform.position.x,
-        //     smoothedHeight,
-        //     m_playerCameraRoot.transform.position.z
+        );
 
-        // );
+        transform.localPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
 
     }
@@ -136,7 +158,6 @@ public class Player : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position, Vector3.forward);
 
     }
 }
