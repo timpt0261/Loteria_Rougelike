@@ -1,9 +1,4 @@
-using System;
-using Mono.Cecil.Cil;
 using Unity.Cinemachine;
-using Unity.Collections;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -30,6 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float m_groundedRadius = .28f;
     [SerializeField] private LayerMask m_groundedLayers;
 
+    private float Stamina = 100f;
+
     [Header("Crouch")]
     private const int _capsuleWalkHeight = 2;
     private const int _capsuleCrouchHeight = 1;
@@ -49,11 +46,13 @@ public class Player : MonoBehaviour
     private bool _isCrouching;
     private bool _isJumping;
 
+    private bool _IsDodging;
+
     [Header("Variables")]
     [SerializeField] private float _JumpHeight = 5f;
     [SerializeField] private float _WalkSpeed = 3f;
     [SerializeField] private float _SprintSpeed = 10f;
-    [SerializeField] private float _RotateSpeed = 0.2f;
+    [SerializeField] private float _DodgeDistance = 3f;
     private Vector3 spherePosition;
     void Start()
     {
@@ -75,6 +74,7 @@ public class Player : MonoBehaviour
         _isJumping = m_playerInput.jump;
         _isSprinting = m_playerInput.sprint;
         _isCrouching = m_playerInput.crouch;
+        _IsDodging = m_playerInput.dodge;
 
         CheckGround();
     }
@@ -82,33 +82,27 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log($"current velocity {m_rigidBody.linearVelocity}");
-        Rotate();
+        // Debug.Log($"current velocity {m_rigidBody.linearVelocity}");
+
         Move();
         Crouch();
         Jump();
-
-    }
-
-
-    private void Rotate()
-    {
-        float targetPitch = _lookDirection.x * _RotateSpeed * Time.fixedDeltaTime;
-        targetPitch = Mathf.Clamp(targetPitch, -_targetPitchRange, _targetPitchRange);
-        this.transform.localRotation *= Quaternion.Euler(0f, targetPitch, 0f);
+        Dodge();
     }
 
     private void Move()
     {
+        if (_IsDodging) return;
         float targetSpeed = _isSprinting ? _SprintSpeed : _WalkSpeed;
         if (_moveDirection == Vector2.zero) targetSpeed = 0;
 
         float targetFOV = _isSprinting ? _sprintFOV : _normalFOV;
         m_playerCamera.Lens.FieldOfView = Mathf.Lerp(a: m_playerCamera.Lens.FieldOfView, b: targetFOV, Time.fixedDeltaTime);
 
-        Vector3 inputDirection = new Vector3(_moveDirection.x, 0f, _moveDirection.y).normalized;
+        Vector3 inputDirection = new Vector3(_moveDirection.x, 0f, _moveDirection.y);
         Vector3 targetDirection = Quaternion.Euler(0.0f, m_playerCamera.transform.eulerAngles.y, 0.0f) * inputDirection;
         m_rigidBody.MovePosition(m_rigidBody.position + targetDirection.normalized * targetSpeed * Time.fixedDeltaTime);
+
     }
 
 
@@ -121,6 +115,30 @@ public class Player : MonoBehaviour
         {
             m_rigidBody.AddForce(Vector3.up * _JumpHeight, ForceMode.Impulse);
         }
+    }
+
+    private void Dodge()
+    {
+        if (!_IsDodging) return;
+        float force = _isJumping ? _DodgeDistance / 2f : _DodgeDistance;
+        float dodgeForce = Mathf.Sqrt(force * -2 * Physics.gravity.y);
+        Vector3 inputDirection = new Vector3(_moveDirection.x, 0f, _moveDirection.y);
+        Vector3 dodgeDirection = Quaternion.Euler(0.0f, m_playerCamera.transform.eulerAngles.y, 0.0f) * inputDirection;
+        if (_moveDirection == Vector2.zero)
+        {
+            dodgeDirection = m_playerCamera.transform.forward;
+        }
+
+        m_rigidBody.linearDamping = 0;
+
+        // Apply dodge impulse
+        // m_rigidBody.AddForce(new Vector3(0f, _JumpHeight / 2f, 0f), ForceMode.Impulse);
+        Debug.Log($" Normalized Dodge Direction: {dodgeDirection * dodgeForce}");
+
+        m_rigidBody.AddForce(dodgeDirection * dodgeForce * Time.fixedDeltaTime, ForceMode.Impulse);
+
+        // Prevent continuous dodging
+        _IsDodging = false;
     }
 
     private void CheckGround()
@@ -147,13 +165,7 @@ public class Player : MonoBehaviour
             m_playerCameraRoot.localPosition.z
 
         );
-
-        transform.localPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-
-
     }
-
-
 
     void OnDrawGizmosSelected()
     {

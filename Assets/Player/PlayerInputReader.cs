@@ -12,6 +12,7 @@ public class PlayerInputReader : MonoBehaviour
     public bool jump;
     public bool sprint;
     public bool crouch;
+    public bool dodge;
 
     public void OnMove(InputAction.CallbackContext value)
     {
@@ -38,31 +39,40 @@ public class PlayerInputReader : MonoBehaviour
         CrouchInput(value.action.triggered);
     }
 
+    public void OnDodge(InputAction.CallbackContext value)
+    {
+        DodgeInput(value.started);
+    }
 
 
-    public void MoveInput(Vector2 moveInput)
+    private void MoveInput(Vector2 moveInput)
     {
         move = moveInput;
     }
 
-    public void LookInput(Vector2 lookInput)
+    private void LookInput(Vector2 lookInput)
     {
         look = lookInput;
     }
 
-    public void JumpInput(bool jumpInput)
+    private void JumpInput(bool jumpInput)
     {
         jump = jumpInput;
     }
 
-    public void SprintInput(bool sprintInput)
+    private void SprintInput(bool sprintInput)
     {
         sprint = sprintInput;
     }
 
-    public void CrouchInput(bool crouchInput)
+    private void CrouchInput(bool crouchInput)
     {
         crouch = crouchInput;
+    }
+
+    private void DodgeInput(bool dodgeInput)
+    {
+        dodge = dodgeInput;
     }
 
 
