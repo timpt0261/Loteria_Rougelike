@@ -13,6 +13,8 @@ public class PlayerInputReader : MonoBehaviour
     public bool sprint;
     public bool crouch;
     public bool dodge;
+    public bool primary_fire;
+    public bool secondary_fire;
 
     public void OnMove(InputAction.CallbackContext value)
     {
@@ -42,6 +44,16 @@ public class PlayerInputReader : MonoBehaviour
     public void OnDodge(InputAction.CallbackContext value)
     {
         DodgeInput(value.started);
+    }
+
+    public void OnPrimaryFire(InputAction.CallbackContext value)
+    {
+        PrimaryFireInput(value.action.triggered);
+    }
+
+    public void OnSecondryFire(InputAction.CallbackContext value)
+    {
+        SecondaryFireInput(value.action.triggered);
     }
 
 
@@ -75,6 +87,16 @@ public class PlayerInputReader : MonoBehaviour
         dodge = dodgeInput;
     }
 
+    private void PrimaryFireInput(bool fireInput)
+    {
+        primary_fire = fireInput;
+    }
+
+
+    private void SecondaryFireInput(bool fireInput)
+    {
+        secondary_fire = fireInput;
+    }
 
 
 }
