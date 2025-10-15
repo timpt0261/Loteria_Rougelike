@@ -2,7 +2,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerInputReader m_playerInput;
     [SerializeField] private Rigidbody m_rigidBody;
@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform m_playerCameraRoot;
     [SerializeField] private CinemachineCamera m_playerCamera;
+
+    public CinemachineCamera CinemachineCamera => m_playerCamera;
     private const float _normalFOV = 60;
     private const float _sprintFOV = 80;
 
