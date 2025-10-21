@@ -15,6 +15,8 @@ public class PlayerInputReader : MonoBehaviour
     public bool dodge;
     public bool primary_fire;
     public bool secondary_fire;
+    public bool previous;
+    public bool next;
 
     public void OnMove(InputAction.CallbackContext value)
     {
