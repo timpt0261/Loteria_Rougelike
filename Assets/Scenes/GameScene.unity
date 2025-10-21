@@ -8132,27 +8132,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6c7d584156c4345851f359014b2d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  rigidBody: {fileID: 1679374832}
+  capsuleCollider: {fileID: 1679374833}
   normalFOV: 60
   sprintFOV: 80
-  m_rigidBody: {fileID: 1679374832}
-  m_capsuleCollider: {fileID: 1679374833}
-  m_isGrounded: 0
-  m_groundedOffset: 1
-  m_groundedRadius: 0.3
-  m_groundedLayers:
+  groundedLayers:
     serializedVersion: 2
     m_Bits: 64
-  _walkHeight: 0.9
-  _crouchHeight: 0.1
-  _capsuleWalkHeight: 2.5
-  _capsuleCrouchHeight: 1.06
-  _walkCenter: {x: 0, y: 0, z: 0}
-  _crouchCenter: {x: 0, y: -0.2, z: 0}
-  _cameraTransitionSpeed: 3
-  _JumpHeight: 4
-  _WalkSpeed: 10
-  _SprintSpeed: 20
-  _DodgeDistance: 150
+  groundedOffset: 1
+  groundedRadius: 0.3
+  walkSpeed: 3
+  sprintSpeed: 10
+  jumpHeight: 5
+  dodgeDistance: 3
+  walkHeight: 1
+  crouchHeight: 0.5
+  capsuleWalkHeight: 2
+  capsuleCrouchHeight: 1
+  walkCenter: {x: 0, y: 0, z: 0}
+  crouchCenter: {x: 0, y: -0.2, z: 0}
+  cameraTransitionSpeed: 3
 --- !u!114 &1679374836
 MonoBehaviour:
   m_ObjectHideFlags: 0

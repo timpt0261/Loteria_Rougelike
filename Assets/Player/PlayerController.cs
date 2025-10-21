@@ -50,31 +50,34 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        _moveDirection = m_playerInput.move;
+	{
+		UpdateInput();
 
-        // jumping , sprinting, crouching, dodging
-        _IsJumping = m_playerInput.jump;
-        _IsSprinting = m_playerInput.sprint;
-        _IsCrouching = m_playerInput.crouch;
-        _IsDodging = m_playerInput.dodge;
+		m_playerMovement.CheckGround();
 
-        // primary and secondary action
-        _IsPrimaryActionPressed = m_playerInput.primary_fire;
-        _IsSecondaryActionPressed = m_playerInput.secondary_fire;
+	}
 
-        // previous and next weapon selection
-        _IsPreviousWeaponSelected = m_playerInput.previous;
-        _IsNextWeaponSelected = m_playerInput.next;
+	private void UpdateInput()
+	{
+		_moveDirection = m_playerInput.move;
+
+		// jumping , sprinting, crouching, dodging
+		_IsJumping = m_playerInput.jump;
+		_IsSprinting = m_playerInput.sprint;
+		_IsCrouching = m_playerInput.crouch;
+		_IsDodging = m_playerInput.dodge;
+
+		// primary and secondary action
+		_IsPrimaryActionPressed = m_playerInput.primary_fire;
+		_IsSecondaryActionPressed = m_playerInput.secondary_fire;
+
+		// previous and next weapon selection
+		_IsPreviousWeaponSelected = m_playerInput.previous;
+		_IsNextWeaponSelected = m_playerInput.next;
+	}
 
 
-        m_playerMovement.CheckGround();
-
-    }
-
-
-
-    void LateUpdate()
+	void LateUpdate()
     {
 
     }

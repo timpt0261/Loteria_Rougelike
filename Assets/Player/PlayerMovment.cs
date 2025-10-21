@@ -1,143 +1,167 @@
 using Unity.Cinemachine;
-using UnityEditor;
 using UnityEngine;
-
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region Components
+    [SerializeField] private Rigidbody rigidBody;
+    [SerializeField] private CapsuleCollider capsuleCollider;
+    #endregion
+
+    #region Camera Settings
+    [Header("Camera")]
     [SerializeField] private float normalFOV = 60f;
     [SerializeField] private float sprintFOV = 80f;
+    #endregion
 
+    #region Ground Detection
+    [Header("Ground Detection")]
+    [SerializeField] private LayerMask groundedLayers;
+    [SerializeField] private float groundedOffset = 0.95f;
+    [SerializeField] private float groundedRadius = 0.28f;
 
-    [SerializeField] private Rigidbody m_rigidBody;
-    [SerializeField] private CapsuleCollider m_capsuleCollider;
+    private bool isGrounded;
+    private Vector3 groundCheckPosition;
 
-    [Header("Jump and Gravity")]
-    [SerializeField] private bool m_isGrounded;
-    public bool IsGrounded => m_isGrounded;
+    public bool IsGrounded => isGrounded;
+    #endregion
 
-    [SerializeField] private float m_groundedOffset = .95f;
-    [SerializeField] private float m_groundedRadius = .28f;
-    [SerializeField] private LayerMask m_groundedLayers;
-
-
-
-    [Header("Crouch")]
-    [SerializeField] private float _walkHeight = 2;
-    [SerializeField] private float _crouchHeight = 1;
-
-    [SerializeField] private float _capsuleWalkHeight = 2;
-    [SerializeField] private float _capsuleCrouchHeight = 1;
-
-
-    [SerializeField] private Vector3 _walkCenter = Vector3.zero;
-    [SerializeField] private Vector3 _crouchCenter = new Vector3(0, -0.5f, 0);
-    [SerializeField] private float _cameraTransitionSpeed = 3f;
-    private float _cameraVelocity;
-
-
-
+    #region Movement Stats
     [Header("Movement Stats")]
-    [SerializeField] private float _JumpHeight = 5f;
-    [SerializeField] private float _WalkSpeed = 3f;
-    [SerializeField] private float _SprintSpeed = 10f;
-    [SerializeField] private float _DodgeDistance = 3f;
-    private Vector3 spherePosition;
-    void Start()
+    [SerializeField] private float walkSpeed = 3f;
+    [SerializeField] private float sprintSpeed = 10f;
+    [SerializeField] private float jumpHeight = 5f;
+    [SerializeField] private float dodgeDistance = 3f;
+    #endregion
+
+    #region Crouch Settings
+    [Header("Crouch Settings")]
+    [SerializeField] private float walkHeight = 2f;
+    [SerializeField] private float crouchHeight = 1f;
+    [SerializeField] private float capsuleWalkHeight = 2f;
+    [SerializeField] private float capsuleCrouchHeight = 1f;
+    [SerializeField] private Vector3 walkCenter = Vector3.zero;
+    [SerializeField] private Vector3 crouchCenter = new Vector3(0, -0.5f, 0);
+    [SerializeField] private float cameraTransitionSpeed = 3f;
+
+    private float cameraVelocity;
+    #endregion
+
+    #region Unity Lifecycle
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        m_rigidBody = GetComponent<Rigidbody>();
-        m_capsuleCollider = GetComponent<CapsuleCollider>();
-
-
+        rigidBody = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
+    #endregion
 
+    #region Public Methods
     public void CheckGround()
     {
-        spherePosition = new Vector3(transform.position.x, transform.position.y - m_groundedOffset, transform.position.z);
-        m_isGrounded = Physics.CheckSphere(spherePosition, m_groundedRadius, m_groundedLayers);
+        groundCheckPosition = new Vector3(
+            transform.position.x,
+            transform.position.y - groundedOffset,
+            transform.position.z
+        );
+        isGrounded = Physics.CheckSphere(groundCheckPosition, groundedRadius, groundedLayers);
     }
 
-    public void Move(Vector2 _moveDirection, CinemachineCamera mainCamera, bool _IsDodging, bool _isSprinting)
+    public void Move(Vector2 moveDirection, CinemachineCamera mainCamera, bool isDodging, bool isSprinting)
     {
-        if (_IsDodging) return;
-        float targetSpeed = _isSprinting ? _SprintSpeed : _WalkSpeed;
-        if (_moveDirection == Vector2.zero) targetSpeed = 0;
+        if (isDodging) return;
 
-        float targetFOV = _isSprinting ? sprintFOV : normalFOV;
-        mainCamera.Lens.FieldOfView = Mathf.Lerp(a: mainCamera.Lens.FieldOfView, b: targetFOV, Time.fixedDeltaTime);
+        float targetSpeed = isSprinting ? sprintSpeed : walkSpeed;
+        if (moveDirection == Vector2.zero) targetSpeed = 0f;
 
-        Vector3 inputDirection = new Vector3(_moveDirection.x, 0f, _moveDirection.y);
-        Vector3 targetDirection = Quaternion.Euler(0.0f, mainCamera.transform.eulerAngles.y, 0.0f) * inputDirection;
-        m_rigidBody.MovePosition(m_rigidBody.position + targetDirection.normalized * targetSpeed * Time.fixedDeltaTime);
+        // Update camera FOV based on sprint state
+        float targetFOV = isSprinting ? sprintFOV : normalFOV;
+        mainCamera.Lens.FieldOfView = Mathf.Lerp(
+            mainCamera.Lens.FieldOfView,
+            targetFOV,
+            Time.fixedDeltaTime
+        );
 
+        // Calculate movement direction relative to camera
+        Vector3 inputDirection = new Vector3(moveDirection.x, 0f, moveDirection.y);
+        Vector3 targetDirection = Quaternion.Euler(0f, mainCamera.transform.eulerAngles.y, 0f) * inputDirection;
+
+        // Apply movement
+        rigidBody.MovePosition(
+            rigidBody.position + targetDirection.normalized * targetSpeed * Time.fixedDeltaTime
+        );
     }
 
-    public void Jump(bool _isJumping)
+    public void Jump(bool isJumping)
     {
-        // if on the ground can jump
-        // if in air can jump while stamina is still full 
-        // while in air termin velocity is slower than forces tha pushes down 
-        if (m_isGrounded && _isJumping)
+        if (isGrounded && isJumping)
         {
-            m_rigidBody.AddForce(Vector3.up * _JumpHeight * 100 * Time.fixedDeltaTime, ForceMode.Impulse);
+            float jumpForce = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
+            rigidBody.AddForce(Vector3.up * jumpForce * 100 * Time.fixedDeltaTime, ForceMode.Impulse);
         }
+
+
     }
 
-    public void Dodge(bool _IsDodging, bool _isJumping, Vector2 _moveDirection, Transform mainCameraTransform)
+    public void Dodge(bool isDodging, bool isJumping, Vector2 moveDirection, Transform mainCameraTransform)
     {
-        if (!_IsDodging) return;
-        float force = _isJumping ? _DodgeDistance / 2f : _DodgeDistance;
+        if (!isDodging) return;
+
+        // Calculate dodge force
+        float force = isJumping ? dodgeDistance / 2f : dodgeDistance;
         float dodgeForce = Mathf.Sqrt(force * -2 * Physics.gravity.y);
-        Vector3 inputDirection = new Vector3(_moveDirection.x, 0f, _moveDirection.y);
-        Vector3 dodgeDirection = Quaternion.Euler(0.0f, mainCameraTransform.eulerAngles.y, 0.0f) * inputDirection;
-        if (_moveDirection == Vector2.zero)
-        {
-            dodgeDirection = mainCameraTransform.transform.forward;
-        }
 
-        m_rigidBody.linearDamping = 0;
+        // Calculate dodge direction relative to camera
+        Vector3 inputDirection = new Vector3(moveDirection.x, 0f, moveDirection.y);
+        Vector3 dodgeDirection = Quaternion.Euler(0f, mainCameraTransform.eulerAngles.y, 0f) * inputDirection;
+
+        // If no input, dodge forward relative to camera
+        if (moveDirection == Vector2.zero)
+        {
+            dodgeDirection = mainCameraTransform.forward;
+        }
 
         // Apply dodge impulse
-        // m_rigidBody.AddForce(new Vector3(0f, _JumpHeight / 2f, 0f), ForceMode.Impulse);
-        Debug.Log($" Normalized Dodge Direction: {dodgeDirection * dodgeForce}");
+        rigidBody.linearDamping = 0f;
+        rigidBody.AddForce(dodgeDirection * dodgeForce * Time.fixedDeltaTime, ForceMode.Impulse);
 
-        m_rigidBody.AddForce(dodgeDirection * dodgeForce * Time.fixedDeltaTime, ForceMode.Impulse);
-
-        // Prevent continuous dodging
-        _IsDodging = false;
+        Debug.Log($"Normalized Dodge Direction: {dodgeDirection * dodgeForce}");
     }
 
-
-
-    public void Crouch(bool _isCrouching, Transform playerCameraRoot)
+    public void Crouch(bool isCrouching, Transform playerCameraRoot)
     {
-        // if not grounded --> slam 
+        // Update capsule collider dimensions
+        capsuleCollider.height = isCrouching ? capsuleCrouchHeight : capsuleWalkHeight;
+        capsuleCollider.center = isCrouching ? crouchCenter : walkCenter;
 
-        m_capsuleCollider.height = _isCrouching ? _capsuleCrouchHeight : _capsuleWalkHeight;
-        m_capsuleCollider.center = _isCrouching ? _crouchCenter : _walkCenter;
-
-        // Smooth interpolation for camera position
+        // Smooth camera height transition
         float currentHeight = playerCameraRoot.localPosition.y;
-        float _targetCameraHeight = _isCrouching ? _crouchHeight : _walkHeight;
-        if (currentHeight == _targetCameraHeight) return;
-        float smoothedHeight = Mathf.SmoothDamp(currentHeight, _targetCameraHeight, ref _cameraVelocity, Time.fixedDeltaTime * _cameraTransitionSpeed);
+        float targetCameraHeight = isCrouching ? crouchHeight : walkHeight;
+
+        if (currentHeight == targetCameraHeight) return;
+
+        float smoothedHeight = Mathf.SmoothDamp(
+            currentHeight,
+            targetCameraHeight,
+            ref cameraVelocity,
+            Time.fixedDeltaTime * cameraTransitionSpeed
+        );
 
         playerCameraRoot.localPosition = new Vector3(
             playerCameraRoot.localPosition.x,
             smoothedHeight,
             playerCameraRoot.localPosition.z
-
         );
     }
+    #endregion
 
-
-    void OnDrawGizmos()
+    #region Gizmos
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(spherePosition, m_groundedRadius);
+        Gizmos.DrawWireSphere(groundCheckPosition, groundedRadius);
     }
-
+    #endregion
 }
