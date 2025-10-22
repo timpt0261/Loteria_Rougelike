@@ -8144,7 +8144,7 @@ MonoBehaviour:
   walkSpeed: 3
   sprintSpeed: 10
   jumpHeight: 5
-  dodgeDistance: 3
+  dodgeDistance: 10
   walkHeight: 1
   crouchHeight: 0.5
   capsuleWalkHeight: 2
@@ -8211,10 +8211,6 @@ MonoBehaviour:
     m_ActionName: 'Player/Look[/Mouse/delta,/Pen/delta]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
-    m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
     m_ActionName: 'Player/Interact[/Keyboard/e]'
   - m_PersistentCalls:
@@ -8253,7 +8249,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1679374837}
         m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
-        m_MethodName: OnPreviousWeaponSelection
+        m_MethodName: OnPrevious
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8269,7 +8265,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1679374837}
         m_TargetAssemblyTypeName: PlayerInputReader, Assembly-CSharp
-        m_MethodName: OnNextWeaponSelection
+        m_MethodName: OnNext
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8408,10 +8404,8 @@ MonoBehaviour:
   sprint: 0
   crouch: 0
   dodge: 0
-  primary_fire: 0
-  secondary_fire: 0
-  previous: 0
-  next: 0
+  primaryFire: 0
+  secondaryFire: 0
 --- !u!114 &1679374839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8419,29 +8413,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679374831}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abf15ae40f328234a9ca09c38adb0d63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
-  m_player_movement: {fileID: 1679374835}
-  m_player_input: {fileID: 1679374837}
-  m_player_camera: {fileID: 0}
-  m_player_animator: {fileID: 87814713}
-  m_audio_source: {fileID: 1679374840}
-  attackDistance: 5
-  attackDelay: 0.4
-  attackSpeed: 2
-  attackDamage: 10
-  attackLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  hitEffect: {fileID: 4264494126044101379, guid: 829400fabd0809a48a690ee04df75421, type: 3}
-  swordSwingSFX: {fileID: 8300000, guid: 7c4540645bee5b14d858059a36a6fdcc, type: 3}
-  hitSFX: {fileID: 8300000, guid: b5e90881dbeab32478d52e3e65946994, type: 3}
   m_currentWeapon: {fileID: 0}
-  m_weaponHolderPosition: {fileID: 0}
-  m_defaultWeapon: []
+  m_weaponHolderPosition: {fileID: 1443052018}
+  m_weaponInventory: []
+  currentWeaponIndex: 0
 --- !u!82 &1679374840
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8551,11 +8531,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86d37b1212dc31468736f287344c35f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  m_playerInput: {fileID: 1679374837}
-  m_playerMovement: {fileID: 1679374835}
-  m_playerCombat: {fileID: 1679374839}
-  m_playerCameraRoot: {fileID: 762687120}
-  m_animator: {fileID: 87814713}
+  playerInput: {fileID: 1679374837}
+  playerMovement: {fileID: 1679374835}
+  playerCombat: {fileID: 1679374839}
+  playerCameraRoot: {fileID: 762687120}
+  animator: {fileID: 87814713}
+  animationTransitionTime: 0.2
+  maxWeaponSlots: 3
 --- !u!1 &1779415782
 GameObject:
   m_ObjectHideFlags: 0

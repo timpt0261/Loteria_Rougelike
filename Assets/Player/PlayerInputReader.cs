@@ -1,104 +1,111 @@
 using System;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputReader : MonoBehaviour
 {
+    #region Input Values
     [Header("Character Input Values")]
-
     public Vector2 move;
     public Vector2 look;
     public bool jump;
     public bool sprint;
     public bool crouch;
     public bool dodge;
-    public bool primary_fire;
-    public bool secondary_fire;
-    public bool previous;
-    public bool next;
+    public bool primaryFire;
+    public bool secondaryFire;
 
+    private bool nextPressed;
+    private bool previousPressed;
+    #endregion
+
+    #region Input Callbacks
     public void OnMove(InputAction.CallbackContext value)
     {
-        MoveInput(value.ReadValue<Vector2>());
+        move = value.ReadValue<Vector2>();
     }
 
     public void OnLook(InputAction.CallbackContext value)
     {
-        LookInput(value.ReadValue<Vector2>());
+        look = value.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext value)
     {
-        JumpInput(value.action.triggered);
+        jump = value.action.triggered;
     }
 
     public void OnSprint(InputAction.CallbackContext value)
     {
-        SprintInput(value.action.triggered);
+        sprint = value.action.triggered;
     }
 
     public void OnCrouch(InputAction.CallbackContext value)
     {
-        CrouchInput(value.action.triggered);
+        crouch = value.action.triggered;
     }
 
     public void OnDodge(InputAction.CallbackContext value)
     {
-        DodgeInput(value.started);
+        dodge = value.started;
     }
 
     public void OnPrimaryFire(InputAction.CallbackContext value)
     {
-        PrimaryFireInput(value.action.triggered);
+        primaryFire = value.action.triggered;
     }
 
     public void OnSecondryFire(InputAction.CallbackContext value)
     {
-        SecondaryFireInput(value.action.triggered);
+        secondaryFire = value.action.triggered;
     }
 
-
-    private void MoveInput(Vector2 moveInput)
+    public void OnPrevious(InputAction.CallbackContext value)
     {
-        move = moveInput;
+        // Only trigger once when button is first pressed
+        if (value.performed)
+        {
+            previousPressed = true;
+        }
     }
 
-    private void LookInput(Vector2 lookInput)
+    public void OnNext(InputAction.CallbackContext value)
     {
-        look = lookInput;
+        // Only trigger once when button is first pressed
+        if (value.performed)
+        {
+            nextPressed = true;
+        }
     }
+    #endregion
 
-    private void JumpInput(bool jumpInput)
+    #region Public Methods - Consumable Inputs
+    /// <summary>
+    /// Check if next weapon input was pressed and consume it.
+    /// Returns true only once per button press.
+    /// </summary>
+    public bool ConsumeNextInput()
     {
-        jump = jumpInput;
+        if (nextPressed)
+        {
+            nextPressed = false;
+            return true;
+        }
+        return false;
     }
 
-    private void SprintInput(bool sprintInput)
+    /// <summary>
+    /// Check if previous weapon input was pressed and consume it.
+    /// Returns true only once per button press.
+    /// </summary>
+    public bool ConsumePreviousInput()
     {
-        sprint = sprintInput;
+        if (previousPressed)
+        {
+            previousPressed = false;
+            return true;
+        }
+        return false;
     }
-
-    private void CrouchInput(bool crouchInput)
-    {
-        crouch = crouchInput;
-    }
-
-    private void DodgeInput(bool dodgeInput)
-    {
-        dodge = dodgeInput;
-    }
-
-    private void PrimaryFireInput(bool fireInput)
-    {
-        primary_fire = fireInput;
-    }
-
-
-    private void SecondaryFireInput(bool fireInput)
-    {
-        secondary_fire = fireInput;
-    }
-
-
+    #endregion
 }

@@ -119,10 +119,8 @@ public class PlayerMovement : MonoBehaviour
 
         // If no input, dodge forward relative to camera
         if (moveDirection == Vector2.zero)
-        {
             dodgeDirection = mainCameraTransform.forward;
-        }
-
+        
         // Apply dodge impulse
         rigidBody.linearDamping = 0f;
         rigidBody.AddForce(dodgeDirection * dodgeForce * Time.fixedDeltaTime, ForceMode.Impulse);

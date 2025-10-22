@@ -1,94 +1,192 @@
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Player Component")]
-    [SerializeField] private PlayerInputReader m_playerInput;
-    [SerializeField] private PlayerMovement m_playerMovement;
-    [SerializeField] private PlayerCombat m_playerCombat;
+    #region Components
+    [Header("Player Components")]
+    [SerializeField] private PlayerInputReader playerInput;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerCombat playerCombat;
+    #endregion
 
-    [Header("Cinemachine")]
-    [SerializeField] private Transform m_playerCameraRoot;
-    private CinemachineCamera m_mainCamera;
-    public CinemachineCamera MainCinemachineCamera => m_mainCamera;
+    #region Camera
+    [Header("Camera")]
+    [SerializeField] private Transform playerCameraRoot;
+    private CinemachineCamera mainCamera;
 
+    public CinemachineCamera MainCinemachineCamera => mainCamera;
+    public Transform CameraRoot => playerCameraRoot;
+    #endregion
 
+    #region Animation
     [Header("Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private float animationTransitionTime = 0.2f;
 
-    [SerializeField] private Animator m_animator;
-    public Animator Animator => m_animator;
+    private string currentAnimationState;
+
+    public Animator Animator => animator;
+    #endregion
+
+    #region Weapon System
+    [Header("Weapon System")]
+    [SerializeField] private int maxWeaponSlots = 3;
+
+    private int currentWeaponIndex = 0;
+    #endregion
+
+    #region Cached Input Values
+    private Vector2 moveDirection;
+    private bool isSprinting;
+    private bool isCrouching;
+    private bool isJumping;
+    private bool isDodging;
+    private bool isPrimaryActionPressed;
+    private bool isSecondaryActionPressed;
+    #endregion
+
+    #region Unity Lifecycle
+    private void Start()
+    {
+        InitializeCursor();
+        InitializeComponents();
+    }
+
+    private void Update()
+    {
+        CacheInputValues();
+        HandleWeaponSwitching();
 
 
-    // Input Reader Actions
-    private Vector2 _moveDirection;
-    private bool _IsSprinting;
-    private bool _IsCrouching;
-    private bool _IsJumping;
-    private bool _IsDodging;
-    private bool _IsPrimaryActionPressed;
-    private bool _IsSecondaryActionPressed;
-    private bool _IsNextWeaponSelected;
-    private bool _IsPreviousWeaponSelected;
 
-    void Start()
+        playerMovement.CheckGround();
+    }
+
+    private void FixedUpdate()
+    {
+        HandleMovement();
+    }
+    #endregion
+
+    #region Initialization
+    private void InitializeCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        m_playerInput = GetComponent<PlayerInputReader>();
-        m_playerCombat = GetComponent<PlayerCombat>();
-        m_playerMovement = GetComponent<PlayerMovement>();
-
-        m_mainCamera = GetComponentInChildren<CinemachineCamera>();
-        m_animator = GetComponentInChildren<Animator>();
-
-
     }
 
-    // Update is called once per frame
-    void Update()
-	{
-		UpdateInput();
-
-		m_playerMovement.CheckGround();
-
-	}
-
-	private void UpdateInput()
-	{
-		_moveDirection = m_playerInput.move;
-
-		// jumping , sprinting, crouching, dodging
-		_IsJumping = m_playerInput.jump;
-		_IsSprinting = m_playerInput.sprint;
-		_IsCrouching = m_playerInput.crouch;
-		_IsDodging = m_playerInput.dodge;
-
-		// primary and secondary action
-		_IsPrimaryActionPressed = m_playerInput.primary_fire;
-		_IsSecondaryActionPressed = m_playerInput.secondary_fire;
-
-		// previous and next weapon selection
-		_IsPreviousWeaponSelected = m_playerInput.previous;
-		_IsNextWeaponSelected = m_playerInput.next;
-	}
-
-
-	void LateUpdate()
+    private void InitializeComponents()
     {
-
+        // Get components if not assigned in inspector
+        if (playerInput == null) playerInput = GetComponent<PlayerInputReader>();
+        if (playerCombat == null) playerCombat = GetComponent<PlayerCombat>();
+        if (playerMovement == null) playerMovement = GetComponent<PlayerMovement>();
+        if (mainCamera == null) mainCamera = GetComponentInChildren<CinemachineCamera>();
+        if (animator == null) animator = GetComponentInChildren<Animator>();
     }
+    #endregion
 
-
-    void FixedUpdate()
+    #region Input Handling
+    private void CacheInputValues()
     {
-        this.m_playerMovement.Move(_moveDirection, m_mainCamera, _IsDodging, _IsSprinting);
-        this.m_playerMovement.Crouch(_IsCrouching, m_playerCameraRoot);
-        this.m_playerMovement.Jump(_IsJumping);
-        this.m_playerMovement.Dodge(_IsDodging, _IsJumping, _moveDirection, m_mainCamera.transform);
+        moveDirection = playerInput.move;
 
+        isJumping = playerInput.jump;
+        isSprinting = playerInput.sprint;
+        isCrouching = playerInput.crouch;
+        isDodging = playerInput.dodge;
+
+        isPrimaryActionPressed = playerInput.primaryFire;
+        isSecondaryActionPressed = playerInput.secondaryFire;
     }
+
+    private void HandleWeaponSwitching()
+    {
+        // Use consume methods to prevent rapid switching
+        if (playerInput.ConsumePreviousInput())
+        {
+            SwitchWeapon(-1);
+        }
+
+        if (playerInput.ConsumeNextInput())
+        {
+            SwitchWeapon(1);
+        }
+    }
+    #endregion
+
+    #region Movement
+    private void HandleMovement()
+    {
+        playerMovement.Move(moveDirection, mainCamera, isDodging, isSprinting);
+        playerMovement.Crouch(isCrouching, playerCameraRoot);
+        playerMovement.Jump(isJumping);
+        playerMovement.Dodge(isDodging, isJumping, moveDirection, mainCamera.transform);
+    }
+    #endregion
+
+    #region Weapon System
+    private void SwitchWeapon(int direction)
+    {
+        currentWeaponIndex += direction;
+
+        // Wrap around using proper modulo for negative numbers
+        if (currentWeaponIndex < 0)
+        {
+            currentWeaponIndex = maxWeaponSlots - 1;
+        }
+        else if (currentWeaponIndex >= maxWeaponSlots)
+        {
+            currentWeaponIndex = 0;
+        }
+
+        Debug.Log($"Switched to weapon slot: {currentWeaponIndex}");
+
+        playerCombat.SwitchWeapon(currentWeaponIndex);
+
+        // TODO: Notify PlayerCombat to equip the weapon at currentWeaponIndex
+        // playerCombat.EquipWeaponAtIndex(currentWeaponIndex);
+    }
+
+    public int GetCurrentWeaponIndex() => currentWeaponIndex;
+    #endregion
+
+    #region Animation Handling
+    /// <summary>
+    /// Changes the current animation state with smooth transition.
+    /// Prevents the same animation from interrupting itself.
+    /// </summary>
+    /// <param name="newAnimationState">Name of the animation state to play</param>
+    public void ChangeAnimationState(string newAnimationState)
+    {
+        if (currentAnimationState == newAnimationState) return;
+
+        currentAnimationState = newAnimationState;
+        animator.CrossFade(newAnimationState, animationTransitionTime);
+    }
+
+    /// <summary>
+    /// Changes animation state with custom transition time.
+    /// </summary>
+    public void ChangeAnimationState(string newAnimationState, float transitionTime)
+    {
+        if (currentAnimationState == newAnimationState) return;
+
+        currentAnimationState = newAnimationState;
+        animator.CrossFade(newAnimationState, transitionTime);
+    }
+    #endregion
+
+    #region Public Properties
+    /// <summary>
+    /// Get the forward direction of the camera (useful for aiming).
+    /// </summary>
+    public Vector3 CameraForward => mainCamera != null ? mainCamera.transform.forward : transform.forward;
+
+    /// <summary>
+    /// Get the camera's Y rotation (useful for character rotation).
+    /// </summary>
+    public float CameraYRotation => mainCamera != null ? mainCamera.transform.eulerAngles.y : 0f;
+    #endregion
 }
