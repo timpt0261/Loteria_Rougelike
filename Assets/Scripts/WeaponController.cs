@@ -94,7 +94,6 @@ public abstract class WeaponController : MonoBehaviour
         isReloading = false;
 
         OnEquip();
-        ChangeAnimationState(ANIM_IDLE);
     }
 
     /// <summary>
@@ -117,7 +116,7 @@ public abstract class WeaponController : MonoBehaviour
         if (attackPoint == null)
         {
             // Try to find it by name
-            Transform foundPoint = transform.Find("AttackPoint");
+            Transform foundPoint = transform.Find("HitPoint");
             if (foundPoint != null)
                 attackPoint = foundPoint;
             else

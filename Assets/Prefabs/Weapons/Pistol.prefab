@@ -453,7 +453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3351318734196012675}
   m_Layer: 0
-  m_Name: Muzzle
+  m_Name: HitPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

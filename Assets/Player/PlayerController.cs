@@ -134,7 +134,6 @@ public class PlayerController : MonoBehaviour
     private void SwitchWeapon(int direction)
     {
         currentWeaponIndex += direction;
-
         // Wrap around using proper modulo for negative numbers
         if (currentWeaponIndex < 0)
         {

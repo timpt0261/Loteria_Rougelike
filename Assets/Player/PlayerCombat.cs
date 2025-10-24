@@ -50,10 +50,13 @@ public class PlayerCombat : MonoBehaviour
 	{
 		if (weaponIndex < 0 || weaponIndex > m_weaponInventory.Count) return;
 		if (m_currentWeapon != null)
+		{
+			m_currentWeapon.OnUnequip();
 			Destroy(m_currentWeapon.gameObject);
+		}
+
 
 		currentWeaponIndex = weaponIndex;
-		// set animator to idle state
 
 		m_currentWeapon = Instantiate(m_weaponInventory[currentWeaponIndex].weaponPrefab, m_weaponHolderPosition);
 		m_currentWeapon.Initialize(m_playerController);
