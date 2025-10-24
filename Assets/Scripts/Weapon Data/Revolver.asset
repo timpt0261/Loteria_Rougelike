@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 016a52abb1210fe4b9c273d4e801a50d, type: 3}
-  m_Name: Pistol
-  m_EditorClassIdentifier: 
+  m_Name: Revolver
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   type: 1
   automatic: 1
-  maxAmmo: 4
-  fireRate: 0.2
-  attackDamage: 2
-  reloadTime: 1
-  headshotMultiplier: 1.2
-  weaponRange: 30
-  fireEffect: {fileID: 6556197431887549076, guid: 471763c166f03c147a6d4e375bcbb711, type: 3}
+  maxAmmo: 6
+  fireRate: 0.5
+  attackDamage: 1
+  reloadTime: 0.5
+  headshotMultiplier: 1.5
+  weaponRange: 25
+  fireEffect: {fileID: 5334228485563152753, guid: aa48f79ae6966f342bfeee96a24533c1, type: 3}
   fireSound: {fileID: 8300000, guid: ec9432de99f51ff4c9ef5a0eb3937476, type: 3}
-  hitEffect: {fileID: 5334228485563152753, guid: aa48f79ae6966f342bfeee96a24533c1, type: 3}
+  hitEffect: {fileID: 7939487899965017791, guid: c34235f538e231c44bd3472afe88b42f, type: 3}
   meleeSwingAngle: 90
   meleeSwingDuration: 0.3
   canBlock: 0
@@ -62,4 +62,4 @@ MonoBehaviour:
   explosionSound: {fileID: 0}
   canSelfDamage: 1
   projectileArc: 0.5
-  weaponPrefab: {fileID: 5697820534571729934, guid: a40bd5a106a8aa74fb64ca34ffeb3c87, type: 3}
+  weaponPrefab: {fileID: 7838809456474540186, guid: b1db9a73ce09b334d9bffab4cf83d8e2, type: 3}

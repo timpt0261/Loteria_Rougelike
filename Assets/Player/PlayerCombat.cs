@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Unity.Cinemachine;
-
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -18,7 +16,7 @@ public class PlayerCombat : MonoBehaviour
 	// public void EquipWeapon(WeaponData data)
 
 
-
+	[SerializeField] private PlayerController m_playerController;
 
 	[SerializeField] private WeaponController m_currentWeapon;
 	[SerializeField] private Transform m_weaponHolderPosition;
@@ -29,18 +27,15 @@ public class PlayerCombat : MonoBehaviour
 
 	void Start()
 	{
-		if (m_currentWeapon == null)
-		{
-			currentWeaponIndex = 0;
-			m_currentWeapon = m_weaponInventory[currentWeaponIndex].weaponPrefab;
-
-		}
+		m_playerController = GetComponent<PlayerController>();
+		currentWeaponIndex = 0;
+		SetWeapon(currentWeaponIndex);
 	}
 
 	public void AddWeaponToInventory(WeaponData newWeapon)
 	{
 		m_weaponInventory.Add(newWeapon);
-		SwitchWeapon(m_weaponInventory.Count - 1);
+		SetWeapon(m_weaponInventory.Count - 1);
 
 	}
 
@@ -49,12 +44,19 @@ public class PlayerCombat : MonoBehaviour
 		m_weaponInventory.Remove(newWeapon);
 	}
 
-	public void SwitchWeapon(int weaponIndex)
+
+
+	public void SetWeapon(int weaponIndex)
 	{
 		if (weaponIndex < 0 || weaponIndex > m_weaponInventory.Count) return;
+		if (m_currentWeapon != null)
+			Destroy(m_currentWeapon.gameObject);
+
 		currentWeaponIndex = weaponIndex;
-		// set animator to first animation state
-		m_currentWeapon = m_weaponInventory[currentWeaponIndex].weaponPrefab;
+		// set animator to idle state
+
+		m_currentWeapon = Instantiate(m_weaponInventory[currentWeaponIndex].weaponPrefab, m_weaponHolderPosition);
+		m_currentWeapon.Initialize(m_playerController);
 	}
 
 

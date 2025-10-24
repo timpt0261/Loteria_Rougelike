@@ -8418,9 +8418,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf15ae40f328234a9ca09c38adb0d63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  m_playerController: {fileID: 1679374841}
   m_currentWeapon: {fileID: 0}
   m_weaponHolderPosition: {fileID: 1443052018}
-  m_weaponInventory: []
+  m_weaponInventory:
+  - {fileID: 11400000, guid: 9cfa3e6c29b93234c88d40a79d517039, type: 2}
+  - {fileID: 11400000, guid: 6261f1ca8c5e5e842afe68b2996a6d64, type: 2}
+  - {fileID: 11400000, guid: 1168d5b2b8c66c0469d66491873fffaf, type: 2}
   currentWeaponIndex: 0
 --- !u!82 &1679374840
 AudioSource:
