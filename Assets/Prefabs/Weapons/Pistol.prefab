@@ -120,8 +120,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2468869179681926413}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0.0022, y: 0.002, z: -0.0029}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -130,7 +130,7 @@ Transform:
   - {fileID: 3063135725956339782}
   - {fileID: 3570607979826641570}
   m_Father: {fileID: 3351318734045613034}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!95 &3351318733641797713
 Animator:
   serializedVersion: 7
@@ -419,6 +419,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd53969b22083d044bbfe22271fcdfca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirearmController
+  OnWeaponFired:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAmmoChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnimationRequested:
+    m_PersistentCalls:
+      m_Calls: []
   weaponData: {fileID: 11400000, guid: 9cfa3e6c29b93234c88d40a79d517039, type: 2}
   attackPoint: {fileID: 3351318734196012675}
   weaponAnimator: {fileID: 3351318733641797713}
@@ -452,13 +467,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3351318734196012684}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.196, y: 0.0794, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.2081, y: 0.0794, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3351318734045613034}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &3459387963094077964
 GameObject:
   m_ObjectHideFlags: 0

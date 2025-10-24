@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private float animationTransitionTime = 0.2f;
 
-    private const string ANIM_UNARMED_IDLE = "";
     private const string ANIM_PISTOL_IDLE = "CharacterArmature_Pistol_Idle";
 
     private const string ANIM_MELEE_IDLE = "CharacterArmature_Sword_Idle";
@@ -148,10 +147,11 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log($"Switched to weapon slot: {currentWeaponIndex}");
 
+
         playerCombat.SetWeapon(currentWeaponIndex);
 
         // TODO: Notify PlayerCombat to equip the weapon at currentWeaponIndex
-        // playerCombat.EquipWeaponAtIndex(currentWeaponIndex);
+
     }
 
     public int GetCurrentWeaponIndex() => currentWeaponIndex;

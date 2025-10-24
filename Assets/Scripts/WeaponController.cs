@@ -1,40 +1,41 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class WeaponController : MonoBehaviour
 {
     #region Events
-    public event Action OnWeaponFired;
-    public event Action<int, int> OnAmmoChanged; // currentAmmo, maxAmmo
-    public event Action OnReloadStarted;
-    public event Action OnReloadCompleted;
-    public event Action<string> OnAnimationRequested; // Request player body animation
+    public UnityEvent OnWeaponFired;
+    public UnityEvent<int, int> OnAmmoChanged; // currentAmmo, maxAmmo
+    public UnityEvent OnReloadStarted;
+    public UnityEvent OnReloadCompleted;
+    public UnityEvent<string> OnAnimationRequested; // Request player body animation
     #endregion
 
     #region Weapon Data
     [Header("Weapon Data")]
     [SerializeField] protected WeaponData weaponData;
-    
+
     public WeaponData Data => weaponData;
     #endregion
 
     #region Component References
     [Header("Component References")]
     public PlayerController MyController { get; set; }
-    
+
     [SerializeField] protected Transform attackPoint;
     [SerializeField] protected Animator weaponAnimator;
     [SerializeField] protected AudioSource audioSource;
-    
+
     public Transform AttackPoint => attackPoint;
     #endregion
 
     #region Animation
     [Header("Animation Settings")]
     [SerializeField] protected float animationTransitionTime = 0.2f;
-    
+
     protected string currentAnimationState;
-    
+
     // Common animation state names
     protected const string ANIM_IDLE = "Idle";
     protected const string ANIM_FIRE = "Fire";
@@ -47,7 +48,7 @@ public abstract class WeaponController : MonoBehaviour
     protected bool isAttacking = false;
     protected bool isReloading = false;
     protected float lastAttackTime = 0f;
-    
+
     public bool IsReady => isReady;
     public bool IsAttacking => isAttacking;
     public bool IsReloading => isReloading;
@@ -57,7 +58,7 @@ public abstract class WeaponController : MonoBehaviour
     #region Ammo System
     [Header("Ammo Information")]
     protected int currentAmmo;
-    
+
     public int CurrentAmmo => currentAmmo;
     public int MaxAmmo => weaponData.maxAmmo;
     public bool HasAmmo => currentAmmo > 0;
@@ -84,15 +85,16 @@ public abstract class WeaponController : MonoBehaviour
     public virtual void Initialize(PlayerController owner)
     {
         MyController = owner;
-        
+
         ValidateComponents();
         InitializeAmmo();
-        
+
         isReady = true;
         isAttacking = false;
         isReloading = false;
-        
+
         OnEquip();
+        ChangeAnimationState(ANIM_IDLE);
     }
 
     /// <summary>
@@ -108,10 +110,10 @@ public abstract class WeaponController : MonoBehaviour
 
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
-        
+
         if (weaponAnimator == null)
             weaponAnimator = GetComponentInChildren<Animator>();
-        
+
         if (attackPoint == null)
         {
             // Try to find it by name
@@ -166,7 +168,7 @@ public abstract class WeaponController : MonoBehaviour
         if (isAttacking) return false;
         if (isReloading) return false;
         if (Time.time < lastAttackTime + weaponData.fireRate) return false;
-        
+
         return true;
     }
 
@@ -178,7 +180,7 @@ public abstract class WeaponController : MonoBehaviour
         if (isReloading) return false;
         if (currentAmmo >= weaponData.maxAmmo) return false;
         if (isAttacking) return false;
-        
+
         return true;
     }
     #endregion
@@ -202,19 +204,19 @@ public abstract class WeaponController : MonoBehaviour
     public virtual void Reload()
     {
         if (!CanReload()) return;
-        
+
         isReloading = true;
         isReady = false;
-        
+
         OnReloadStarted?.Invoke();
-        
+
         // Play reload animation
         if (weaponAnimator != null)
             ChangeAnimationState(ANIM_RELOAD);
-        
+
         // Request player body animation
         OnAnimationRequested?.Invoke("Reload");
-        
+
         // Schedule reload completion
         Invoke(nameof(CompleteReload), weaponData.reloadTime);
     }
@@ -227,7 +229,7 @@ public abstract class WeaponController : MonoBehaviour
         currentAmmo = weaponData.maxAmmo;
         isReloading = false;
         isReady = true;
-        
+
         OnAmmoChanged?.Invoke(currentAmmo, weaponData.maxAmmo);
         OnReloadCompleted?.Invoke();
     }
@@ -297,7 +299,7 @@ public abstract class WeaponController : MonoBehaviour
     {
         if (audioSource != null && weaponData.fireSound != null)
         {
-            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
             audioSource.PlayOneShot(weaponData.fireSound);
         }
     }
@@ -309,7 +311,7 @@ public abstract class WeaponController : MonoBehaviour
     {
         if (audioSource != null && clip != null)
         {
-            audioSource.pitch = UnityEngine.Random.Range(1f - pitchVariation, 1f + pitchVariation);
+            audioSource.pitch = Random.Range(1f - pitchVariation, 1f + pitchVariation);
             audioSource.PlayOneShot(clip);
         }
     }
@@ -330,15 +332,15 @@ public abstract class WeaponController : MonoBehaviour
     protected virtual int ApplyDamageModifiers(int baseDamage, bool isHeadshot = false, float distance = 0f)
     {
         float finalDamage = baseDamage;
-        
+
         // Apply headshot multiplier
         if (isHeadshot)
         {
             finalDamage *= weaponData.headshotMultiplier;
         }
-        
+
         // Can add distance falloff here for firearms
-        
+
         return Mathf.RoundToInt(finalDamage);
     }
 
@@ -363,7 +365,7 @@ public abstract class WeaponController : MonoBehaviour
     {
         if (weaponAnimator == null) return;
         if (currentAnimationState == newAnimationState) return;
-        
+
         currentAnimationState = newAnimationState;
         weaponAnimator.CrossFade(newAnimationState, animationTransitionTime);
     }
@@ -371,9 +373,16 @@ public abstract class WeaponController : MonoBehaviour
     /// <summary>
     /// Request player body animation change.
     /// </summary>
-    protected virtual void RequestPlayerAnimation(string animationName)
+    protected virtual void RequestSinglePlayerAnimation(string animationName)
     {
-        OnAnimationRequested?.Invoke(animationName);
+        MyController.ChangeAnimationState(animationName);
+    }
+
+    protected virtual void RequestRandomPlayerAnimation(List<string> animationName)
+    {
+        int randomIndex = Random.Range(0, animationName.Count);
+        string attackAnimation = weaponData.AttackPlayerAnimation[randomIndex];
+        MyController.ChangeAnimationState(attackAnimation);
     }
     #endregion
 
@@ -387,7 +396,7 @@ public abstract class WeaponController : MonoBehaviour
         {
             return MyController.MainCinemachineCamera.transform.forward;
         }
-        
+
         return transform.forward;
     }
 
@@ -400,7 +409,7 @@ public abstract class WeaponController : MonoBehaviour
         {
             return MyController.MainCinemachineCamera.transform.position;
         }
-        
+
         return attackPoint != null ? attackPoint.position : transform.position;
     }
 
@@ -421,7 +430,7 @@ public abstract class WeaponController : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackPoint.position, 0.1f);
-            
+
             if (weaponData != null)
             {
                 Gizmos.color = Color.yellow;

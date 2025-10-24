@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016a52abb1210fe4b9c273d4e801a50d, type: 3}
   m_Name: LongSword
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  IdlePlayerAnimation: CharacterArmature_Sword_Idle
+  AttackPlayerAnimation:
+  - CharacterArmature_Sword_Slash1
+  - CharacterArmature_Sword_Slash2
+  BlockPlayerAnimation: CharacterArmature_Sword_Block
+  ReloadPlayerAnimation: 
   type: 0
   automatic: 1
   maxAmmo: 0
@@ -62,4 +68,4 @@ MonoBehaviour:
   explosionSound: {fileID: 0}
   canSelfDamage: 1
   projectileArc: 0.5
-  weaponPrefab: {fileID: 7765086947726163380, guid: 701d8c3d0cb394c41988bb43d6b1287f, type: 3}
+  weaponPrefab: {fileID: -3952307560824030589, guid: edccbf15fadd9704cb7a2020a492b120, type: 3}

@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponType { Melee, Bullet, Piercing, Explosive}
+public enum WeaponType { Melee, Bullet, Piercing, Explosive }
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Weapon Data")]
 public class WeaponData : ScriptableObject
 {
+    [Header("Player Animation")]
+
+    public string IdlePlayerAnimation;
+    public List<string> AttackPlayerAnimation;
+    public string BlockPlayerAnimation;
+    public string ReloadPlayerAnimation;
+
     [Header("Weapon")]
     public WeaponType type;
     public bool automatic = true;

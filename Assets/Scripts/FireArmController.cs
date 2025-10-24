@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class FirearmController : WeaponController
@@ -6,9 +7,9 @@ public class FirearmController : WeaponController
     [Header("Firearm Settings")]
     [SerializeField] private LayerMask hitLayers;
     [SerializeField] private bool showDebugRays = true;
-    
+
     private bool isAiming = false;
-    
+
     public bool IsAiming => isAiming;
     #endregion
 
@@ -17,8 +18,8 @@ public class FirearmController : WeaponController
     {
         // Play equip animation
         ChangeAnimationState(ANIM_IDLE);
-        RequestPlayerAnimation("EquipFirearm");
-        
+        RequestSinglePlayerAnimation(weaponData.IdlePlayerAnimation);
+
         Debug.Log($"Equipped firearm: {weaponData.name}");
     }
 
@@ -26,10 +27,10 @@ public class FirearmController : WeaponController
     {
         // Stop any ongoing actions
         isAiming = false;
-        
+
         // Cancel pending reloads
         CancelInvoke(nameof(CompleteReload));
-        
+
         Debug.Log($"Unequipped firearm: {weaponData.name}");
     }
 
@@ -37,18 +38,18 @@ public class FirearmController : WeaponController
     {
         // Validation checks
         if (!CanAttack()) return;
-        
+
         // Check ammo and auto-reload if empty
         if (!HasAmmo)
         {
             Reload();
             return;
         }
-        
+
         // Execute attack
         StartCooldown();
         ConsumeAmmo();
-        
+
         // Fire based on weapon type
         switch (weaponData.type)
         {
@@ -62,13 +63,16 @@ public class FirearmController : WeaponController
                 Debug.LogWarning($"Firearm type {weaponData.type} not supported in FirearmController");
                 break;
         }
-        
+
         // Effects and animations
         PlayFireEffect();
         PlayFireSound();
         ChangeAnimationState(ANIM_FIRE);
-        RequestPlayerAnimation("Shoot");
-        
+        RequestSinglePlayerAnimation(weaponData.AttackPlayerAnimation.First());
+        int randomIndex = Random.Range(0, weaponData.AttackPlayerAnimation.Count);
+        string attackAnimation = weaponData.AttackPlayerAnimation[randomIndex];
+        MyController.ChangeAnimationState(attackAnimation);
+
         // Fire event
         // OnWeaponFired?.Invoke();
     }
@@ -77,7 +81,7 @@ public class FirearmController : WeaponController
     {
         // // Toggle aim down sights
         // isAiming = !isAiming;
-        
+
         // if (isAiming)
         // {
         //     RequestPlayerAnimation("AimStart");
@@ -86,7 +90,7 @@ public class FirearmController : WeaponController
         // {
         //     RequestPlayerAnimation("AimEnd");
         // }
-        
+
         // Can add FOV changes, accuracy bonuses, etc. here
     }
     #endregion
@@ -99,18 +103,18 @@ public class FirearmController : WeaponController
     {
         Vector3 origin = GetAimOrigin();
         Vector3 direction = GetAimDirection();
-        
+
         // Apply spread if not aiming
         if (!isAiming)
         {
             direction = ApplySpread(direction);
         }
-        
+
         // Perform raycast
         if (Physics.Raycast(origin, direction, out RaycastHit hit, weaponData.weaponRange, hitLayers))
         {
             ProcessHit(hit);
-            
+
             // Debug visualization
             if (showDebugRays)
             {
@@ -134,21 +138,21 @@ public class FirearmController : WeaponController
     {
         Vector3 origin = GetAimOrigin();
         Vector3 direction = GetAimDirection();
-        
+
         // Get all hits along the ray
         RaycastHit[] hits = Physics.RaycastAll(origin, direction, weaponData.weaponRange, hitLayers);
-        
+
         if (hits.Length > 0)
         {
             // Sort by distance
             System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-            
+
             // Process each hit
             foreach (RaycastHit hit in hits)
             {
                 ProcessHit(hit);
             }
-            
+
             // Debug visualization
             if (showDebugRays)
             {
@@ -171,22 +175,22 @@ public class FirearmController : WeaponController
     {
         // Spawn hit effect
         PlayHitEffect(hit.point, Quaternion.LookRotation(hit.normal));
-        
+
         // Check if we hit an actor
         Actor actor = hit.transform.GetComponentInParent<Actor>();
-        
+
         if (actor != null)
         {
             // Check for headshot
             bool isHeadshot = hit.transform.CompareTag("Head");
-            
+
             // Calculate damage
             int baseDamage = CalculateDamage();
             int finalDamage = ApplyDamageModifiers(baseDamage, isHeadshot, hit.distance);
-            
+
             // Apply damage
             DealDamage(actor, finalDamage, hit.point);
-            
+
             // Log for debugging
             if (isHeadshot)
             {
@@ -204,13 +208,13 @@ public class FirearmController : WeaponController
     {
         // Simple cone spread - can be expanded with spread patterns
         float spread = isAiming ? 0.5f : 2f; // Less spread when aiming
-        
+
         Vector3 spreadOffset = new Vector3(
             Random.Range(-spread, spread),
             Random.Range(-spread, spread),
             0f
         );
-        
+
         return (direction + spreadOffset).normalized;
     }
     #endregion
@@ -233,13 +237,13 @@ public class FirearmController : WeaponController
     protected override int ApplyDamageModifiers(int baseDamage, bool isHeadshot = false, float distance = 0f)
     {
         float finalDamage = baseDamage;
-        
+
         // Apply headshot multiplier
         if (isHeadshot)
         {
             finalDamage *= weaponData.headshotMultiplier;
         }
-        
+
         // Apply distance falloff (optional - can be removed for hit-scan weapons)
         // Damage reduces to 50% at max range
         if (distance > 0f && weaponData.weaponRange > 0f)
@@ -247,7 +251,7 @@ public class FirearmController : WeaponController
             float distanceFactor = 1f - (distance / weaponData.weaponRange) * 0.5f;
             finalDamage *= Mathf.Clamp01(distanceFactor);
         }
-        
+
         return Mathf.RoundToInt(finalDamage);
     }
 
@@ -257,10 +261,10 @@ public class FirearmController : WeaponController
     public override bool CanAttack()
     {
         if (!base.CanAttack()) return false;
-        
+
         // Firearms need ammo to shoot
         if (!HasAmmo && weaponData.type != WeaponType.Melee) return false;
-        
+
         return true;
     }
     #endregion
@@ -269,14 +273,14 @@ public class FirearmController : WeaponController
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
-        
+
         // Draw weapon range
         if (weaponData != null && attackPoint != null)
         {
             Gizmos.color = isAiming ? Color.green : Color.yellow;
             Vector3 origin = attackPoint.position;
             Vector3 direction = attackPoint.forward;
-            
+
             Gizmos.DrawRay(origin, direction * weaponData.weaponRange);
             Gizmos.DrawWireSphere(origin + direction * weaponData.weaponRange, 0.2f);
         }

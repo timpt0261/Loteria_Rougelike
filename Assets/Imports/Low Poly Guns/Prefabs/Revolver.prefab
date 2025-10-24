@@ -171,6 +171,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd53969b22083d044bbfe22271fcdfca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirearmController
+  OnWeaponFired:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAmmoChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnimationRequested:
+    m_PersistentCalls:
+      m_Calls: []
   weaponData: {fileID: 11400000, guid: 6261f1ca8c5e5e842afe68b2996a6d64, type: 2}
   attackPoint: {fileID: 5080616146958185704}
   weaponAnimator: {fileID: 735626104598708495}

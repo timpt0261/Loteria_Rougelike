@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016a52abb1210fe4b9c273d4e801a50d, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
+  IdlePlayerAnimation: CharacterArmature_Pistol_IdleCharacterArmature_Pistol_Idle
+  AttackPlayerAnimation:
+  - CharacterArmature_Pistol_Shoot
+  BlockPlayerAnimation: 
+  ReloadPlayerAnimation: CharacterArmature_Pistol_Reload
   type: 1
   automatic: 1
   maxAmmo: 4
