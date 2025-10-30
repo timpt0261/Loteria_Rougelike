@@ -62,7 +62,7 @@ public abstract class WeaponController : MonoBehaviour
     public int CurrentAmmo => currentAmmo;
     public int MaxAmmo => weaponData.maxAmmo;
     public bool HasAmmo => currentAmmo > 0;
-    public float AmmoPercentage => weaponData.maxAmmo > 0 ? (float)currentAmmo / weaponData.maxAmmo : 0f;
+    public string AmmoPercentage => weaponData.maxAmmo > 0 ? $"{CurrentAmmo} / {MaxAmmo}" : $"{Mathf.Infinity}";
     #endregion
 
     #region Unity Lifecycle
@@ -287,7 +287,7 @@ public abstract class WeaponController : MonoBehaviour
         if (weaponData.hitEffect != null)
         {
             GameObject hitVFX = Instantiate(weaponData.hitEffect, hitPosition, rotation);
-            Destroy(hitVFX, 4f);
+            Destroy(hitVFX, 10f);
         }
     }
 
@@ -298,7 +298,7 @@ public abstract class WeaponController : MonoBehaviour
     {
         if (audioSource != null && weaponData.fireSound != null)
         {
-            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
             audioSource.PlayOneShot(weaponData.fireSound);
         }
     }
@@ -310,7 +310,7 @@ public abstract class WeaponController : MonoBehaviour
     {
         if (audioSource != null && clip != null)
         {
-            audioSource.pitch = Random.Range(1f - pitchVariation, 1f + pitchVariation);
+            audioSource.pitch = UnityEngine.Random.Range(1f - pitchVariation, 1f + pitchVariation);
             audioSource.PlayOneShot(clip);
         }
     }
@@ -360,6 +360,12 @@ public abstract class WeaponController : MonoBehaviour
     /// <summary>
     /// Change weapon model animation state with smooth transition.
     /// </summary>
+    public virtual void SetAnimationState()
+    {
+        if (!isAttacking && !isReloading && isReady)
+            ChangeAnimationState(weaponData.IdlePlayerAnimation);
+
+    }
     protected virtual void ChangeAnimationState(string newAnimationState)
     {
         if (weaponAnimator == null) return;
@@ -379,7 +385,7 @@ public abstract class WeaponController : MonoBehaviour
 
     protected virtual void RequestRandomPlayerAnimation(List<string> animationName)
     {
-        int randomIndex = Random.Range(0, animationName.Count);
+        int randomIndex = UnityEngine.Random.Range(0, animationName.Count);
         string attackAnimation = weaponData.AttackPlayerAnimation[randomIndex];
         MyController.ChangeAnimationState(attackAnimation);
     }

@@ -26,4 +26,9 @@ public class Actor : MonoBehaviour
         // TEMPORARY: Destroy Object
         Destroy(gameObject);
     }
+
+    void OnDrawGizmos()
+    {
+        UnityEditor.Handles.Label(transform.position + transform.up, $"{currentHealth}");
+    }
 }

@@ -193,7 +193,7 @@ MonoBehaviour:
   animationTransitionTime: 0.2
   hitLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   showDebugRays: 1
 --- !u!82 &7903882435452445324
 AudioSource:

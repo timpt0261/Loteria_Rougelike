@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -8,6 +9,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInputReader playerInput;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private PlayerCombat playerCombat;
+    #endregion
+
+    #region UI
+    [SerializeField] TextMeshProUGUI ammoCountText;
     #endregion
 
     #region Camera
@@ -61,9 +66,24 @@ public class PlayerController : MonoBehaviour
     {
         CacheInputValues();
         HandleWeaponSwitching();
+        ammoCountText.text = $"{playerCombat.CurrentWeapon.AmmoPercentage}";
 
+        if (isPrimaryActionPressed)
+        {
+            playerCombat.PrimaryAttack();
+        }
 
+        if (isSecondaryActionPressed)
+        {
+            playerCombat.SecondaryAttack();
+        }
 
+        // if (playerCombat.CurrentWeapon.CurrentAmmo < 1)
+        // {
+        //     playerCombat.CurrentWeapon.Reload();
+        // }
+
+        playerCombat.CurrentWeapon.SetAnimationState();
         playerMovement.CheckGround();
     }
 
@@ -148,6 +168,7 @@ public class PlayerController : MonoBehaviour
 
 
         playerCombat.SetWeapon(currentWeaponIndex);
+
 
         // TODO: Notify PlayerCombat to equip the weapon at currentWeaponIndex
 

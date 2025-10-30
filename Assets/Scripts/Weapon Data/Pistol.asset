@@ -19,7 +19,7 @@ MonoBehaviour:
   ReloadPlayerAnimation: CharacterArmature_Pistol_Reload
   type: 1
   automatic: 1
-  maxAmmo: 4
+  maxAmmo: 5
   fireRate: 0.2
   attackDamage: 2
   reloadTime: 1

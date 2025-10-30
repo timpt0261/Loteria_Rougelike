@@ -4,26 +4,13 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-	/// Simplified structure:
-	// - WeaponController currentWeapon
-	// - List<WeaponData> inventory
-	// - int currentWeaponIndex
-
-	// // Methods:
-	// public void PrimaryAttack() => currentWeapon?.PrimaryAttack()
-	// public void SecondaryAttack() => currentWeapon?.SecondaryAttack()
-	// public void SwitchWeapon(int direction)
-	// public void EquipWeapon(WeaponData data)
-
-
 	[SerializeField] private PlayerController m_playerController;
-
 	[SerializeField] private WeaponController m_currentWeapon;
 	[SerializeField] private Transform m_weaponHolderPosition;
 	[SerializeField] private List<WeaponData> m_weaponInventory;
 	[SerializeField] private int currentWeaponIndex = 0;
 
-
+	public WeaponController CurrentWeapon => m_currentWeapon;
 
 	void Start()
 	{
@@ -31,6 +18,12 @@ public class PlayerCombat : MonoBehaviour
 		currentWeaponIndex = 0;
 		SetWeapon(currentWeaponIndex);
 	}
+
+	public void PrimaryAttack() => m_currentWeapon?.PrimaryAttack();
+
+	public void SecondaryAttack() => m_currentWeapon?.SecondaryAttack();
+
+	public void Reload() => m_currentWeapon?.Reload();
 
 	public void AddWeaponToInventory(WeaponData newWeapon)
 	{

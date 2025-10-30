@@ -104,11 +104,13 @@ public class FirearmController : WeaponController
         Vector3 origin = GetAimOrigin();
         Vector3 direction = GetAimDirection();
 
+        Debug.Log($"Origin: {origin}");
+        Debug.Log($"Direction: {direction}");
         // Apply spread if not aiming
-        if (!isAiming)
-        {
-            direction = ApplySpread(direction);
-        }
+        // if (!isAiming)
+        // {
+        //     direction = ApplySpread(direction);
+        // }
 
         // Perform raycast
         if (Physics.Raycast(origin, direction, out RaycastHit hit, weaponData.weaponRange, hitLayers))
@@ -173,6 +175,7 @@ public class FirearmController : WeaponController
     /// </summary>
     private void ProcessHit(RaycastHit hit)
     {
+        Debug.Log($"Hit: {hit.transform.gameObject.name}");
         // Spawn hit effect
         PlayHitEffect(hit.point, Quaternion.LookRotation(hit.normal));
 
@@ -181,21 +184,21 @@ public class FirearmController : WeaponController
 
         if (actor != null)
         {
-            // Check for headshot
-            bool isHeadshot = hit.transform.CompareTag("Head");
+            // // Check for headshot
+            // bool isHeadshot = hit.transform.CompareTag("Head");
 
-            // Calculate damage
-            int baseDamage = CalculateDamage();
-            int finalDamage = ApplyDamageModifiers(baseDamage, isHeadshot, hit.distance);
+            // // Calculate damage
+            // int baseDamage = CalculateDamage();
+            // int finalDamage = ApplyDamageModifiers(baseDamage, isHeadshot, hit.distance);
 
-            // Apply damage
-            DealDamage(actor, finalDamage, hit.point);
+            // // Apply damage
+            // DealDamage(actor, finalDamage, hit.point);
 
-            // Log for debugging
-            if (isHeadshot)
-            {
-                Debug.Log($"HEADSHOT! Dealt {finalDamage} damage to {actor.name}");
-            }
+            // // Log for debugging
+            // if (isHeadshot)
+            // {
+            //     Debug.Log($"HEADSHOT! Dealt {finalDamage} damage to {actor.name}");
+            // }
         }
     }
     #endregion
@@ -258,15 +261,7 @@ public class FirearmController : WeaponController
     /// <summary>
     /// Override to add weapon-specific checks.
     /// </summary>
-    public override bool CanAttack()
-    {
-        if (!base.CanAttack()) return false;
 
-        // Firearms need ammo to shoot
-        if (!HasAmmo && weaponData.type != WeaponType.Melee) return false;
-
-        return true;
-    }
     #endregion
 
     #region Debug Visualization
