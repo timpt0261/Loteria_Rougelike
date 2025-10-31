@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         CacheInputValues();
         HandleWeaponSwitching();
-        ammoCountText.text = $"{playerCombat.CurrentWeapon.AmmoPercentage}";
+        // ammoCountText.text = $"{playerCombat.CurrentWeapon.AmmoPercentage}";
 
         if (isPrimaryActionPressed)
         {
@@ -77,7 +77,10 @@ public class PlayerController : MonoBehaviour
         {
             playerCombat.SecondaryAttack();
         }
+        if (!playerCombat.CurrentWeapon.IsAttacking)
+		{
 
+		}
         playerCombat.CurrentWeapon.SetAnimationState();
         playerMovement.CheckGround();
     }

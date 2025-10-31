@@ -40,15 +40,15 @@ public class FirearmController : WeaponController
         if (!CanAttack()) return;
 
         // Check ammo and auto-reload if empty
-        if (!HasAmmo)
-        {
-            Reload();
-            return;
-        }
+        // if (!HasAmmo)
+        // {
+        //     Reload();
+        //     return;
+        // }
 
         // Execute attack
         StartCooldown();
-        ConsumeAmmo();
+        // ConsumeAmmo();
 
         // Fire based on weapon type
         switch (weaponData.type)
