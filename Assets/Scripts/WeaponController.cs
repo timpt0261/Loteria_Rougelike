@@ -293,6 +293,14 @@ public abstract class WeaponController : MonoBehaviour
             Destroy(hitVFX, 10f);
         }
     }
+    protected virtual void PlayHitEffect(Vector3 hitPosition, Quaternion rotation, Transform parent)
+    {
+        if (weaponData.hitEffect != null)
+        {
+            GameObject hitVFX = Instantiate(weaponData.hitEffect, hitPosition, rotation, parent);
+            Destroy(hitVFX, 10f);
+        }
+    }
 
     /// <summary>
     /// Play weapon fire sound with pitch variation.
@@ -349,12 +357,13 @@ public abstract class WeaponController : MonoBehaviour
     /// <summary>
     /// Deal damage to target actor.
     /// </summary>
+    
     protected virtual void DealDamage(Actor target, int damage, Vector3 hitPoint)
     {
         if (target != null)
         {
             target.TakeDamage(damage);
-            PlayHitEffect(hitPoint, Quaternion.identity);
+            PlayHitEffect(hitPoint, Quaternion.identity, target.gameObject.transform);
         }
     }
     #endregion

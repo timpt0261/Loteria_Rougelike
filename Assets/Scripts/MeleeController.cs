@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Note meele weapons don't have any specific animations
+
 public class MeleeController : WeaponController
 {
     #region Melee-Specific State
@@ -208,7 +210,7 @@ public class MeleeController : WeaponController
         {
             1 => ANIM_ATTACK_1,
             2 => ANIM_ATTACK_2,
-            3 => ANIM_ATTACK_3,
+            // 3 => ANIM_ATTACK_3,
             _ => ANIM_ATTACK_1
         };
     }
