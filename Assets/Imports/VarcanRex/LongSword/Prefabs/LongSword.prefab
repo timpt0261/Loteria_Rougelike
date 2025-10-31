@@ -45,6 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825ac2e60d8c18e41a98a2b386d97610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeController
+  OnWeaponFired:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAmmoChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnimationRequested:
+    m_PersistentCalls:
+      m_Calls: []
   weaponData: {fileID: 11400000, guid: 1168d5b2b8c66c0469d66491873fffaf, type: 2}
   attackPoint: {fileID: 0}
   weaponAnimator: {fileID: 0}
@@ -52,7 +67,7 @@ MonoBehaviour:
   animationTransitionTime: 0.2
   attackLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   showDebugGizmos: 1
 --- !u!1 &4334314813405729788
 GameObject:

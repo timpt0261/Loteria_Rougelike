@@ -69,10 +69,6 @@ public class FirearmController : WeaponController
         PlayFireSound();
         ChangeAnimationState(ANIM_FIRE);
         RequestSinglePlayerAnimation(weaponData.AttackPlayerAnimation.First());
-        int randomIndex = Random.Range(0, weaponData.AttackPlayerAnimation.Count);
-        string attackAnimation = weaponData.AttackPlayerAnimation[randomIndex];
-        MyController.ChangeAnimationState(attackAnimation);
-
         // Fire event
         // OnWeaponFired?.Invoke();
     }
@@ -103,9 +99,6 @@ public class FirearmController : WeaponController
     {
         Vector3 origin = GetAimOrigin();
         Vector3 direction = GetAimDirection();
-
-        Debug.Log($"Origin: {origin}");
-        Debug.Log($"Direction: {direction}");
         // Apply spread if not aiming
         // if (!isAiming)
         // {

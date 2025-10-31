@@ -25,7 +25,7 @@ MonoBehaviour:
   attackDamage: 1
   reloadTime: 0.5
   headshotMultiplier: 1.5
-  weaponRange: 20
+  weaponRange: 5
   fireEffect: {fileID: 0}
   fireSound: {fileID: 8300000, guid: 7c4540645bee5b14d858059a36a6fdcc, type: 3}
   hitEffect: {fileID: 4264494126044101379, guid: 829400fabd0809a48a690ee04df75421, type: 3}

@@ -84,9 +84,7 @@ public class MeleeController : WeaponController
         // Play appropriate combo animation
         string attackAnim = GetComboAnimation();
         ChangeAnimationState(attackAnim);
-        int randomIndex = Random.Range(0, weaponData.AttackPlayerAnimation.Count);
-        string attackAnimation = weaponData.AttackPlayerAnimation[randomIndex];
-        MyController.ChangeAnimationState(attackAnimation);
+        RequestRandomPlayerAnimation(weaponData.AttackPlayerAnimation);
 
         // Play swing sound
         PlayFireSound();

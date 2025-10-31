@@ -214,7 +214,7 @@ public abstract class WeaponController : MonoBehaviour
         {
             ChangeAnimationState(ANIM_RELOAD);
         }
-        MyController.ChangeAnimationState(weaponData.ReloadPlayerAnimation);
+        RequestSinglePlayerAnimation(weaponData.ReloadPlayerAnimation);
 
         // Request player body animation
         OnAnimationRequested?.Invoke("Reload");
@@ -368,7 +368,7 @@ public abstract class WeaponController : MonoBehaviour
         if (!isAttacking)
         {
             ChangeAnimationState(ANIM_IDLE);
-            MyController.ChangeAnimationState(weaponData.IdlePlayerAnimation);
+            RequestSinglePlayerAnimation(weaponData.IdlePlayerAnimation);
         }
 
 
