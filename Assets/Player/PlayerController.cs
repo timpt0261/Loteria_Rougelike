@@ -78,11 +78,6 @@ public class PlayerController : MonoBehaviour
             playerCombat.SecondaryAttack();
         }
 
-        // if (playerCombat.CurrentWeapon.CurrentAmmo < 1)
-        // {
-        //     playerCombat.CurrentWeapon.Reload();
-        // }
-
         playerCombat.CurrentWeapon.SetAnimationState();
         playerMovement.CheckGround();
     }

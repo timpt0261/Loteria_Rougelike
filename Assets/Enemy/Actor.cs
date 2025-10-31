@@ -29,6 +29,6 @@ public class Actor : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        UnityEditor.Handles.Label(transform.position + transform.up, $"{currentHealth}");
+        UnityEditor.Handles.Label(transform.position + (transform.up * 1.5f), $"{currentHealth}");
     }
 }

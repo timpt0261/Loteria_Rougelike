@@ -27,7 +27,7 @@ MonoBehaviour:
   weaponRange: 25
   fireEffect: {fileID: 6556197431887549076, guid: 471763c166f03c147a6d4e375bcbb711, type: 3}
   fireSound: {fileID: 8300000, guid: ec9432de99f51ff4c9ef5a0eb3937476, type: 3}
-  hitEffect: {fileID: 7939487899965017791, guid: c34235f538e231c44bd3472afe88b42f, type: 3}
+  hitEffect: {fileID: 5334228485563152753, guid: aa48f79ae6966f342bfeee96a24533c1, type: 3}
   meleeSwingAngle: 90
   meleeSwingDuration: 0.3
   canBlock: 0

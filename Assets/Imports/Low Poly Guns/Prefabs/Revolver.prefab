@@ -189,7 +189,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 6261f1ca8c5e5e842afe68b2996a6d64, type: 2}
   attackPoint: {fileID: 5080616146958185704}
   weaponAnimator: {fileID: 735626104598708495}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 7903882435452445324}
   animationTransitionTime: 0.2
   hitLayers:
     serializedVersion: 2

@@ -184,21 +184,21 @@ public class FirearmController : WeaponController
 
         if (actor != null)
         {
-            // // Check for headshot
-            // bool isHeadshot = hit.transform.CompareTag("Head");
+            // Check for headshot
+            bool isHeadshot = hit.transform.CompareTag("Head");
 
-            // // Calculate damage
-            // int baseDamage = CalculateDamage();
-            // int finalDamage = ApplyDamageModifiers(baseDamage, isHeadshot, hit.distance);
+            // Calculate damage
+            int baseDamage = CalculateDamage();
+            int finalDamage = ApplyDamageModifiers(baseDamage, isHeadshot, hit.distance);
 
-            // // Apply damage
-            // DealDamage(actor, finalDamage, hit.point);
+            // Apply damage
+            DealDamage(actor, finalDamage, hit.point);
 
-            // // Log for debugging
-            // if (isHeadshot)
-            // {
-            //     Debug.Log($"HEADSHOT! Dealt {finalDamage} damage to {actor.name}");
-            // }
+            // Log for debugging
+            if (isHeadshot)
+            {
+                Debug.Log($"HEADSHOT! Dealt {finalDamage} damage to {actor.name}");
+            }
         }
     }
     #endregion
