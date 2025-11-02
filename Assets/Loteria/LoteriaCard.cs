@@ -11,9 +11,9 @@ public class LoteriaCard : MonoBehaviour
 
 	[SerializeField] private int id;
 	[SerializeField] private float value;
-
 	[SerializeField] private float chance;
 
+	public int ID => id;
 	public float Chance => chance;
 
 	[Header("GameObject Components")]
@@ -26,9 +26,11 @@ public class LoteriaCard : MonoBehaviour
 		if (loteriaCardsData == null) { Debug.LogError("Failed to Create Card Instance as Loteria Card Data Doesn't Exist "); return; }
 		this.cardsData = loteriaCardsData;
 		this.id = loteriaCardsData.id;
+		if (this.cardImages == null)
+			this.cardImages = GetComponent<Image>();
 		this.cardImages.sprite = loteriaCardsData.sprite;
 		this.chance = loteriaCardsData.chance;
-		this.name = loteriaCardsData.name;
+
 
 
 	}
