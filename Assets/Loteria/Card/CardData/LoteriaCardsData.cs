@@ -5,8 +5,6 @@ using UnityEngine;
 public class LoteriaCardsData : ScriptableObject
 {
 	public int id;
-
-	public Sprite sprite;
-
 	public float chance;
+	public Sprite sprite;
 }

@@ -2,13 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Cantador : MonoBehaviour
 {
     public static Cantador Instance { get; private set; }
 
+
     [Header("Card Data")]
-    [SerializeField] private List<LoteriaCardsData> cardSprites = new();
+    [SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
     [SerializeField] private List<LoteriaCardsData> loteriaCardsToDraw = new();
     [SerializeField] private List<LoteriaCardsData> loteriaCardsNotDrawn = new();
 
@@ -19,22 +21,26 @@ public class Cantador : MonoBehaviour
     [SerializeField] private float drawTime = 3f;   // duration between draws
     [SerializeField] private float refillSpeed = 2f;
 
-    [SerializeField] private UnityEvent OnCardDrawn;
-
-    // states
+// states
     private float timer;
     private bool isDrawingCard;
     private bool isReady = true;
 
     [SerializeField] private Image drawCardImage;
 
+    [Header("Events")]
+    public UnityEvent OnCardDrawn;
+    public UnityEvent OnDeckShuffled;
+
 
     void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        Instance = this;
 
     }
 
@@ -75,20 +81,21 @@ public class Cantador : MonoBehaviour
 
         // // Start cooldown
         // StartTimer();
+        if (loteriaCardsToDraw.Count <= 1)
+        {
+            Shuffle();
+        }
 
         // Draw a random card
         int index = Random.Range(0, loteriaCardsToDraw.Count);
+
         DrawnCard = loteriaCardsToDraw[index];
         Sprite drawnCard = DrawnCard.sprite;
-        if (loteriaCardsToDraw.Count <= 1)
-            Shuffle();
-
         loteriaCardsToDraw.RemoveAt(index);
         loteriaCardsNotDrawn.Add(DrawnCard);
         drawCardImage.sprite = drawnCard;
-        // Debug.Log($"Drew card: {drawnCard.name}");
         OnCardDrawn?.Invoke();
-        // Shuffle(loteriaCardsToDraw);
+
     }
 
     private void StartTimer()
@@ -115,9 +122,9 @@ public class Cantador : MonoBehaviour
         return true;
     }
 
-    private void Shuffle()
+    public void Shuffle()
     {
-        var shuffled = new List<LoteriaCardsData>(cardSprites);
+        var shuffled = new List<LoteriaCardsData>(loteriaDeck);
         for (int i = 0; i < shuffled.Count; i++)
         {
             int r = Random.Range(i, shuffled.Count);
