@@ -11,6 +11,7 @@ public class Cantador : MonoBehaviour
 
     [Header("Card Data")]
     [SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
+    public void SetLoteriaDeck(List<LoteriaCardsData> newloteriaDeck) => this.loteriaDeck = newloteriaDeck;
     [SerializeField] private List<LoteriaCardsData> loteriaCardsToDraw = new();
     [SerializeField] private List<LoteriaCardsData> loteriaCardsNotDrawn = new();
 
@@ -21,7 +22,7 @@ public class Cantador : MonoBehaviour
     [SerializeField] private float drawTime = 3f;   // duration between draws
     [SerializeField] private float refillSpeed = 2f;
 
-// states
+    // states
     private float timer;
     private bool isDrawingCard;
     private bool isReady = true;
@@ -44,10 +45,10 @@ public class Cantador : MonoBehaviour
 
     }
 
-    void Start()
+    public void Initialize()
     {
         Shuffle();
-        // ResetTimer();
+        //ResetTimer();
     }
 
     void Update()
@@ -77,6 +78,8 @@ public class Cantador : MonoBehaviour
 
     public void TryDraw()
     {
+        int seed = (int)System.DateTime.Now.Ticks + 100;
+        Random.InitState(seed);
         // if (!CanDraw()) return;
 
         // // Start cooldown
@@ -132,16 +135,8 @@ public class Cantador : MonoBehaviour
         }
         loteriaCardsToDraw = shuffled;
         loteriaCardsNotDrawn.Clear();
+        OnDeckShuffled?.Invoke();
     }
 
-    private void Shuffle(List<LoteriaCardsData> toShuffle)
-    {
-        var shuffled = new List<LoteriaCardsData>(toShuffle);
-        for (int i = 0; i < shuffled.Count; i++)
-        {
-            int r = Random.Range(i, shuffled.Count);
-            (shuffled[i], shuffled[r]) = (shuffled[r], shuffled[i]);
-        }
-        loteriaCardsToDraw = shuffled;
-    }
+
 }

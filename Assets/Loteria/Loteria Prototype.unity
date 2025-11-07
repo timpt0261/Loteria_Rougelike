@@ -1066,61 +1066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   gridContainer: {fileID: 1646729024}
-  allloteriaCardsData:
-  - {fileID: 11400000, guid: 38fa43d1618d16345a7915e888dd8862, type: 2}
-  - {fileID: 11400000, guid: 53cc29f9c4bdb964eb017a3627f71952, type: 2}
-  - {fileID: 11400000, guid: e7c6e854b767bbe448e4077ee9a51138, type: 2}
-  - {fileID: 11400000, guid: 372d058ef001ce3478a3ea0a38709e6f, type: 2}
-  - {fileID: 11400000, guid: c472f8bc60aa7b940b272df113b071df, type: 2}
-  - {fileID: 11400000, guid: d12535b6cd867a14783a6cd687236202, type: 2}
-  - {fileID: 11400000, guid: 9000136da61fc9344b55b5de29660788, type: 2}
-  - {fileID: 11400000, guid: f0b791e6549f3f045b9633777c481f1e, type: 2}
-  - {fileID: 11400000, guid: eb561c09144b2bb4cae0851608891084, type: 2}
-  - {fileID: 11400000, guid: 1093731d4e063bc4684bf59d0bc0f4e6, type: 2}
-  - {fileID: 11400000, guid: d9d2ecb12d540cd49bcc9af2cd14d90f, type: 2}
-  - {fileID: 11400000, guid: 59c1149af3d2aaf4ead7aba8915f64ae, type: 2}
-  - {fileID: 11400000, guid: 1fc10acd0ce7c894896f4081e42bf120, type: 2}
-  - {fileID: 11400000, guid: 933139b76ece299449140c74347f1b5d, type: 2}
-  - {fileID: 11400000, guid: 594ee1143eff08f4384cf59679f54990, type: 2}
-  - {fileID: 11400000, guid: bccc22fff0cfa6244917bc3b096be878, type: 2}
-  - {fileID: 11400000, guid: ec17cf5f6ac8c3f4fbcb05b1a6a803c1, type: 2}
-  - {fileID: 11400000, guid: 3114a8317699bc644acdd0b2f6159f9b, type: 2}
-  - {fileID: 11400000, guid: 93abc9e2f4a31ec40a9883467587a683, type: 2}
-  - {fileID: 11400000, guid: 966c357cce6966843925b44d30553b68, type: 2}
-  - {fileID: 11400000, guid: e0a50b110a2d37148ac8d64ccecbba11, type: 2}
-  - {fileID: 11400000, guid: c03fe05f7474252469203f6a58289c78, type: 2}
-  - {fileID: 11400000, guid: cca3a53f85f981248b5e7a2306ee09d3, type: 2}
-  - {fileID: 11400000, guid: 9587648c1cc93cd4fadfbe398b1f7bed, type: 2}
-  - {fileID: 11400000, guid: 47eac948858345b4ba290c5f824d137e, type: 2}
-  - {fileID: 11400000, guid: b1e47948a5dd1d54b980997a3eee5f51, type: 2}
-  - {fileID: 11400000, guid: d2b8424487a7e4e4f81d588b1829e5ca, type: 2}
-  - {fileID: 11400000, guid: 18ccadd7763af994383c7f38ee70da74, type: 2}
-  - {fileID: 11400000, guid: a2c16629717654d4eb550309f9ea621b, type: 2}
-  - {fileID: 11400000, guid: 2fa51f25b9ae5344cae625b329ddc333, type: 2}
-  - {fileID: 11400000, guid: 05b3d8b74b98c5d4e966fa14b04fd13c, type: 2}
-  - {fileID: 11400000, guid: ec219ced976cd9c4e915ffe33c4b3e83, type: 2}
-  - {fileID: 11400000, guid: 8c2b31d02cf81864d852857d05e81fad, type: 2}
-  - {fileID: 11400000, guid: 3df7e7695a8282c4b8b20d901cc04b10, type: 2}
-  - {fileID: 11400000, guid: 4132ea627b0709c45a60ab405ea42350, type: 2}
-  - {fileID: 11400000, guid: 339015f1df8ad6447a17553b8334a3b2, type: 2}
-  - {fileID: 11400000, guid: c0966c3734faed64492eccb80baae23a, type: 2}
-  - {fileID: 11400000, guid: 3347321ec6b2e23438a0f100af0f0417, type: 2}
-  - {fileID: 11400000, guid: 105c0b8fdeb859c4f9354563555dc00b, type: 2}
-  - {fileID: 11400000, guid: e7f2afea8bbfe744e90af37e189c3642, type: 2}
-  - {fileID: 11400000, guid: a65cbba1376793e409e3c9a1e5c5964e, type: 2}
-  - {fileID: 11400000, guid: 84c895ac28a5e3e47851a8e61523c453, type: 2}
-  - {fileID: 11400000, guid: 8726ae708843af04f865a7115ba4e608, type: 2}
-  - {fileID: 11400000, guid: b31a9705dd3b31a4085597405b5345c4, type: 2}
-  - {fileID: 11400000, guid: b6e1ad068dd8a09458f2e7d043b372c3, type: 2}
-  - {fileID: 11400000, guid: 68b8ffe21e36f79428e502fb218fb3c4, type: 2}
-  - {fileID: 11400000, guid: 220ae7dae8943504fafb238722c642c8, type: 2}
-  - {fileID: 11400000, guid: d392ae9fc30673141aa3a4711a0d5cd2, type: 2}
-  - {fileID: 11400000, guid: c4038278bd6489744ae062d0a34434d7, type: 2}
-  - {fileID: 11400000, guid: 0a48fc43777cee54ab0f4dd11bee9b3b, type: 2}
-  - {fileID: 11400000, guid: 8892a8c55feff7c4080dc6823b9851f0, type: 2}
-  - {fileID: 11400000, guid: 6725374d8392720408651cd0265a5a01, type: 2}
-  - {fileID: 11400000, guid: 81f2aad99fb875b419231461e05e8643, type: 2}
-  - {fileID: 11400000, guid: 42fd0abeeb44467458af493b271865cb, type: 2}
+  loteriaDeck: []
   cardPrefabs:
   - {fileID: 2214604379435494901}
   - {fileID: 1235945726}
@@ -1138,9 +1084,7 @@ MonoBehaviour:
   - {fileID: 1643626988}
   - {fileID: 165837524}
   - {fileID: 923247165}
-  tableGrid: 
   scoreUI: {fileID: 399805884}
-  score: 0
   horizontalMultiplier: 4
   verticalMultiplier: 4
   diagonalMultiplier: 8
@@ -2758,61 +2702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1beac44bb81031b489d75b2b69d6466b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cantador
-  loteriaDeck:
-  - {fileID: 11400000, guid: 38fa43d1618d16345a7915e888dd8862, type: 2}
-  - {fileID: 11400000, guid: 53cc29f9c4bdb964eb017a3627f71952, type: 2}
-  - {fileID: 11400000, guid: e7c6e854b767bbe448e4077ee9a51138, type: 2}
-  - {fileID: 11400000, guid: 372d058ef001ce3478a3ea0a38709e6f, type: 2}
-  - {fileID: 11400000, guid: c472f8bc60aa7b940b272df113b071df, type: 2}
-  - {fileID: 11400000, guid: d12535b6cd867a14783a6cd687236202, type: 2}
-  - {fileID: 11400000, guid: 9000136da61fc9344b55b5de29660788, type: 2}
-  - {fileID: 11400000, guid: f0b791e6549f3f045b9633777c481f1e, type: 2}
-  - {fileID: 11400000, guid: eb561c09144b2bb4cae0851608891084, type: 2}
-  - {fileID: 11400000, guid: 1093731d4e063bc4684bf59d0bc0f4e6, type: 2}
-  - {fileID: 11400000, guid: d9d2ecb12d540cd49bcc9af2cd14d90f, type: 2}
-  - {fileID: 11400000, guid: 59c1149af3d2aaf4ead7aba8915f64ae, type: 2}
-  - {fileID: 11400000, guid: 1fc10acd0ce7c894896f4081e42bf120, type: 2}
-  - {fileID: 11400000, guid: 933139b76ece299449140c74347f1b5d, type: 2}
-  - {fileID: 11400000, guid: 594ee1143eff08f4384cf59679f54990, type: 2}
-  - {fileID: 11400000, guid: bccc22fff0cfa6244917bc3b096be878, type: 2}
-  - {fileID: 11400000, guid: ec17cf5f6ac8c3f4fbcb05b1a6a803c1, type: 2}
-  - {fileID: 11400000, guid: 3114a8317699bc644acdd0b2f6159f9b, type: 2}
-  - {fileID: 11400000, guid: 93abc9e2f4a31ec40a9883467587a683, type: 2}
-  - {fileID: 11400000, guid: 966c357cce6966843925b44d30553b68, type: 2}
-  - {fileID: 11400000, guid: e0a50b110a2d37148ac8d64ccecbba11, type: 2}
-  - {fileID: 11400000, guid: c03fe05f7474252469203f6a58289c78, type: 2}
-  - {fileID: 11400000, guid: cca3a53f85f981248b5e7a2306ee09d3, type: 2}
-  - {fileID: 11400000, guid: 9587648c1cc93cd4fadfbe398b1f7bed, type: 2}
-  - {fileID: 11400000, guid: 47eac948858345b4ba290c5f824d137e, type: 2}
-  - {fileID: 11400000, guid: b1e47948a5dd1d54b980997a3eee5f51, type: 2}
-  - {fileID: 11400000, guid: d2b8424487a7e4e4f81d588b1829e5ca, type: 2}
-  - {fileID: 11400000, guid: 18ccadd7763af994383c7f38ee70da74, type: 2}
-  - {fileID: 11400000, guid: a2c16629717654d4eb550309f9ea621b, type: 2}
-  - {fileID: 11400000, guid: 2fa51f25b9ae5344cae625b329ddc333, type: 2}
-  - {fileID: 11400000, guid: 05b3d8b74b98c5d4e966fa14b04fd13c, type: 2}
-  - {fileID: 11400000, guid: ec219ced976cd9c4e915ffe33c4b3e83, type: 2}
-  - {fileID: 11400000, guid: 8c2b31d02cf81864d852857d05e81fad, type: 2}
-  - {fileID: 11400000, guid: 3df7e7695a8282c4b8b20d901cc04b10, type: 2}
-  - {fileID: 11400000, guid: 4132ea627b0709c45a60ab405ea42350, type: 2}
-  - {fileID: 11400000, guid: 339015f1df8ad6447a17553b8334a3b2, type: 2}
-  - {fileID: 11400000, guid: c0966c3734faed64492eccb80baae23a, type: 2}
-  - {fileID: 11400000, guid: 3347321ec6b2e23438a0f100af0f0417, type: 2}
-  - {fileID: 11400000, guid: 105c0b8fdeb859c4f9354563555dc00b, type: 2}
-  - {fileID: 11400000, guid: e7f2afea8bbfe744e90af37e189c3642, type: 2}
-  - {fileID: 11400000, guid: a65cbba1376793e409e3c9a1e5c5964e, type: 2}
-  - {fileID: 11400000, guid: 84c895ac28a5e3e47851a8e61523c453, type: 2}
-  - {fileID: 11400000, guid: 8726ae708843af04f865a7115ba4e608, type: 2}
-  - {fileID: 11400000, guid: b31a9705dd3b31a4085597405b5345c4, type: 2}
-  - {fileID: 11400000, guid: b6e1ad068dd8a09458f2e7d043b372c3, type: 2}
-  - {fileID: 11400000, guid: 68b8ffe21e36f79428e502fb218fb3c4, type: 2}
-  - {fileID: 11400000, guid: 220ae7dae8943504fafb238722c642c8, type: 2}
-  - {fileID: 11400000, guid: d392ae9fc30673141aa3a4711a0d5cd2, type: 2}
-  - {fileID: 11400000, guid: c4038278bd6489744ae062d0a34434d7, type: 2}
-  - {fileID: 11400000, guid: 0a48fc43777cee54ab0f4dd11bee9b3b, type: 2}
-  - {fileID: 11400000, guid: 8892a8c55feff7c4080dc6823b9851f0, type: 2}
-  - {fileID: 11400000, guid: 6725374d8392720408651cd0265a5a01, type: 2}
-  - {fileID: 11400000, guid: 81f2aad99fb875b419231461e05e8643, type: 2}
-  - {fileID: 11400000, guid: 42fd0abeeb44467458af493b271865cb, type: 2}
+  loteriaDeck: []
   loteriaCardsToDraw: []
   loteriaCardsNotDrawn: []
   timeSlot: {fileID: 0}
@@ -3142,6 +3032,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0024daf74fbd1564ca324a2a8902accf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoteriaGameManager
+  allLoteriaCards:
+  - {fileID: 11400000, guid: 38fa43d1618d16345a7915e888dd8862, type: 2}
+  - {fileID: 11400000, guid: 53cc29f9c4bdb964eb017a3627f71952, type: 2}
+  - {fileID: 11400000, guid: e7c6e854b767bbe448e4077ee9a51138, type: 2}
+  - {fileID: 11400000, guid: 372d058ef001ce3478a3ea0a38709e6f, type: 2}
+  - {fileID: 11400000, guid: c472f8bc60aa7b940b272df113b071df, type: 2}
+  - {fileID: 11400000, guid: d12535b6cd867a14783a6cd687236202, type: 2}
+  - {fileID: 11400000, guid: 9000136da61fc9344b55b5de29660788, type: 2}
+  - {fileID: 11400000, guid: f0b791e6549f3f045b9633777c481f1e, type: 2}
+  - {fileID: 11400000, guid: eb561c09144b2bb4cae0851608891084, type: 2}
+  - {fileID: 11400000, guid: 1093731d4e063bc4684bf59d0bc0f4e6, type: 2}
+  - {fileID: 11400000, guid: d9d2ecb12d540cd49bcc9af2cd14d90f, type: 2}
+  - {fileID: 11400000, guid: 59c1149af3d2aaf4ead7aba8915f64ae, type: 2}
+  - {fileID: 11400000, guid: 1fc10acd0ce7c894896f4081e42bf120, type: 2}
+  - {fileID: 11400000, guid: 933139b76ece299449140c74347f1b5d, type: 2}
+  - {fileID: 11400000, guid: 594ee1143eff08f4384cf59679f54990, type: 2}
+  - {fileID: 11400000, guid: bccc22fff0cfa6244917bc3b096be878, type: 2}
+  - {fileID: 11400000, guid: ec17cf5f6ac8c3f4fbcb05b1a6a803c1, type: 2}
+  - {fileID: 11400000, guid: 3114a8317699bc644acdd0b2f6159f9b, type: 2}
+  - {fileID: 11400000, guid: 93abc9e2f4a31ec40a9883467587a683, type: 2}
+  - {fileID: 11400000, guid: 966c357cce6966843925b44d30553b68, type: 2}
+  - {fileID: 11400000, guid: e0a50b110a2d37148ac8d64ccecbba11, type: 2}
+  - {fileID: 11400000, guid: c03fe05f7474252469203f6a58289c78, type: 2}
+  - {fileID: 11400000, guid: cca3a53f85f981248b5e7a2306ee09d3, type: 2}
+  - {fileID: 11400000, guid: 9587648c1cc93cd4fadfbe398b1f7bed, type: 2}
+  - {fileID: 11400000, guid: 47eac948858345b4ba290c5f824d137e, type: 2}
+  - {fileID: 11400000, guid: d2b8424487a7e4e4f81d588b1829e5ca, type: 2}
+  - {fileID: 11400000, guid: 18ccadd7763af994383c7f38ee70da74, type: 2}
+  - {fileID: 11400000, guid: a2c16629717654d4eb550309f9ea621b, type: 2}
+  - {fileID: 11400000, guid: 2fa51f25b9ae5344cae625b329ddc333, type: 2}
+  - {fileID: 11400000, guid: 05b3d8b74b98c5d4e966fa14b04fd13c, type: 2}
+  - {fileID: 11400000, guid: ec219ced976cd9c4e915ffe33c4b3e83, type: 2}
+  - {fileID: 11400000, guid: 8c2b31d02cf81864d852857d05e81fad, type: 2}
+  - {fileID: 11400000, guid: 3df7e7695a8282c4b8b20d901cc04b10, type: 2}
+  - {fileID: 11400000, guid: 4132ea627b0709c45a60ab405ea42350, type: 2}
+  - {fileID: 11400000, guid: 339015f1df8ad6447a17553b8334a3b2, type: 2}
+  - {fileID: 11400000, guid: c0966c3734faed64492eccb80baae23a, type: 2}
+  - {fileID: 11400000, guid: 105c0b8fdeb859c4f9354563555dc00b, type: 2}
+  - {fileID: 11400000, guid: e7f2afea8bbfe744e90af37e189c3642, type: 2}
+  - {fileID: 11400000, guid: a65cbba1376793e409e3c9a1e5c5964e, type: 2}
+  - {fileID: 11400000, guid: 84c895ac28a5e3e47851a8e61523c453, type: 2}
+  - {fileID: 11400000, guid: 8726ae708843af04f865a7115ba4e608, type: 2}
+  - {fileID: 11400000, guid: b31a9705dd3b31a4085597405b5345c4, type: 2}
+  - {fileID: 11400000, guid: b6e1ad068dd8a09458f2e7d043b372c3, type: 2}
+  - {fileID: 11400000, guid: 68b8ffe21e36f79428e502fb218fb3c4, type: 2}
+  - {fileID: 11400000, guid: 220ae7dae8943504fafb238722c642c8, type: 2}
+  - {fileID: 11400000, guid: d392ae9fc30673141aa3a4711a0d5cd2, type: 2}
+  - {fileID: 11400000, guid: c4038278bd6489744ae062d0a34434d7, type: 2}
+  - {fileID: 11400000, guid: 0a48fc43777cee54ab0f4dd11bee9b3b, type: 2}
+  - {fileID: 11400000, guid: 8892a8c55feff7c4080dc6823b9851f0, type: 2}
+  - {fileID: 11400000, guid: 6725374d8392720408651cd0265a5a01, type: 2}
+  - {fileID: 11400000, guid: 81f2aad99fb875b419231461e05e8643, type: 2}
+  - {fileID: 11400000, guid: 42fd0abeeb44467458af493b271865cb, type: 2}
   cantador: {fileID: 1527410829}
   loteriaTable: {fileID: 643953566}
 --- !u!4 &1719677315

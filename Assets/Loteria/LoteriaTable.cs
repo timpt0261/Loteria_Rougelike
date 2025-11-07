@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,32 +8,45 @@ using UnityEngine.UI;
 public class LoteriaTable : MonoBehaviour
 {
 	public static LoteriaTable Instance { get; private set; }
+
+	[Header("Table Configuration")]
 	[SerializeField] private Transform gridContainer;
-	[SerializeField] private List<LoteriaCardsData> allloteriaCardsData;
-
-
+	[SerializeField] private List<LoteriaCardsData> loteriaDeck;
+	public void SetLoteriaDeck(List<LoteriaCardsData> loteriaCardDeck)
+	{
+		this.loteriaDeck = loteriaCardDeck;
+	}
 	[SerializeField] private List<GameObject> cardPrefabs;
-	[SerializeField] private List<int> tableGrid = new();
-	[SerializeField] private Dictionary<int, LoteriaCard> loteriaSlots = new();
+
 	private const int TOTAL_TABLA_COUNT = 16;
+	private const int GRID_SIZE = 4;
+	private const int TOP_LEFT_INDEX = 0;
+	private const int TOP_RIGHT_INDEX = 3;
+	private const int CENTER_LEFT_TOP_INDEX = 5;
+	private const int CENTER_RIGHT_TOP_INDEX = 6;
+	private const int CENTER_LEFT_BOTTOM_INDEX = 9;
+	private const int CENTER_RIGHT_BOTTOM_INDEX = 10;
+	private const int BOTTOM_LEFT_INDEX = 12;
+	private const int BOTTOM_RIGHT_INDEX = 15;
 
-	[Header("Score Tracker")]
+	private List<int> tableGrid = new();
+	private Dictionary<int, LoteriaCard> loteriaSlots = new();
+
+	[Header("Scoring")]
 	[SerializeField] private TextMeshProUGUI scoreUI;
-	[SerializeField] private int score = 0;
-
+	[SerializeField] private int singleMultiplier = 1;
 	[SerializeField] private int horizontalMultiplier = 4;
 	[SerializeField] private int verticalMultiplier = 4;
-
 	[SerializeField] private int diagonalMultiplier = 8;
-
 	[SerializeField] private int fullMultiplier = 16;
 
-
+	private int score = 0;
 	public int Score => score;
 
 	[Header("Events")]
 	public UnityEvent OnTableCompleted;
 
+	#region Unity Lifecycle
 	void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -43,160 +56,173 @@ public class LoteriaTable : MonoBehaviour
 		}
 		Instance = this;
 	}
+	#endregion
 
-	void Start()
-	{
-		SetTable();
-	}
-
+	#region Table Setup
 	public void ResetTable()
 	{
+		tableGrid.Clear();
+		loteriaSlots.Clear();
 		ResetCheckMarks();
 		SetTable();
 		score = 0;
 	}
+
 	private void SetTable()
 	{
-
-		// shuffled all sprites
 		List<LoteriaCardsData> shuffled = Shuffle();
-		//
+
 		for (int i = 0; i < TOTAL_TABLA_COUNT; i++)
 		{
 			var currentSlot = cardPrefabs[i];
 			var loteriaCard = currentSlot.GetComponent<LoteriaCard>();
 			loteriaCard.SetCardData(shuffled[i % shuffled.Count]);
-			int key = loteriaCard.ID;
-			tableGrid.Add(key);
-			loteriaSlots.Add(key, loteriaCard);
 
-
+			int cardId = loteriaCard.ID;
+			tableGrid.Add(cardId);
+			loteriaSlots.Add(cardId, loteriaCard);
 		}
 	}
 
 	private List<LoteriaCardsData> Shuffle()
 	{
-		var shuffled = new List<LoteriaCardsData>(allloteriaCardsData);
+		int seed = (int)System.DateTime.Now.Ticks;
+		Random.InitState(seed);
+		var shuffled = new List<LoteriaCardsData>(loteriaDeck);
+
 		for (int i = 0; i < shuffled.Count; i++)
 		{
-			int r = Random.Range(i, shuffled.Count);
-			var tmp = shuffled[i]; shuffled[i] = shuffled[r]; shuffled[r] = tmp;
+			int randomIndex = Random.Range(i, shuffled.Count);
+			var temp = shuffled[i];
+			shuffled[i] = shuffled[randomIndex];
+			shuffled[randomIndex] = temp;
 		}
 
 		return shuffled;
 	}
+	#endregion
 
+	#region Game State Updates
 	public void UpdateTabla(LoteriaCardsData drawnCard)
 	{
-
 		if (drawnCard == null)
 		{
 			Debug.Log("Called Drawn Card is null");
 			return;
 		}
 
+		UpdateTokenPlacement(drawnCard);
+
 		if (IsCompleted())
 		{
 			OnTableCompleted?.Invoke();
 		}
 
-		// update cross on all horizontal rows
-
-		// update the check mark 
-		UpdateCheckmarks(drawnCard);
-		score = 0;
-
-		// update score 
-
-		// check horizontal
-		score += CheckHorizontal();
-		// check vertical
-		score += CheckVertical();
-		// Check left diagonal
-		score += CheckLeftDiagonal();
-		// Check right diagonal
-		score += CheckRightDiagonal();
-
-		// Check all 
-		score += AllPostionMarked(tableGrid) ? TOTAL_TABLA_COUNT : 0;
-
-
+		CalculateScore();
 		scoreUI.text = $"{score}";
-
 	}
 
-
-
-	#region  
-
-	private int CheckHorizontal()
+	private void UpdateTokenPlacement(LoteriaCardsData drawnCard)
 	{
-		int horizontalMultiplier = 0;
-		for (int i = 0; i < 4; i++)
-		{
-			var temp = tableGrid.GetRange(i * 4, 4);
-			horizontalMultiplier += AllPostionMarked(tableGrid) ? 4 : 0;
-		}
+		if (!tableGrid.Contains(drawnCard.id)) return;
 
-		return horizontalMultiplier;
-	}
-
-	private int CheckVertical()
-	{
-		int verticalMultiplier = 0;
-		for (int i = 0; i < 4; i++)
-		{
-			List<int> temp = new();
-			for (int j = 0; j < 4; j++)
-			{
-				temp.Add(tableGrid[(j * 4) + i]);
-			}
-
-			verticalMultiplier += AllPostionMarked(temp) ? 4 : 0;
-		}
-
-		return verticalMultiplier;
-	}
-
-
-	private int CheckLeftDiagonal()
-	{
-		int leftDiagonalMultiplier = 0;
-		List<int> leftDiagonal = new List<int>(new int[] { tableGrid[0], tableGrid[5], tableGrid[10], tableGrid[15] });
-		bool allLeftDiagonal = AllPostionMarked(leftDiagonal);
-		leftDiagonalMultiplier += allLeftDiagonal ? 4 : 0;
-		return leftDiagonalMultiplier;
-	}
-
-
-	private int CheckRightDiagonal()
-	{
-		int rightDiagonalMultiplier = 0;
-		List<int> rightDiagonal = new List<int>(new int[] { tableGrid[3], tableGrid[6], tableGrid[9], tableGrid[12] });
-		bool allRightDiagonal = AllPostionMarked(rightDiagonal);
-		rightDiagonalMultiplier += allRightDiagonal ? 4 : 0;
-		return rightDiagonalMultiplier;
+		loteriaSlots[drawnCard.id].PlaceToken(true);
 	}
 
 	private void ResetCheckMarks()
 	{
-		foreach (LoteriaCard el in loteriaSlots.Values)
+		foreach (LoteriaCard card in loteriaSlots.Values)
 		{
-			el.PlaceToken(false);
+			card.PlaceToken(false);
 		}
 	}
+	#endregion
 
-	private void UpdateCheckmarks(LoteriaCardsData drawnCard)
+	#region Score Calculation
+	private void CalculateScore()
 	{
-		if (!tableGrid.Contains(drawnCard.id)) { return; }
-		loteriaSlots[drawnCard.id].PlaceToken(true);
-		return;
+		score = 0;
+		score += CheckIndividual();
+		score += CheckHorizontal();
+		score += CheckVertical();
+		score += CheckLeftDiagonal();
+		score += CheckRightDiagonal();
+		score += AllPositionMarked(tableGrid) ? fullMultiplier : 0;
 	}
 
-	#endregion
-	private bool AllPostionMarked(List<int> postions)
+	private int CheckIndividual()
 	{
-		foreach (int id in postions)
+		int points = 0;
+		
+		foreach (var id in tableGrid)
+		{
+			points += loteriaSlots[id].TokenPlaced() ? singleMultiplier : 0;
+		}
+		
+		return points;
+	}
+
+	private int CheckHorizontal()
+	{
+		int points = 0;
+
+		for (int row = 0; row < GRID_SIZE; row++)
+		{
+			var rowIds = tableGrid.GetRange(row * GRID_SIZE, GRID_SIZE);
+			points += AllPositionMarked(rowIds) ? horizontalMultiplier : 0;
+		}
+
+		return points;
+	}
+
+	private int CheckVertical()
+	{
+		int points = 0;
+
+		for (int col = 0; col < GRID_SIZE; col++)
+		{
+			List<int> columnIds = new();
+
+			for (int row = 0; row < GRID_SIZE; row++)
+			{
+				columnIds.Add(tableGrid[(row * GRID_SIZE) + col]);
+			}
+
+			points += AllPositionMarked(columnIds) ? verticalMultiplier : 0;
+		}
+
+		return points;
+	}
+
+	private int CheckLeftDiagonal()
+	{
+		List<int> diagonalIds = new List<int>
+		{
+			tableGrid[TOP_LEFT_INDEX],
+			tableGrid[CENTER_LEFT_TOP_INDEX],
+			tableGrid[CENTER_RIGHT_BOTTOM_INDEX],
+			tableGrid[BOTTOM_RIGHT_INDEX]
+		};
+
+		return AllPositionMarked(diagonalIds) ? diagonalMultiplier : 0;
+	}
+
+	private int CheckRightDiagonal()
+	{
+		List<int> diagonalIds = new List<int>
+		{
+			tableGrid[TOP_RIGHT_INDEX],
+			tableGrid[CENTER_RIGHT_TOP_INDEX],
+			tableGrid[CENTER_LEFT_BOTTOM_INDEX],
+			tableGrid[BOTTOM_LEFT_INDEX]
+		};
+
+		return AllPositionMarked(diagonalIds) ? diagonalMultiplier : 0;
+	}
+
+	private bool AllPositionMarked(List<int> cardIds)
+	{
+		foreach (int id in cardIds)
 		{
 			if (!loteriaSlots[id].TokenPlaced())
 				return false;
@@ -205,15 +231,9 @@ public class LoteriaTable : MonoBehaviour
 		return true;
 	}
 
-	#region Score Tracking
-	private void CalculateScore()
-	{
-		// Detect
-	}
-
 	public bool IsCompleted()
 	{
-		return AllPostionMarked(tableGrid);
+		return AllPositionMarked(tableGrid);
 	}
 	#endregion
 }
