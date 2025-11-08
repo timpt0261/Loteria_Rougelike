@@ -7,15 +7,16 @@ using UnityEngine.SocialPlatforms.Impl;
 public class Cantador : MonoBehaviour
 {
     public static Cantador Instance { get; private set; }
-
+    [SerializeField] private int drawAmount = 4;
 
     [Header("Card Data")]
     [SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
     public void SetLoteriaDeck(List<LoteriaCardsData> newloteriaDeck) => this.loteriaDeck = newloteriaDeck;
-    [SerializeField] private List<LoteriaCardsData> loteriaCardsToDraw = new();
-    [SerializeField] private List<LoteriaCardsData> loteriaCardsNotDrawn = new();
+    [SerializeField] private List<LoteriaCardsData> deckLoteriaCards = new();
+    [SerializeField] private List<LoteriaCardsData> discardLoteriaCards = new();
 
-    public LoteriaCardsData DrawnCard { get; private set; }
+    public List<LoteriaCardsData> DrawnLoteriaCardsThisRound { get { return discardLoteriaCards; } private set { discardLoteriaCards = value; } }
+    private List<LoteriaCardsData> DrawnLoteriaCardsThisTurn = new();
 
     [Header("Timer Settings")]
     [SerializeField] private Slider timeSlot;
@@ -27,7 +28,9 @@ public class Cantador : MonoBehaviour
     private bool isDrawingCard;
     private bool isReady = true;
 
-    [SerializeField] private Image drawCardImage;
+
+    [SerializeField] private List<Image> drawingCardSlot;
+    [SerializeField] private Transform drawingCardTransform;
 
     [Header("Events")]
     public UnityEvent OnCardDrawn;
@@ -43,16 +46,22 @@ public class Cantador : MonoBehaviour
         }
         Instance = this;
 
+        if (drawingCardSlot == null)
+        {
+            drawingCardSlot = new List<Image>(drawingCardTransform.GetComponentsInChildren<Image>());
+        }
+
     }
 
     public void Initialize()
     {
         Shuffle();
-        //ResetTimer();
+        ResetTimer();
     }
 
     void Update()
     {
+        TryDraw();
         HandleTimer();
     }
 
@@ -80,25 +89,31 @@ public class Cantador : MonoBehaviour
     {
         int seed = (int)System.DateTime.Now.Ticks + 100;
         Random.InitState(seed);
-        // if (!CanDraw()) return;
 
-        // // Start cooldown
-        // StartTimer();
-        if (loteriaCardsToDraw.Count <= 1)
+        if (!CanDraw()) return;
+
+        // Start cooldown
+        StartTimer();
+
+        for (int i = 0; i < drawAmount; i++)
         {
-            Shuffle();
+            if (deckLoteriaCards.Count <= 1)
+            {
+                Shuffle();
+            }
+
+            // Draw a random card
+            int index = Random.Range(0, deckLoteriaCards.Count);
+
+            DrawnLoteriaCardsThisTurn.Add(deckLoteriaCards[index]);
+            Sprite drawnCard = DrawnLoteriaCardsThisTurn[i].sprite;
+            deckLoteriaCards.RemoveAt(index);
+            discardLoteriaCards.Add(DrawnLoteriaCardsThisTurn[i]);
+            drawingCardSlot[i].sprite = drawnCard;
+
         }
-
-        // Draw a random card
-        int index = Random.Range(0, loteriaCardsToDraw.Count);
-
-        DrawnCard = loteriaCardsToDraw[index];
-        Sprite drawnCard = DrawnCard.sprite;
-        loteriaCardsToDraw.RemoveAt(index);
-        loteriaCardsNotDrawn.Add(DrawnCard);
-        drawCardImage.sprite = drawnCard;
         OnCardDrawn?.Invoke();
-
+        DrawnLoteriaCardsThisTurn.Clear();
     }
 
     private void StartTimer()
@@ -121,7 +136,7 @@ public class Cantador : MonoBehaviour
     {
         if (isDrawingCard) return false;
         if (!isReady) return false;
-        if (loteriaCardsToDraw.Count < 1) Shuffle();
+        if (deckLoteriaCards.Count < 1) Shuffle();
         return true;
     }
 
@@ -133,8 +148,9 @@ public class Cantador : MonoBehaviour
             int r = Random.Range(i, shuffled.Count);
             (shuffled[i], shuffled[r]) = (shuffled[r], shuffled[i]);
         }
-        loteriaCardsToDraw = shuffled;
-        loteriaCardsNotDrawn.Clear();
+        deckLoteriaCards = shuffled;
+        discardLoteriaCards.Clear();
+        DrawnLoteriaCardsThisTurn.Clear();
         OnDeckShuffled?.Invoke();
     }
 

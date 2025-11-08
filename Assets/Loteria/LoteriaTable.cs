@@ -63,9 +63,18 @@ public class LoteriaTable : MonoBehaviour
 	{
 		tableGrid.Clear();
 		loteriaSlots.Clear();
-		ResetCheckMarks();
+		ResetTokenPlacers();
 		SetTable();
 		score = 0;
+	}
+
+	void Update()
+	{
+		if (IsCompleted())
+		{
+			OnTableCompleted?.Invoke();
+		}
+
 	}
 
 	private void SetTable()
@@ -103,37 +112,41 @@ public class LoteriaTable : MonoBehaviour
 	#endregion
 
 	#region Game State Updates
-	public void UpdateTabla(LoteriaCardsData drawnCard)
+	public void UpdateTabla(List<LoteriaCardsData> drawnCards)
 	{
-		if (drawnCard == null)
+		if (drawnCards == null)
 		{
 			Debug.Log("Called Drawn Card is null");
 			return;
 		}
 
-		UpdateTokenPlacement(drawnCard);
-
-		if (IsCompleted())
+		foreach (LoteriaCardsData drawnCard in drawnCards)
 		{
-			OnTableCompleted?.Invoke();
+			UpdateTokenPlacement(drawnCard);
+
+
 		}
 
+	}
+
+	public void UpdateScore()
+	{
 		CalculateScore();
-		scoreUI.text = $"{score}";
+		scoreUI.text = $"Score: {score}";
 	}
 
 	private void UpdateTokenPlacement(LoteriaCardsData drawnCard)
 	{
 		if (!tableGrid.Contains(drawnCard.id)) return;
 
-		loteriaSlots[drawnCard.id].PlaceToken(true);
+		loteriaSlots[drawnCard.id].CanPlaceToken(true);
 	}
 
-	private void ResetCheckMarks()
+	private void ResetTokenPlacers()
 	{
 		foreach (LoteriaCard card in loteriaSlots.Values)
 		{
-			card.PlaceToken(false);
+			card.CanPlaceToken(false);
 		}
 	}
 	#endregion
@@ -153,12 +166,12 @@ public class LoteriaTable : MonoBehaviour
 	private int CheckIndividual()
 	{
 		int points = 0;
-		
+
 		foreach (var id in tableGrid)
 		{
 			points += loteriaSlots[id].TokenPlaced() ? singleMultiplier : 0;
 		}
-		
+
 		return points;
 	}
 

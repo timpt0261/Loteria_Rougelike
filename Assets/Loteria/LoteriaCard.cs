@@ -20,6 +20,7 @@ public class LoteriaCard : MonoBehaviour
 			this.chance = value.chance;
 			this.loteriaCard_Artwork.sprite = value.sprite;
 			this.loteriaCard_TokenMarker.enabled = false;
+			this.loteriaCard_TokenButton.interactable = false;
 			OnCardSet?.Invoke();
 		}
 	}
@@ -38,10 +39,15 @@ public class LoteriaCard : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI loteriaCard_ID;
 	[SerializeField] private Image loteriaCard_Artwork;
 	[SerializeField] private Image loteriaCard_TokenMarker; // sprite that contains token
+	[SerializeField] private Button loteriaCard_TokenButton;
+
+	[Header("Animator")]
+	[SerializeField] private Animator cardAnimator;
 
 	[Header("Loteria Card Events")]
 	public UnityEvent OnCardSet;
-	public UnityEvent OnTokenPlaced;
+	public UnityEvent OnCanPlaceToken; // Can start timer
+	public UnityEvent OnTokenPlaced; // Can end timer
 
 	public void SetCardData(LoteriaCardsData newLoteriaCardData)
 	{
@@ -67,6 +73,11 @@ public class LoteriaCard : MonoBehaviour
 			loteriaCard_TokenMarker = this.GetComponentInChildren<Image>();
 		}
 
+		if (loteriaCard_TokenButton == null)
+		{
+			loteriaCard_TokenButton = this.GetComponentInChildren<Button>();
+		}
+
 		CurrentLoteriaCardData = newLoteriaCardData;
 
 
@@ -74,12 +85,19 @@ public class LoteriaCard : MonoBehaviour
 	}
 
 
-	public void PlaceToken(bool tokenEnabled)
+	public void CanPlaceToken(bool tokenEnabled)
 	{
-		loteriaCard_TokenMarker.enabled = tokenEnabled;
-		OnTokenPlaced?.Invoke();
+		loteriaCard_TokenButton.interactable = tokenEnabled;
+		OnCanPlaceToken?.Invoke();
+
 	}
 
+	public void OnPlaceToken()
+	{
+		Debug.Log("Pressing on Token");
+		loteriaCard_TokenMarker.enabled = true;
+		OnTokenPlaced?.Invoke(); // here's where it should update the token
+	}
 
 
 }

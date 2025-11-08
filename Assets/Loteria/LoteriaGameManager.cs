@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LoteriaGameManager : MonoBehaviour
@@ -28,7 +29,7 @@ public class LoteriaGameManager : MonoBehaviour
 
     public void HandleCardDrawn()
     {
-        loteriaTable.UpdateTabla(cantador.DrawnCard);
+        loteriaTable.UpdateTabla(cantador.DrawnLoteriaCardsThisRound);
 
     }
 
@@ -40,5 +41,17 @@ public class LoteriaGameManager : MonoBehaviour
     public void HandleDeckShuffled()
     {
         loteriaTable.ResetTable();
+    }
+
+
+    public void HandleCanTokenBePlaced()
+    {
+
+    }
+
+    public void HadleWhenTokenPlaced()
+    {
+        loteriaTable.UpdateScore();
+
     }
 }

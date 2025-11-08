@@ -207,6 +207,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (11)
@@ -226,6 +246,142 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
   m_PrefabInstance: {fileID: 17675787}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &145416087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 145416088}
+  - component: {fileID: 145416090}
+  - component: {fileID: 145416089}
+  m_Layer: 5
+  m_Name: Turn Count Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &145416088
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145416087}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1409750737}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &145416089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145416087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Turn: 00'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 27.49
+  m_fontSizeBase: 27.49
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &145416090
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145416087}
+  m_CullTransparentMesh: 1
 --- !u!1001 &165837523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -314,6 +470,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (14)
@@ -333,6 +509,42 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
   m_PrefabInstance: {fileID: 165837523}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &192606587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 192606588}
+  m_Layer: 5
+  m_Name: Fill Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &192606588
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192606587}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1784316981}
+  m_Father: {fileID: 913278539}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -2.4171, y: 0}
+  m_SizeDelta: {x: -4.8342, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &194110215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -421,6 +633,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (12)
@@ -440,6 +672,42 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
   m_PrefabInstance: {fileID: 194110215}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &363933475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 363933476}
+  m_Layer: 5
+  m_Name: Handle Slide Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &363933476
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363933475}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 516420834}
+  m_Father: {fileID: 913278539}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &399805882
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +765,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 'Score: 00'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -532,7 +800,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -663,6 +931,26 @@ PrefabInstance:
     - target: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
@@ -820,6 +1108,81 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &516420833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 516420834}
+  - component: {fileID: 516420836}
+  - component: {fileID: 516420835}
+  m_Layer: 5
+  m_Name: Handle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &516420834
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516420833}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 363933476}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &516420835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516420833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &516420836
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516420833}
+  m_CullTransparentMesh: 1
 --- !u!1 &620953606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,8 +1407,10 @@ RectTransform:
   m_Children:
   - {fileID: 1886353248}
   - {fileID: 1211295032}
-  - {fileID: 644113236}
+  - {fileID: 1695503660}
   - {fileID: 702121634}
+  - {fileID: 1409750737}
+  - {fileID: 913278539}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1085,6 +1450,7 @@ MonoBehaviour:
   - {fileID: 165837524}
   - {fileID: 923247165}
   scoreUI: {fileID: 399805884}
+  singleMultiplier: 1
   horizontalMultiplier: 4
   verticalMultiplier: 4
   diagonalMultiplier: 8
@@ -1116,7 +1482,7 @@ GameObject:
   - component: {fileID: 644113238}
   - component: {fileID: 644113237}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Drawn Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1129,17 +1495,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644113235}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 643953565}
+  m_Father: {fileID: 1695503660}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 316.38, y: 73}
-  m_SizeDelta: {x: 161.2382, y: 226.3854}
+  m_AnchoredPosition: {x: -65, y: 73}
+  m_SizeDelta: {x: 160, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &644113237
 MonoBehaviour:
@@ -1214,8 +1580,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 329, y: -108}
-  m_SizeDelta: {x: 288.7667, y: 51.1854}
+  m_AnchoredPosition: {x: -79, y: 234}
+  m_SizeDelta: {x: 192.4717, y: 51.1854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &702121635
 MonoBehaviour:
@@ -1230,7 +1596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1254,6 +1620,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702121633}
+  m_CullTransparentMesh: 1
+--- !u!1 &716930057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 716930058}
+  - component: {fileID: 716930060}
+  - component: {fileID: 716930059}
+  m_Layer: 5
+  m_Name: Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &716930058
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716930057}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 913278539}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -2.2963028, y: 0}
+  m_SizeDelta: {x: 4.5925, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &716930059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716930057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5635902, g: 0.6257212, b: 0.8018868, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &716930060
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716930057}
   m_CullTransparentMesh: 1
 --- !u!1001 &743969717
 PrefabInstance:
@@ -1342,6 +1783,26 @@ PrefabInstance:
     - target: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
@@ -1450,6 +1911,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (6)
@@ -1557,6 +2038,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (3)
@@ -1576,6 +2077,96 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
   m_PrefabInstance: {fileID: 778240674}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &913278538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 913278539}
+  - component: {fileID: 913278540}
+  m_Layer: 5
+  m_Name: CountDownTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &913278539
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913278538}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 716930058}
+  - {fileID: 192606588}
+  - {fileID: 363933476}
+  m_Father: {fileID: 643953565}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 424.2, y: 267.1}
+  m_SizeDelta: {x: 160, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &913278540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913278538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 0
+  m_TargetGraphic: {fileID: 516420835}
+  m_FillRect: {fileID: 1784316981}
+  m_HandleRect: {fileID: 516420834}
+  m_Direction: 0
+  m_MinValue: 0
+  m_MaxValue: 1
+  m_WholeNumbers: 0
+  m_Value: 1
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &923247164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1664,6 +2255,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (15)
@@ -1717,17 +2328,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -1850,6 +2461,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 313778590255208643, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (8)
@@ -1956,6 +2591,26 @@ PrefabInstance:
     - target: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
@@ -2200,6 +2855,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (9)
@@ -2307,6 +2982,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (5)
@@ -2339,7 +3034,7 @@ GameObject:
   - component: {fileID: 1211295034}
   - component: {fileID: 1211295033}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Draw Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2362,7 +3057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 317, y: 247}
+  m_AnchoredPosition: {x: 421, y: 299.9}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1211295033
@@ -2547,6 +3242,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (1)
@@ -2566,6 +3281,232 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
   m_PrefabInstance: {fileID: 1235945725}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1409750736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409750737}
+  - component: {fileID: 1409750739}
+  - component: {fileID: 1409750738}
+  m_Layer: 5
+  m_Name: Turn Count
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1409750737
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409750736}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 145416088}
+  m_Father: {fileID: 643953565}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -80.174774, y: 291.411}
+  m_SizeDelta: {x: 186.1221, y: 48.3634}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1409750738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409750736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1409750739
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409750736}
+  m_CullTransparentMesh: 1
+--- !u!1 &1431127232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431127233}
+  - component: {fileID: 1431127235}
+  - component: {fileID: 1431127234}
+  m_Layer: 5
+  m_Name: Drawn Box (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1431127233
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431127232}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695503660}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 451, y: 73}
+  m_SizeDelta: {x: 160, y: 225}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1431127234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431127232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1431127235
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431127232}
+  m_CullTransparentMesh: 1
+--- !u!1 &1497809423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1497809424}
+  - component: {fileID: 1497809426}
+  - component: {fileID: 1497809425}
+  m_Layer: 5
+  m_Name: Drawn Box (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1497809424
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497809423}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695503660}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 110, y: 73}
+  m_SizeDelta: {x: 160, y: 225}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1497809425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497809423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1497809426
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497809423}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1518400918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2654,6 +3595,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
       value: LoteriaCardPrefab (2)
@@ -2702,13 +3663,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1beac44bb81031b489d75b2b69d6466b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cantador
+  drawAmount: 4
   loteriaDeck: []
   loteriaCardsToDraw: []
   loteriaCardsNotDrawn: []
-  timeSlot: {fileID: 0}
+  timeSlot: {fileID: 913278540}
   drawTime: 5
   refillSpeed: 10
-  drawCardImage: {fileID: 644113237}
+  drawingCardSlot:
+  - {fileID: 644113237}
+  - {fileID: 1497809425}
+  - {fileID: 1864357649}
+  - {fileID: 1431127234}
+  drawingCardTransform: {fileID: 1695503660}
   OnCardDrawn:
     m_PersistentCalls:
       m_Calls:
@@ -2841,6 +3808,26 @@ PrefabInstance:
     - target: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name
@@ -3003,6 +3990,45 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1800, y: 2439}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1695503659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1695503660}
+  m_Layer: 5
+  m_Name: Drawn Cards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1695503660
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695503659}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 644113236}
+  - {fileID: 1497809424}
+  - {fileID: 1864357648}
+  - {fileID: 1431127233}
+  m_Father: {fileID: 643953565}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1719677313
 GameObject:
   m_ObjectHideFlags: 0
@@ -3102,6 +4128,156 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1784316980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1784316981}
+  - component: {fileID: 1784316983}
+  - component: {fileID: 1784316982}
+  m_Layer: 5
+  m_Name: Fill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1784316981
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784316980}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 192606588}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1784316982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784316980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.03773582, g: 0.020113904, b: 0.020113904, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1784316983
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784316980}
+  m_CullTransparentMesh: 1
+--- !u!1 &1864357647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1864357648}
+  - component: {fileID: 1864357650}
+  - component: {fileID: 1864357649}
+  m_Layer: 5
+  m_Name: Drawn Box (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1864357648
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864357647}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1695503660}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 280, y: 73}
+  m_SizeDelta: {x: 160, y: 225}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1864357649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864357647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1864357650
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864357647}
+  m_CullTransparentMesh: 1
 --- !u!1 &1886353247
 GameObject:
   m_ObjectHideFlags: 0
@@ -3264,6 +4440,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224179407788888464, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HadleWhenTokenPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1998900872559572033, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434257653358120940, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3722272995622482366, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: m_Interactable
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
