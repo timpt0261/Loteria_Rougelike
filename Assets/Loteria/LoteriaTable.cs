@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -40,8 +40,17 @@ public class LoteriaTable : MonoBehaviour
 	[SerializeField] private int diagonalMultiplier = 8;
 	[SerializeField] private int fullMultiplier = 16;
 
-	private int score = 0;
-	public int Score => score;
+	private float score = 0;
+	public float Score => score;
+
+	private List<bool> tokenState = new();
+
+	// table states
+	private bool IsTableWithToken = false;
+	private bool IsTableWithCompletedRow = false;
+	private bool IsTableWithCompletedColumn = false;
+	private bool IsTableWithCompletedDiagonal = false;
+	private bool IsTableCompleted = false;
 
 	[Header("Events")]
 	public UnityEvent OnTableCompleted;
@@ -64,8 +73,10 @@ public class LoteriaTable : MonoBehaviour
 		tableGrid.Clear();
 		loteriaSlots.Clear();
 		ResetTokenPlacers();
+		ResetTableState();
 		SetTable();
 		score = 0;
+
 	}
 
 	void Update()
@@ -123,8 +134,6 @@ public class LoteriaTable : MonoBehaviour
 		foreach (LoteriaCardsData drawnCard in drawnCards)
 		{
 			UpdateTokenPlacement(drawnCard);
-
-
 		}
 
 	}
@@ -149,104 +158,133 @@ public class LoteriaTable : MonoBehaviour
 			card.CanPlaceToken(false);
 		}
 	}
+
+	private void ResetTableState()
+	{
+		IsTableWithToken = false;
+		IsTableWithCompletedRow = false;
+		IsTableWithCompletedColumn = false;
+		IsTableWithCompletedDiagonal = false;
+		IsTableCompleted = false;
+	}
 	#endregion
 
 	#region Score Calculation
 	private void CalculateScore()
 	{
-		score = 0;
-		score += CheckIndividual();
-		score += CheckHorizontal();
-		score += CheckVertical();
-		score += CheckLeftDiagonal();
-		score += CheckRightDiagonal();
-		score += AllPositionMarked(tableGrid) ? fullMultiplier : 0;
-	}
-
-	private int CheckIndividual()
-	{
-		int points = 0;
-
-		foreach (var id in tableGrid)
+		int CacheTokenState(bool[] tokenStates, float[] tokenMultiplier, int markedCount)
 		{
-			points += loteriaSlots[id].TokenPlaced() ? singleMultiplier : 0;
-		}
-
-		return points;
-	}
-
-	private int CheckHorizontal()
-	{
-		int points = 0;
-
-		for (int row = 0; row < GRID_SIZE; row++)
-		{
-			var rowIds = tableGrid.GetRange(row * GRID_SIZE, GRID_SIZE);
-			points += AllPositionMarked(rowIds) ? horizontalMultiplier : 0;
-		}
-
-		return points;
-	}
-
-	private int CheckVertical()
-	{
-		int points = 0;
-
-		for (int col = 0; col < GRID_SIZE; col++)
-		{
-			List<int> columnIds = new();
-
-			for (int row = 0; row < GRID_SIZE; row++)
+			for (int i = 0; i < TOTAL_TABLA_COUNT; i++)
 			{
-				columnIds.Add(tableGrid[(row * GRID_SIZE) + col]);
+				tokenStates[i] = loteriaSlots[tableGrid[i]].TokenPlaced();
+				tokenMultiplier[i] = tokenStates[i] ? loteriaSlots[tableGrid[i]].TimerBonusMultiplier : 1;
+				if (tokenStates[i])
+				{
+					markedCount++;
+
+					score += singleMultiplier * tokenMultiplier[i];
+				}
 			}
 
-			points += AllPositionMarked(columnIds) ? verticalMultiplier : 0;
+			return markedCount;
 		}
 
-		return points;
+		score = 0;
+
+		// Check all patterns in a single pass through the grid
+		bool[] tokenStates = new bool[TOTAL_TABLA_COUNT];
+		float[] tokenMultiplier = new float[TOTAL_TABLA_COUNT];
+		int markedCount = 0;
+
+		// Cache token states to avoid repeated lookups
+		markedCount = CacheTokenState(tokenStates, tokenMultiplier, markedCount);
+
+		// Early exit if not enough tokens for patterns
+		if (markedCount < GRID_SIZE) return;
+		IsTableWithToken = true;
+
+		// Check horizontal patterns
+		score += ScoreHorizontalPatterns(tokenStates);
+
+		// Check vertical patterns
+		score += ScoreVerticalPatterns(tokenStates);
+
+		// Check diagonals
+		int diagonalScore = ScoreLeftDiagonal(tokenStates) + ScoreRightDiagonal(tokenStates);
+		IsTableWithCompletedDiagonal = diagonalScore > 0;
+		score += diagonalScore;
+
+		// Check full board
+		score += ScoreFullBoard(markedCount);
+
+
 	}
 
-	private int CheckLeftDiagonal()
+	private int ScoreHorizontalPatterns(bool[] tokenStates)
 	{
-		List<int> diagonalIds = new List<int>
+		int horizontalScore = 0;
+		for (int row = 0; row < GRID_SIZE; row++)
 		{
-			tableGrid[TOP_LEFT_INDEX],
-			tableGrid[CENTER_LEFT_TOP_INDEX],
-			tableGrid[CENTER_RIGHT_BOTTOM_INDEX],
-			tableGrid[BOTTOM_RIGHT_INDEX]
-		};
-
-		return AllPositionMarked(diagonalIds) ? diagonalMultiplier : 0;
+			if (CheckPattern(tokenStates, row * GRID_SIZE, GRID_SIZE, 1))
+			{
+				horizontalScore += horizontalMultiplier;
+			}
+		}
+		IsTableWithCompletedRow = horizontalScore > 0;
+		return horizontalScore;
 	}
 
-	private int CheckRightDiagonal()
+	private int ScoreVerticalPatterns(bool[] tokenStates)
 	{
-		List<int> diagonalIds = new List<int>
+		int verticalScore = 0;
+		for (int col = 0; col < GRID_SIZE; col++)
 		{
-			tableGrid[TOP_RIGHT_INDEX],
-			tableGrid[CENTER_RIGHT_TOP_INDEX],
-			tableGrid[CENTER_LEFT_BOTTOM_INDEX],
-			tableGrid[BOTTOM_LEFT_INDEX]
-		};
-
-		return AllPositionMarked(diagonalIds) ? diagonalMultiplier : 0;
+			if (CheckPattern(tokenStates, col, GRID_SIZE, GRID_SIZE))
+			{
+				verticalScore += verticalMultiplier;
+			}
+		}
+		IsTableWithCompletedColumn = verticalScore > 0;
+		return verticalScore;
 	}
 
-	private bool AllPositionMarked(List<int> cardIds)
+	private int ScoreLeftDiagonal(bool[] tokenStates)
 	{
-		foreach (int id in cardIds)
+		return CheckDiagonal(tokenStates, TOP_LEFT_INDEX, CENTER_LEFT_TOP_INDEX, CENTER_RIGHT_BOTTOM_INDEX, BOTTOM_RIGHT_INDEX) ? diagonalMultiplier : 0;
+	}
+
+	private int ScoreRightDiagonal(bool[] tokenStates)
+	{
+		return CheckDiagonal(tokenStates, TOP_RIGHT_INDEX, CENTER_RIGHT_TOP_INDEX, CENTER_LEFT_BOTTOM_INDEX, BOTTOM_LEFT_INDEX) ? diagonalMultiplier : 0;
+	}
+
+	private int ScoreFullBoard(int markedCount)
+	{
+		int fullScore = markedCount == TOTAL_TABLA_COUNT ? fullMultiplier : 0;
+		IsTableCompleted = fullScore > 0;
+		return fullScore;
+	}
+
+	private bool CheckPattern(bool[] tokenStates, int startIndex, int count, int step)
+	{
+		for (int i = 0; i < count; i++)
 		{
-			if (!loteriaSlots[id].TokenPlaced())
+			if (!tokenStates[startIndex + (i * step)])
 				return false;
 		}
-
 		return true;
 	}
 
-	public bool IsCompleted()
+	private bool CheckDiagonal(bool[] tokenStates, int idx1, int idx2, int idx3, int idx4)
 	{
-		return AllPositionMarked(tableGrid);
+		return tokenStates[idx1] && tokenStates[idx2] && tokenStates[idx3] && tokenStates[idx4];
 	}
 	#endregion
+
+
+
+	public bool IsCompleted()
+	{
+		return IsTableCompleted;
+	}
 }

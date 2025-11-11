@@ -208,11 +208,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -220,11 +252,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -471,11 +527,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -483,11 +571,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -634,11 +746,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -646,11 +790,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -933,11 +1101,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -945,11 +1145,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -1785,11 +2009,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -1797,11 +2053,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -1912,11 +2192,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -1924,11 +2236,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2039,11 +2375,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2051,11 +2419,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2256,11 +2648,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2268,11 +2692,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2461,16 +2909,44 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 313778590255208643, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2478,11 +2954,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2593,11 +3093,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2605,11 +3137,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2856,11 +3412,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2868,11 +3456,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2983,11 +3595,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -2995,11 +3639,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -3243,11 +3911,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -3255,11 +3955,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -3596,11 +4320,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -3608,11 +4364,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -3665,8 +4445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Cantador
   drawAmount: 4
   loteriaDeck: []
-  loteriaCardsToDraw: []
-  loteriaCardsNotDrawn: []
+  deckLoteriaCards: []
+  discardLoteriaCards: []
   timeSlot: {fileID: 913278540}
   drawTime: 5
   refillSpeed: 10
@@ -3810,11 +4590,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -3822,11 +4634,35 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -4443,11 +5279,43 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleOnCardSet
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1719677314}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1719677314}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
@@ -4455,24 +5323,36 @@ PrefabInstance:
       value: HadleWhenTokenPlaced
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleCanTokenBePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoteriaGameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCardSet.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: OnTokenPlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 1998900872559572033, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2434257653358120940, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
-      propertyPath: m_Interactable
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3722272995622482366, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
-      propertyPath: m_Interactable
-      value: 0
+    - target: {fileID: 586494114750786926, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
+      propertyPath: OnCanPlaceToken.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6092780588953907730, guid: 2b160afc638691c4691701e850da8c7f, type: 3}
       propertyPath: m_Name

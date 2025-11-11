@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LoteriaGameManager : MonoBehaviour
 {
-
+    private enum LoteriaGameState { MENU, START, SHOP, END }
     [SerializeField] private List<LoteriaCardsData> allLoteriaCards;
     [SerializeField] private Cantador cantador;
     [SerializeField] private LoteriaTable loteriaTable;
@@ -43,6 +43,11 @@ public class LoteriaGameManager : MonoBehaviour
         loteriaTable.ResetTable();
     }
 
+
+    public void HandleOnCardSet()
+    {
+
+    }
 
     public void HandleCanTokenBePlaced()
     {
