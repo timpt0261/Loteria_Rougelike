@@ -6,18 +6,12 @@ using UnityEngine.UI;
 public class LoteriaCard : MonoBehaviour
 {
 	[Header("Loteria Card Data")]
-	private LoteriaCardsData CurrentLoteriaCardData
+	[SerializeField] private LoteriaCardsData currentLoteriaCardData;
+	public LoteriaCardsData CurrentLoteriaCardData
 	{
-		set
-		{
-			this.id = value.id;
-			this.chance = value.chance;
-			this.loteriaCard_Artwork.sprite = value.sprite;
-			this.loteriaCard_TokenMarker.enabled = false;
-			this.loteriaCard_TokenButton.interactable = false;
-			OnCardSet?.Invoke();
-		}
+		get;
 	}
+
 
 	private const float HUNDRED = 100f;
 	[SerializeField] private int id;
@@ -61,7 +55,15 @@ public class LoteriaCard : MonoBehaviour
 		}
 
 		InitializeComponents();
-		CurrentLoteriaCardData = newLoteriaCardData;
+		currentLoteriaCardData = newLoteriaCardData;
+
+		this.id = currentLoteriaCardData.id;
+		this.chance = currentLoteriaCardData.chance;
+		this.loteriaCard_Artwork.sprite = currentLoteriaCardData.sprite;
+		this.loteriaCard_TokenMarker.enabled = false;
+		this.loteriaCard_TokenButton.interactable = false;
+
+		OnCardSet?.Invoke();
 	}
 
 	private void InitializeComponents()
@@ -131,10 +133,8 @@ public class LoteriaCard : MonoBehaviour
 		if (elapsedTime <= maxBonusTime)
 		{
 			// Linear interpolation: faster = higher multiplier
-			// At 0 seconds: returns maxBonusTime (e.g., 4.0)
-			// At maxBonusTime: returns minBonusTime (e.g., 1.0)
 			float bonus = Mathf.Lerp(maxBonusTime, minBonusTime, elapsedTime / maxBonusTime);
-			return Mathf.Round(bonus * 100f) / 100f; // Round to 2 decimal places
+			return Mathf.Round(bonus * HUNDRED) / HUNDRED; // Round to 2 decimal places
 		}
 
 		// If too slow, return base multiplier

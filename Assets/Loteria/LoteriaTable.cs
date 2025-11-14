@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.Antlr3.Runtime;
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -43,14 +43,27 @@ public class LoteriaTable : MonoBehaviour
 	private float score = 0;
 	public float Score => score;
 
-	private List<bool> tokenState = new();
-
+	[SerializeField] private List<bool> tokenState = new();
 	// table states
-	private bool IsTableWithToken = false;
-	private bool IsTableWithCompletedRow = false;
-	private bool IsTableWithCompletedColumn = false;
-	private bool IsTableWithCompletedDiagonal = false;
-	private bool IsTableCompleted = false;
+	[SerializeField] private bool IsTableWithToken = false;
+	[SerializeField] private bool IsTableWithCompletedRow = false;
+	[SerializeField] private bool IsTableWithCompletedColumn = false;
+	[SerializeField] private bool IsTableWithCompletedDiagonal = false;
+	[SerializeField] private bool IsTableCompleted = false;
+
+
+	private List<int> unmarkedSlots;    // keep  track of unmarked slots
+	public List<int> UnmarkedSlots { get { return unmarkedSlots; } }
+
+	private List<int> markedSlots; // keep track of marked slots
+	public List<int> MarkedSlots { get { return markedSlots; } }
+
+	// be able to set slots
+	// be able to switch slots
+
+	private string currentSeed;
+	public string CurrentSeed { get { return currentSeed; } private set { currentSeed = value; } }
+	public int MarkedCount;
 
 	[Header("Events")]
 	public UnityEvent OnTableCompleted;
@@ -81,21 +94,20 @@ public class LoteriaTable : MonoBehaviour
 
 	void Update()
 	{
-		if (IsCompleted())
-		{
-			OnTableCompleted?.Invoke();
-		}
+		// if (IsCompleted())
+		// {
+		// 	OnTableCompleted?.Invoke();
+		// }
 
 	}
-
 	private void SetTable()
 	{
 		List<LoteriaCardsData> shuffled = Shuffle();
 
 		for (int i = 0; i < TOTAL_TABLA_COUNT; i++)
 		{
-			var currentSlot = cardPrefabs[i];
-			var loteriaCard = currentSlot.GetComponent<LoteriaCard>();
+			GameObject currentSlot = cardPrefabs[i];
+			LoteriaCard loteriaCard = currentSlot.GetComponent<LoteriaCard>();
 			loteriaCard.SetCardData(shuffled[i % shuffled.Count]);
 
 			int cardId = loteriaCard.ID;
@@ -120,6 +132,42 @@ public class LoteriaTable : MonoBehaviour
 
 		return shuffled;
 	}
+
+	private void SwitchSlots(int cardSlotA, int cardSlotB)
+	{
+		int keyA = tableGrid[cardSlotA];
+		int keyB = tableGrid[cardSlotB];
+
+		var tempCard = loteriaSlots[keyA];
+		LoteriaCard loteriaCardA = loteriaSlots[keyA];
+		LoteriaCard loteriaCardB = loteriaSlots[keyB];
+
+		// switch card data
+		// set a to b
+		loteriaCardA.SetCardData(loteriaCardB.CurrentLoteriaCardData);
+
+		// set b to a
+		loteriaCardB.SetCardData(tempCard.CurrentLoteriaCardData);
+
+		int temp = tableGrid[cardSlotA];
+		tableGrid[cardSlotA] = tableGrid[cardSlotB];
+		tableGrid[cardSlotB] = temp;
+	}
+	private List<int> GenerateRandomTable()
+	{
+		int count = loteriaDeck.Count;
+		HashSet<int> choosenSlots = new();
+		while (choosenSlots.Count < TOTAL_TABLA_COUNT)
+		{
+
+			int x = Random.Range(0, count);
+			choosenSlots.Add(x);
+		}
+
+		return new List<int>(choosenSlots);
+	}
+
+
 	#endregion
 
 	#region Game State Updates
@@ -137,18 +185,16 @@ public class LoteriaTable : MonoBehaviour
 		}
 
 	}
+	private void UpdateTokenPlacement(LoteriaCardsData drawnCard)
+	{
+		if (!tableGrid.Contains(drawnCard.id)) return;
+		loteriaSlots[drawnCard.id].CanPlaceToken(true);
+	}
 
 	public void UpdateScore()
 	{
 		CalculateScore();
 		scoreUI.text = $"Score: {score}";
-	}
-
-	private void UpdateTokenPlacement(LoteriaCardsData drawnCard)
-	{
-		if (!tableGrid.Contains(drawnCard.id)) return;
-
-		loteriaSlots[drawnCard.id].CanPlaceToken(true);
 	}
 
 	private void ResetTokenPlacers()
@@ -198,10 +244,11 @@ public class LoteriaTable : MonoBehaviour
 
 		// Cache token states to avoid repeated lookups
 		markedCount = CacheTokenState(tokenStates, tokenMultiplier, markedCount);
+		IsTableWithToken = markedCount >= 1;
 
 		// Early exit if not enough tokens for patterns
 		if (markedCount < GRID_SIZE) return;
-		IsTableWithToken = true;
+
 
 		// Check horizontal patterns
 		score += ScoreHorizontalPatterns(tokenStates);
@@ -281,10 +328,40 @@ public class LoteriaTable : MonoBehaviour
 	}
 	#endregion
 
-
+	public bool LoteriaWinConditionIsMet()
+	{
+		return IsTableWithCompletedRow || IsTableWithCompletedColumn || IsTableWithCompletedDiagonal;
+	}
 
 	public bool IsCompleted()
 	{
 		return IsTableCompleted;
 	}
+
+
+	#region Radom Utility
+	public void GenerateRandomSeed()
+	{
+		int seed = (int)System.DateTime.Now.Ticks;
+		currentSeed = seed.ToString();
+		Random.InitState(seed);
+	}
+	public void SetRandomSeed(string seed = "")
+	{
+		currentSeed = seed;
+		int tempSeed = 0;
+		// Source - https://stackoverflow.com/a
+		// Posted by mqp, modified by community. See post 'Timeline' for change history
+		// Retrieved 2025-11-12, License - CC BY-SA 4.0
+
+		var isNumeric = int.TryParse(currentSeed, out _);
+
+		if (isNumeric)
+			tempSeed = System.Int32.Parse(seed);
+		else
+			tempSeed = currentSeed.GetHashCode();
+
+		Random.InitState(tempSeed);
+	}
+	#endregion
 }

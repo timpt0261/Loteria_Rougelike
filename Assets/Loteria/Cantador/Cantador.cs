@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.SocialPlatforms.Impl;
+using TMPro;
+using UnityEngine.Rendering;
 
 public class Cantador : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class Cantador : MonoBehaviour
     [SerializeField] private List<LoteriaCardsData> deckLoteriaCards = new();
     [SerializeField] private List<LoteriaCardsData> discardLoteriaCards = new();
 
+    [SerializeField] private int turnCount = 0;
     public List<LoteriaCardsData> DrawnLoteriaCardsThisRound { get { return discardLoteriaCards; } private set { discardLoteriaCards = value; } }
     private List<LoteriaCardsData> DrawnLoteriaCardsThisTurn = new();
 
@@ -28,13 +31,22 @@ public class Cantador : MonoBehaviour
     private bool isDrawingCard;
     private bool isReady = true;
 
-
     [SerializeField] private List<Image> drawingCardSlot;
     [SerializeField] private Transform drawingCardTransform;
 
+    [SerializeField] private TextMeshProUGUI turnUI;
+
+    [Header("Shuffle")]
+
+    [SerializeField] private int shufflesRemaining = 3;
+
+    private float shuffleCost = 2f;
+
+
     [Header("Events")]
     public UnityEvent OnCardDrawn;
-    public UnityEvent OnDeckShuffled;
+    public UnityEvent OnGameStartDeckReset;
+    public UnityEvent OnMidRoundDeckReShuffle;
 
 
     void Awake()
@@ -55,14 +67,16 @@ public class Cantador : MonoBehaviour
 
     public void Initialize()
     {
-        Shuffle();
+        turnCount = 0;
+        ResetShuffleToNewGame();
         ResetTimer();
     }
 
     void Update()
     {
-        TryDraw();
-        HandleTimer();
+        // turnUI.text = $"Turn: {turnCount}";
+        // TryDraw();
+        // HandleTimer();
     }
 
     private void HandleTimer()
@@ -87,19 +101,18 @@ public class Cantador : MonoBehaviour
 
     public void TryDraw()
     {
-        int seed = (int)System.DateTime.Now.Ticks + 100;
+        int HUNDRED = 100;
+        int seed = (int)System.DateTime.Now.Ticks + HUNDRED;
         Random.InitState(seed);
 
-        if (!CanDraw()) return;
-
-        // Start cooldown
-        StartTimer();
+        // StartTimer();
 
         for (int i = 0; i < drawAmount; i++)
         {
-            if (deckLoteriaCards.Count <= 1)
+            
+            if (deckLoteriaCards.Count <= 3)
             {
-                Shuffle();
+                ResetShuffleToNewGame();
             }
 
             // Draw a random card
@@ -136,23 +149,52 @@ public class Cantador : MonoBehaviour
     {
         if (isDrawingCard) return false;
         if (!isReady) return false;
-        if (deckLoteriaCards.Count < 1) Shuffle();
+        if (deckLoteriaCards.Count < 1) ResetShuffleToNewGame();
         return true;
     }
 
-    public void Shuffle()
+
+    // shuffles the entire deck when round starts
+    public void ResetShuffleToNewGame()
     {
-        var shuffled = new List<LoteriaCardsData>(loteriaDeck);
+        var shuffled = new List<LoteriaCardsData>(loteriaDeck); // create copy
+        ShuffleCards(shuffled);
+        deckLoteriaCards = shuffled; // set current deck to loteria deck
+
+        discardLoteriaCards.Clear();
+        DrawnLoteriaCardsThisTurn.Clear();
+        OnGameStartDeckReset?.Invoke();
+    }
+
+
+
+    // shuffles undrawn cards in deck
+    public void ReShuffleRemainingCards()
+    {
+        if (shufflesRemaining <= 0) { return; }
+        shufflesRemaining--;
+        int length = deckLoteriaCards.Count;
+        if (length < drawAmount) return;
+        ShuffleCards(deckLoteriaCards);
+        OnMidRoundDeckReShuffle?.Invoke();
+    }
+
+
+    private static void ShuffleCards(List<LoteriaCardsData> shuffled)
+    {
         for (int i = 0; i < shuffled.Count; i++)
         {
             int r = Random.Range(i, shuffled.Count);
             (shuffled[i], shuffled[r]) = (shuffled[r], shuffled[i]);
         }
-        deckLoteriaCards = shuffled;
-        discardLoteriaCards.Clear();
-        DrawnLoteriaCardsThisTurn.Clear();
-        OnDeckShuffled?.Invoke();
     }
 
-
+    public void ResetShufflesRemaining(int newShufflesRemaining = 3)
+    {
+        this.shufflesRemaining = newShufflesRemaining;
+    }
+    public int GetShuffleChargesRemaining()
+    {
+        return this.shufflesRemaining;
+    }
 }
