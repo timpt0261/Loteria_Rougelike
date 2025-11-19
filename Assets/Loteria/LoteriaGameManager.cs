@@ -57,16 +57,18 @@ public class LoteriaGameManager : MonoBehaviour
     void Update()
     {
         UpdateUI();
-        // if the loteria table meets round end
-        if (this.loteriaTable.LoteriaWinConditionIsMet())
-        {
-            ProcessRoundEnd();
-        }
+        // call onnce not on update
+        // if (this.loteriaTable.LoteriaWinConditionIsMet())
+        // {
+        //     ProcessRoundEnd();
+        //     return;
+        // }
 
-        // game over if the turns end
+        // // game over if the turns end
         if (turnsRemaining <= 0)
         {
             ProcessGameOver();
+            return;
         }
 
 
@@ -111,10 +113,8 @@ public class LoteriaGameManager : MonoBehaviour
         // Calculate final score and cash earned
         roundScore = loteriaTable.Score;
         playerCash += roundScore;
-
-
         Debug.Log($"Round {roundCount} completed! Score: {roundScore}, Total Cash: {playerCash}");
-        Invoke("SetupNewRound", 3);
+        OpenShop();
 
     }
 
@@ -129,6 +129,7 @@ public class LoteriaGameManager : MonoBehaviour
 
     private void ProcessGameOver()
     {
+        if (gameOverElement.activeInHierarchy) return;
         gameOverElement.SetActive(true);
         gameOver_UI.text = $"Game Over\n Final Cash: {playerCash}\n Rounds Completed: {roundCount} ";
         Debug.Log($"Game Over! Final Cash: {playerCash}, Rounds Completed: {roundCount}");
@@ -163,6 +164,19 @@ public class LoteriaGameManager : MonoBehaviour
     public void HandleDeckShuffleMidRound()
     {
         reshufflesRemaining = cantador.GetShuffleChargesRemaining();
+    }
+    #endregion
+
+    #region  Loteria Table
+
+    public void HandleLoteriaWinCondition()
+    {
+        ProcessRoundEnd();
+    }
+
+    public void HandleLoteriaLoseCondtion()
+    {
+
     }
     #endregion
 

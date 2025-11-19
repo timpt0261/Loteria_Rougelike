@@ -68,6 +68,8 @@ public class LoteriaTable : MonoBehaviour
 	[Header("Events")]
 	public UnityEvent OnTableCompleted;
 
+	public UnityEvent OnLoteriaWinConditionMet;
+
 	#region Unity Lifecycle
 	void Awake()
 	{
@@ -86,7 +88,6 @@ public class LoteriaTable : MonoBehaviour
 		tableGrid.Clear();
 		loteriaSlots.Clear();
 		ResetTokenPlacers();
-		ResetTableState();
 		SetTable();
 		score = 0;
 
@@ -94,10 +95,11 @@ public class LoteriaTable : MonoBehaviour
 
 	void Update()
 	{
-		// if (IsCompleted())
-		// {
-		// 	OnTableCompleted?.Invoke();
-		// }
+		if (LoteriaWinConditionIsMet())
+		{
+			OnLoteriaWinConditionMet?.Invoke();
+			ResetTableState();
+		}
 
 	}
 	private void SetTable()

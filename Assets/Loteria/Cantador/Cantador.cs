@@ -71,14 +71,6 @@ public class Cantador : MonoBehaviour
         ResetShuffleToNewGame();
         ResetTimer();
     }
-
-    void Update()
-    {
-        // turnUI.text = $"Turn: {turnCount}";
-        // TryDraw();
-        // HandleTimer();
-    }
-
     private void HandleTimer()
     {
         // If drawing, count down the timer
