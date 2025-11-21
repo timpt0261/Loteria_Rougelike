@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Vending%20Machine/USS/vending-machine-style.uss?fileID=7433441132597879392&amp;guid=c07590a6442e75f439b6330af7938e47&amp;type=3#vending-machine-style" />
+    <ui:VisualElement name="Container" style="flex-grow: 1;">
+        <ui:VisualElement name="Background" class="background" style="flex-grow: 1;">
+            <ui:VisualElement name="Display" class="display" style="flex-grow: 1; width: 426px; height: 260px; bottom: 521px; top: 32px; left: 31px; right: 143px; -unity-background-scale-mode: scale-to-fit; transform-origin: left top; scale: 1 2; -unity-slice-type: sliced; margin-top: 19px; margin-right: 19px; margin-bottom: 19px; margin-left: 19px; padding-top: 17px; padding-right: 17px; padding-bottom: 17px; padding-left: 17px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

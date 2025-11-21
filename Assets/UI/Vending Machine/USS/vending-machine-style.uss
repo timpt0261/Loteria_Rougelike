@@ -1,0 +1,68 @@
+:root {
+}
+
+.background {
+    background-color: rgb(13, 13, 13);
+}
+
+.display {
+    background-color: rgb(29, 38, 89);
+    background-position-y: center;
+    position: absolute;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    align-items: auto;
+    justify-content: flex-start;
+    align-self: flex-start;
+    align-content: flex-end;
+    -unity-background-scale-mode: stretch-to-fill;
+    background-repeat: no-repeat no-repeat;
+    background-position-x: left 0;
+    border-top-color: rgb(223, 229, 242);
+    border-top-width: 2px;
+    border-right-color: rgb(223, 229, 242);
+    border-left-color: rgb(223, 229, 242);
+    border-bottom-color: rgb(223, 229, 242);
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+    border-bottom-right-radius: 13px;
+    border-bottom-left-radius: 360px;
+    flex-wrap: wrap-reverse;
+    flex-basis: -18px;
+    background-image: none;
+}
+
+.itemContainer {
+    position: absolute;
+    display: flex;
+    visibility: visible;
+    overflow: visible;
+    background-color: rgb(29, 38, 89);
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    background-position-x: center;
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-slice-type: tiled;
+    align-content: auto;
+    align-self: auto;
+    width: 617px;
+    height: -825px;
+}
+
+.vendingButtons {
+    align-items: auto;
+    visibility: visible;
+    width: 31px;
+    height: 31px;
+    background-color: rgb(208, 223, 233);
+    cursor: initial;
+    background-image: url("project://database/Assets/UI/Vending%20Machine/Images/button.jpg?fileID=2800000&guid=df97c4db11731c64f97f3c0a5bcfed57&type=3#button");
+    background-size: 146% 123%;
+    color: rgba(27, 27, 27, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
