@@ -2,24 +2,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
 using TMPro;
-using UnityEngine.Rendering;
+using System;
+using System.Collections;
+using System.Xml.Schema;
+
 
 public class Cantador : MonoBehaviour
 {
     public static Cantador Instance { get; private set; }
     [SerializeField] private int drawAmount = 4;
 
+    public int DrawAmount { get { return drawAmount; } set { drawAmount = value; } }
+
     [Header("Card Data")]
+
+    private int _initalTotal;
     [SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
     public void SetLoteriaDeck(List<LoteriaCardsData> newloteriaDeck) => this.loteriaDeck = newloteriaDeck;
     [SerializeField] private List<LoteriaCardsData> deckLoteriaCards = new();
     [SerializeField] private List<LoteriaCardsData> discardLoteriaCards = new();
 
-    [SerializeField] private int turnCount = 0;
     public List<LoteriaCardsData> DrawnLoteriaCardsThisRound { get { return discardLoteriaCards; } private set { discardLoteriaCards = value; } }
-    private List<LoteriaCardsData> DrawnLoteriaCardsThisTurn = new();
+    public List<LoteriaCardsData> DrawnLoteriaCardsThisTurn = new();
 
     [Header("Timer Settings")]
     [SerializeField] private Slider timeSlot;
@@ -31,16 +36,11 @@ public class Cantador : MonoBehaviour
     private bool isDrawingCard;
     private bool isReady = true;
 
-    [SerializeField] private List<Image> drawingCardSlot;
     [SerializeField] private Transform drawingCardTransform;
 
     [SerializeField] private TextMeshProUGUI turnUI;
 
-    [Header("Shuffle")]
 
-    [SerializeField] private int shufflesRemaining = 3;
-
-    private float shuffleCost = 2f;
 
 
     [Header("Events")]
@@ -48,6 +48,8 @@ public class Cantador : MonoBehaviour
     public UnityEvent OnGameStartDeckReset;
     public UnityEvent OnMidRoundDeckReShuffle;
 
+    public static event Action<int, int> OnUpdateRemainingCards;
+    public static event Action<List<LoteriaCardsData>> OnDrawingCards;
 
     void Awake()
     {
@@ -58,18 +60,14 @@ public class Cantador : MonoBehaviour
         }
         Instance = this;
 
-        if (drawingCardSlot == null)
-        {
-            drawingCardSlot = new List<Image>(drawingCardTransform.GetComponentsInChildren<Image>());
-        }
-
+        Initialize();
     }
 
     public void Initialize()
     {
-        turnCount = 0;
+        _initalTotal = this.loteriaDeck.Count;
         ResetShuffleToNewGame();
-        ResetTimer();
+        //ResetTimer();
     }
     private void HandleTimer()
     {
@@ -91,35 +89,34 @@ public class Cantador : MonoBehaviour
         }
     }
 
-    public void TryDraw()
+    public void DrawCards()
     {
-        int HUNDRED = 100;
-        int seed = (int)System.DateTime.Now.Ticks + HUNDRED;
-        Random.InitState(seed);
+        DrawnLoteriaCardsThisTurn.Clear();
+        int remainingCards = deckLoteriaCards.Count;
+        int drawnCount = drawAmount > remainingCards ? remainingCards : drawAmount;
 
-        // StartTimer();
 
-        for (int i = 0; i < drawAmount; i++)
+        OnUpdateRemainingCards?.Invoke(remainingCards - drawAmount, _initalTotal);
+
+        for (int i = 0; i < drawnCount; i++)
         {
-            
-            if (deckLoteriaCards.Count <= 3)
-            {
-                ResetShuffleToNewGame();
-            }
-
             // Draw a random card
-            int index = Random.Range(0, deckLoteriaCards.Count);
+            int index = UnityEngine.Random.Range(0, deckLoteriaCards.Count);
+            LoteriaCardsData cardData = deckLoteriaCards[index];
 
-            DrawnLoteriaCardsThisTurn.Add(deckLoteriaCards[index]);
-            Sprite drawnCard = DrawnLoteriaCardsThisTurn[i].sprite;
+            // update decks respectively
             deckLoteriaCards.RemoveAt(index);
-            discardLoteriaCards.Add(DrawnLoteriaCardsThisTurn[i]);
-            drawingCardSlot[i].sprite = drawnCard;
+            discardLoteriaCards.Add(cardData);
+
+            DrawnLoteriaCardsThisTurn.Add(cardData);
+            DrawnLoteriaCardsThisRound.Add(cardData);
 
         }
-        OnCardDrawn?.Invoke();
-        DrawnLoteriaCardsThisTurn.Clear();
+
+        OnDrawingCards?.Invoke(DrawnLoteriaCardsThisTurn); // call display to drawn selected card
+
     }
+
 
     private void StartTimer()
     {
@@ -155,38 +152,19 @@ public class Cantador : MonoBehaviour
 
         discardLoteriaCards.Clear();
         DrawnLoteriaCardsThisTurn.Clear();
-        OnGameStartDeckReset?.Invoke();
+        // OnGameStartDeckReset?.Invoke();
     }
 
 
 
     // shuffles undrawn cards in deck
-    public void ReShuffleRemainingCards()
-    {
-        if (shufflesRemaining <= 0) { return; }
-        shufflesRemaining--;
-        int length = deckLoteriaCards.Count;
-        if (length < drawAmount) return;
-        ShuffleCards(deckLoteriaCards);
-        OnMidRoundDeckReShuffle?.Invoke();
-    }
-
-
     private static void ShuffleCards(List<LoteriaCardsData> shuffled)
     {
         for (int i = 0; i < shuffled.Count; i++)
         {
-            int r = Random.Range(i, shuffled.Count);
+            int r = UnityEngine.Random.Range(i, shuffled.Count);
             (shuffled[i], shuffled[r]) = (shuffled[r], shuffled[i]);
         }
     }
 
-    public void ResetShufflesRemaining(int newShufflesRemaining = 3)
-    {
-        this.shufflesRemaining = newShufflesRemaining;
-    }
-    public int GetShuffleChargesRemaining()
-    {
-        return this.shufflesRemaining;
-    }
 }

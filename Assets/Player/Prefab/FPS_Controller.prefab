@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1115423431491723470}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.99999994, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -209,7 +209,7 @@ Transform:
   m_GameObject: {fileID: 2025266614205320487}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -264,7 +264,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2461061428729375751}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -313,7 +313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2023801555664550463}
-  - component: {fileID: 7712518532425858271}
+  - component: {fileID: 1006274596978692359}
   - component: {fileID: 3106464095561953980}
   - component: {fileID: 8263536606912060045}
   - component: {fileID: 4881746083744961707}
@@ -344,31 +344,33 @@ Transform:
   - {fileID: 4634768830431860131}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &7712518532425858271
-CharacterController:
+--- !u!54 &1006274596978692359
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2869677131043014856}
-  m_Material: {fileID: 0}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!136 &3106464095561953980
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -406,7 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FPS_Controller
   speed: 3
   capsuleCollider: {fileID: 3106464095561953980}
-  characterController: {fileID: 7712518532425858271}
+  rigidBody: {fileID: 0}
   animator: {fileID: 825386293330391356}
   mainCamera: {fileID: 2373276545124853490}
   cameraRoot: {fileID: 2237152037281101470}

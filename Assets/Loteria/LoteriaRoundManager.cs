@@ -1,20 +1,24 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class LoteriaGameManager : MonoBehaviour
+public class LoteriaRoundManager : MonoBehaviour
 {
+    private enum ROUNDSTATE{ ROUND_START, DRAW, REVEAL, ROUND_END}
+
     [Header("References")]
     [SerializeField] private List<LoteriaCardsData> allLoteriaCards;
     [SerializeField] private Cantador cantador;
     [SerializeField] private LoteriaTable loteriaTable;
 
+    [SerializeField] private CharmManager charmManager;
+
     [Header("Game Stats")]
     [SerializeField] private float debt;
     [SerializeField] private float playerCash;
     [SerializeField] private float roundScore;
-    [SerializeField] private int turnsRemaining;
-    [SerializeField] private int roundCount;
+    [SerializeField] private int totalRounds = 3;
     [SerializeField] private int reshufflesRemaining;
 
 
@@ -22,64 +26,27 @@ public class LoteriaGameManager : MonoBehaviour
     private const int MAX_TURNS_PER_ROUND = 7;
     private const int INITIAL_PLAYER_CASH = 2;
 
-    [Header("UI")]
-
-    [SerializeField] private TextMeshProUGUI playerCash_UI;
-    [SerializeField] private TextMeshProUGUI turnCount_UI;
-
-    // Game Over
-    [SerializeField] private GameObject gameOverElement;
-    [SerializeField] private TextMeshProUGUI gameOver_UI;
-
-    // Shop
-    [SerializeField] private GameObject shopUIElement;
-
-    [SerializeField] private TextMeshProUGUI round_UI;
     // set game condtion to win
     // game over works
     // shows up after round is completed
     void Awake()
     {
         InitializeRound();
-        gameOverElement.SetActive(false);
-        shopUIElement.SetActive(false);
     }
 
     void Start()
     {
         cantador = Cantador.Instance;
         loteriaTable = LoteriaTable.Instance;
+        charmManager = CharmManager.Instance;
         SetLoteriaCardReference();
-        cantador.Initialize();
-
-    }
-
-    void Update()
-    {
-        UpdateUI();
-        // call onnce not on update
-        // if (this.loteriaTable.LoteriaWinConditionIsMet())
-        // {
-        //     ProcessRoundEnd();
-        //     return;
-        // }
-
-        // // game over if the turns end
-        if (turnsRemaining <= 0)
-        {
-            ProcessGameOver();
-            return;
-        }
-
-
+        SetupNewRound();
     }
 
     #region Initialization
     private void InitializeRound()
     {
-        reshufflesRemaining = MAX_SHUFFLE_CHARGES;
-        turnsRemaining = MAX_TURNS_PER_ROUND;
-        roundCount = 0;
+        totalRounds = 0;
         playerCash = INITIAL_PLAYER_CASH;
         debt = 0f;
         roundScore = 0f;
@@ -98,14 +65,14 @@ public class LoteriaGameManager : MonoBehaviour
     #region State Actions
     private void SetupNewRound()
     {
-        roundCount++;
-        turnsRemaining = MAX_TURNS_PER_ROUND;
+        totalRounds++;
         roundScore = 0f;
 
         cantador.Initialize();
         loteriaTable.ResetTable();
 
-        reshufflesRemaining = cantador.GetShuffleChargesRemaining();
+        
+        charmManager.OnRoundStart?.Invoke();
     }
 
     private void ProcessRoundEnd()
@@ -113,26 +80,10 @@ public class LoteriaGameManager : MonoBehaviour
         // Calculate final score and cash earned
         roundScore = loteriaTable.Score;
         playerCash += roundScore;
-        Debug.Log($"Round {roundCount} completed! Score: {roundScore}, Total Cash: {playerCash}");
-        OpenShop();
+        Debug.Log($"Round {totalRounds} completed! Score: {roundScore}, Total Cash: {playerCash}");
+        charmManager.OnRoundEnd?.Invoke();
+        //OpenShop();
 
-    }
-
-
-
-    private void OpenShop()
-    {
-        Debug.Log("Opening shop...");
-        // Shop UI logic here
-        shopUIElement.SetActive(true);
-    }
-
-    private void ProcessGameOver()
-    {
-        if (gameOverElement.activeInHierarchy) return;
-        gameOverElement.SetActive(true);
-        gameOver_UI.text = $"Game Over\n Final Cash: {playerCash}\n Rounds Completed: {roundCount} ";
-        Debug.Log($"Game Over! Final Cash: {playerCash}, Rounds Completed: {roundCount}");
     }
     #endregion
 
@@ -141,6 +92,7 @@ public class LoteriaGameManager : MonoBehaviour
     public void RestartGame()
     {
         InitializeRound();
+
     }
     #endregion
 
@@ -148,13 +100,9 @@ public class LoteriaGameManager : MonoBehaviour
     public void HandleCardDrawn()
     {
         loteriaTable.UpdateTabla(cantador.DrawnLoteriaCardsThisRound);
-        turnsRemaining--;
     }
 
-    public void HandleTableCompleted()
-    {
-        cantador.ResetShufflesRemaining();
-    }
+
 
     public void HandleDeckShuffleOnStart()
     {
@@ -163,7 +111,7 @@ public class LoteriaGameManager : MonoBehaviour
 
     public void HandleDeckShuffleMidRound()
     {
-        reshufflesRemaining = cantador.GetShuffleChargesRemaining();
+        
     }
     #endregion
 
@@ -198,25 +146,6 @@ public class LoteriaGameManager : MonoBehaviour
     #endregion
 
     #region UI Updates
-    private void UpdateUI()
-    {
-        if (turnCount_UI != null)
-        {
-            turnCount_UI.text = $"Turns: {turnsRemaining}/{MAX_TURNS_PER_ROUND}";
-        }
-
-        if (round_UI != null)
-        {
-            round_UI.text = $"Round : {roundCount}";
-        }
-
-        if (playerCash_UI != null)
-        {
-            playerCash_UI.text = $"${playerCash}";
-        }
-
-
-    }
     #endregion
 
 

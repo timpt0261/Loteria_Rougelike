@@ -10,7 +10,6 @@ public class LoteriaTable : MonoBehaviour
 	public static LoteriaTable Instance { get; private set; }
 
 	[Header("Table Configuration")]
-	[SerializeField] private Transform gridContainer;
 	[SerializeField] private List<LoteriaCardsData> loteriaDeck;
 	public void SetLoteriaDeck(List<LoteriaCardsData> loteriaCardDeck)
 	{
@@ -70,6 +69,16 @@ public class LoteriaTable : MonoBehaviour
 
 	public UnityEvent OnLoteriaWinConditionMet;
 
+	private void OnEnable()
+	{
+		DrawnCardDisplay.OnCardRevealed += UpdateTokenPlacement;
+	}
+
+	private void Osable()
+	{
+			DrawnCardDisplay.OnCardRevealed -= UpdateTokenPlacement;
+	}
+
 	#region Unity Lifecycle
 	void Awake()
 	{
@@ -79,6 +88,7 @@ public class LoteriaTable : MonoBehaviour
 			return;
 		}
 		Instance = this;
+		unmarkedSlots = tableGrid;
 	}
 	#endregion
 
@@ -134,27 +144,6 @@ public class LoteriaTable : MonoBehaviour
 
 		return shuffled;
 	}
-
-	private void SwitchSlots(int cardSlotA, int cardSlotB)
-	{
-		int keyA = tableGrid[cardSlotA];
-		int keyB = tableGrid[cardSlotB];
-
-		var tempCard = loteriaSlots[keyA];
-		LoteriaCard loteriaCardA = loteriaSlots[keyA];
-		LoteriaCard loteriaCardB = loteriaSlots[keyB];
-
-		// switch card data
-		// set a to b
-		loteriaCardA.SetCardData(loteriaCardB.CurrentLoteriaCardData);
-
-		// set b to a
-		loteriaCardB.SetCardData(tempCard.CurrentLoteriaCardData);
-
-		int temp = tableGrid[cardSlotA];
-		tableGrid[cardSlotA] = tableGrid[cardSlotB];
-		tableGrid[cardSlotB] = temp;
-	}
 	private List<int> GenerateRandomTable()
 	{
 		int count = loteriaDeck.Count;
@@ -169,6 +158,188 @@ public class LoteriaTable : MonoBehaviour
 		return new List<int>(choosenSlots);
 	}
 
+
+	#endregion
+
+	// Add these public functions to your LoteriaTable class
+
+	#region Slot Management
+
+	/// <summary>
+	/// Sets a specific slot to display a card from the loteria deck
+	/// </summary>
+	/// <param name="slotIndex">Index of the slot (0-15)</param>
+	/// <param name="cardData">The card data to set in this slot</param>
+	/// <returns>True if successful, false otherwise</returns>
+	public bool SetSlotCard(int slotIndex, LoteriaCardsData cardData)
+	{
+		// Validate slot index
+		if (slotIndex < 0 || slotIndex >= TOTAL_TABLA_COUNT)
+		{
+			Debug.LogWarning($"Invalid slot index: {slotIndex}. Must be between 0 and {TOTAL_TABLA_COUNT - 1}");
+			return false;
+		}
+
+		// Validate card data
+		if (cardData == null)
+		{
+			Debug.LogWarning("Cannot set slot with null card data");
+			return false;
+		}
+
+		// Get the current card ID at this slot
+		int oldCardId = tableGrid[slotIndex];
+
+		// Remove old mapping
+		if (loteriaSlots.ContainsKey(oldCardId))
+		{
+			loteriaSlots.Remove(oldCardId);
+		}
+
+		// Get the card component and update it
+		GameObject slotObject = cardPrefabs[slotIndex];
+		LoteriaCard loteriaCard = slotObject.GetComponent<LoteriaCard>();
+		loteriaCard.SetCardData(cardData);
+
+		// Update mappings
+		tableGrid[slotIndex] = cardData.id;
+		loteriaSlots[cardData.id] = loteriaCard;
+
+		if (cardData.id == 0)
+		{
+			UpdateTokenPlacement(drawnCardData: cardData);
+		}
+
+		return true;
+	}
+
+	/// <summary>
+	/// Sets a slot by finding the card with the specified ID and replacing it
+	/// </summary>
+	/// <param name="currentCardId">ID of the card currently in the table to replace</param>
+	/// <param name="cardToSet">The new card data to set</param>
+	/// <returns>True if successful, false if card ID not found</returns>
+	public bool SetSlotByCardId(int currentCardId, LoteriaCardsData cardToSet)
+	{
+		// Validate card data
+		if (cardToSet == null)
+		{
+			Debug.LogWarning("Cannot set slot with null card data");
+			return false;
+		}
+
+		// Check if the card ID exists in the table
+		if (!loteriaSlots.ContainsKey(currentCardId))
+		{
+			Debug.LogWarning($"Card ID {currentCardId} not found in table");
+			return false;
+		}
+
+		// Find the slot index for this card ID
+		int slotIndex = tableGrid.IndexOf(currentCardId);
+		if (slotIndex == -1)
+		{
+			Debug.LogWarning($"Card ID {currentCardId} not found in grid");
+			return false;
+		}
+
+		// Get the card component
+		LoteriaCard loteriaCard = loteriaSlots[currentCardId];
+
+		// Remove old mapping
+		loteriaSlots.Remove(currentCardId);
+
+		// Update the card visually
+		loteriaCard.SetCardData(cardToSet);
+
+		// Update mappings with new card ID
+		tableGrid[slotIndex] = cardToSet.id;
+		loteriaSlots[cardToSet.id] = loteriaCard;
+
+		return true;
+	}
+
+	/// <summary>
+	/// Swaps the cards between two slots on the table
+	/// </summary>
+	/// <param name="slotIndexA">First slot index (0-15)</param>
+	/// <param name="slotIndexB">Second slot index (0-15)</param>
+	/// <returns>True if successful, false otherwise</returns>
+	public bool SwapSlots(int slotIndexA, int slotIndexB)
+	{
+		// Validate indices
+		if (slotIndexA < 0 || slotIndexA >= TOTAL_TABLA_COUNT)
+		{
+			Debug.LogWarning($"Invalid slot index A: {slotIndexA}. Must be between 0 and {TOTAL_TABLA_COUNT - 1}");
+			return false;
+		}
+
+		if (slotIndexB < 0 || slotIndexB >= TOTAL_TABLA_COUNT)
+		{
+			Debug.LogWarning($"Invalid slot index B: {slotIndexB}. Must be between 0 and {TOTAL_TABLA_COUNT - 1}");
+			return false;
+		}
+
+		if (slotIndexA == slotIndexB)
+		{
+			Debug.LogWarning("Cannot swap a slot with itself");
+			return false;
+		}
+
+		// Get card IDs at both slots
+		int cardIdA = tableGrid[slotIndexA];
+		int cardIdB = tableGrid[slotIndexB];
+
+		// Get the card components
+		LoteriaCard loteriaCardA = loteriaSlots[cardIdA];
+		LoteriaCard loteriaCardB = loteriaSlots[cardIdB];
+
+		// Store card data temporarily
+		LoteriaCardsData tempCardData = loteriaCardA.CurrentLoteriaCardData;
+
+		// Swap the visual cards
+		loteriaCardA.SetCardData(loteriaCardB.CurrentLoteriaCardData);
+		loteriaCardB.SetCardData(tempCardData);
+
+		// Swap in the grid
+		tableGrid[slotIndexA] = cardIdB;
+		tableGrid[slotIndexB] = cardIdA;
+
+		return true;
+	}
+
+	/// <summary>
+	/// Gets the card data at a specific slot
+	/// </summary>
+	/// <param name="slotIndex">Index of the slot (0-15)</param>
+	/// <returns>The card data at that slot, or null if invalid</returns>
+	public LoteriaCardsData GetSlotCard(int slotIndex)
+	{
+		if (slotIndex < 0 || slotIndex >= TOTAL_TABLA_COUNT)
+		{
+			Debug.LogWarning($"Invalid slot index: {slotIndex}");
+			return null;
+		}
+
+		int cardId = tableGrid[slotIndex];
+		return loteriaSlots[cardId].CurrentLoteriaCardData;
+	}
+
+	/// <summary>
+	/// Gets the card ID at a specific slot
+	/// </summary>
+	/// <param name="slotIndex">Index of the slot (0-15)</param>
+	/// <returns>The card ID at that slot, or -1 if invalid</returns>
+	public int GetSlotCardId(int slotIndex)
+	{
+		if (slotIndex < 0 || slotIndex >= TOTAL_TABLA_COUNT)
+		{
+			Debug.LogWarning($"Invalid slot index: {slotIndex}");
+			return -1;
+		}
+
+		return tableGrid[slotIndex];
+	}
 
 	#endregion
 
@@ -187,10 +358,13 @@ public class LoteriaTable : MonoBehaviour
 		}
 
 	}
-	private void UpdateTokenPlacement(LoteriaCardsData drawnCard)
+	private void UpdateTokenPlacement(LoteriaCardsData drawnCardData)
 	{
-		if (!tableGrid.Contains(drawnCard.id)) return;
-		loteriaSlots[drawnCard.id].CanPlaceToken(true);
+		if (!tableGrid.Contains(drawnCardData.id)) return;
+		if (loteriaSlots[drawnCardData.id].TokenPlaced()) return;
+		loteriaSlots[drawnCardData.id].CanPlaceToken(true);
+		unmarkedSlots.Remove(drawnCardData.id);
+		markedSlots.Add(drawnCardData.id);
 	}
 
 	public void UpdateScore()

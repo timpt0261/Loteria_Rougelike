@@ -4,11 +4,13 @@ using UnityEngine.InputSystem;
 
 public class FPS_Controller : MonoBehaviour
 {
+
+
     [SerializeField] private float speed = 10f;
 
     [Header("Assest References")]
     [SerializeField] private CapsuleCollider capsuleCollider;
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private Animator animator;
     [SerializeField] private CinemachineCamera mainCamera;
     [SerializeField] private Transform cameraRoot;
@@ -68,7 +70,7 @@ public class FPS_Controller : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        if (characterController == null) { characterController = GetComponent<CharacterController>(); }
+        if (rigidBody == null) { rigidBody = GetComponent<Rigidbody>(); }
         if (capsuleCollider == null) { capsuleCollider = GetComponent<CapsuleCollider>(); }
         if (audioSource == null) { audioSource = GetComponent<AudioSource>(); }
         if (animator == null) { animator = GetComponent<Animator>(); }
@@ -77,7 +79,7 @@ public class FPS_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
 
     }
 
@@ -89,20 +91,20 @@ public class FPS_Controller : MonoBehaviour
     public void Move()
     {
 
-        float targetSpeed = speed;
+
 
         // Calculate movement direction relative to camera
         Vector3 inputDirection = new Vector3(move.x, 0f, move.y);
         Vector3 targetDirection = Quaternion.Euler(0f, mainCamera.transform.eulerAngles.y, 0f) * inputDirection;
 
         // Apply movement
-        // rigidBody.MovePosition(
-        //     rigidBody.position + targetDirection.normalized * targetSpeed * Time.fixedDeltaTime
-        // );
-        characterController.Move(targetDirection * speed * Time.fixedDeltaTime);
+        rigidBody.MovePosition(
+            rigidBody.position + targetDirection.normalized * speed * Time.fixedDeltaTime
+        );
+        // rigidBody.Move(targetDirection * speed * Time.fixedDeltaTime);
     }
 
-    
+
 
 
 
