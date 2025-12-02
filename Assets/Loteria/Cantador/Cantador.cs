@@ -19,7 +19,6 @@ public class Cantador : MonoBehaviour
 
     private int _initalTotal;
     [SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
-    public void SetLoteriaDeck(List<LoteriaCardsData> newloteriaDeck) => this.loteriaDeck = newloteriaDeck;
     [SerializeField] private List<LoteriaCardsData> deckLoteriaCards = new();
     [SerializeField] private List<LoteriaCardsData> discardLoteriaCards = new();
 
@@ -59,34 +58,31 @@ public class Cantador : MonoBehaviour
             return;
         }
         Instance = this;
-
-        Initialize();
     }
 
-    public void Initialize()
+    private void OnEnable()
     {
+        EventBus.Subscribe<RunStartEvent>(OnRunStart);
+        EventBus.Subscribe<RoundStartEvent>(OnRoundStart);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<RunStartEvent>(OnRunStart);
+        EventBus.Unsubscribe<RoundStartEvent>(OnRoundStart);
+    }
+
+    private void OnRunStart(RunStartEvent runStartEvent)
+    {
+        loteriaDeck = runStartEvent.CurrentDeck;
+    }
+
+
+    private void OnRoundStart(RoundStartEvent roundStartEvent)
+    {
+
         _initalTotal = this.loteriaDeck.Count;
         ResetShuffleToNewGame();
-        //ResetTimer();
-    }
-    private void HandleTimer()
-    {
-        // If drawing, count down the timer
-        if (isDrawingCard)
-        {
-            timer -= Time.deltaTime;
-
-            // Update the UI slider to represent remaining time
-            timeSlot.value = Mathf.Clamp01(timer / drawTime);
-
-            if (timer <= 0f)
-            {
-                // Finished cooldown → ready to draw again
-                isDrawingCard = false;
-                isReady = true;
-                timeSlot.value = 1f;
-            }
-        }
     }
 
     public void DrawCards()
@@ -117,23 +113,6 @@ public class Cantador : MonoBehaviour
 
     }
 
-
-    private void StartTimer()
-    {
-        isDrawingCard = true;
-        isReady = false;
-        timer = drawTime;
-        timeSlot.value = 1f; // start full, deplete over time
-    }
-
-    private void ResetTimer()
-    {
-        isDrawingCard = false;
-        isReady = true;
-        timer = 0f;
-        timeSlot.value = 1f;
-    }
-
     private bool CanDraw()
     {
         if (isDrawingCard) return false;
@@ -144,7 +123,7 @@ public class Cantador : MonoBehaviour
 
 
     // shuffles the entire deck when round starts
-    public void ResetShuffleToNewGame()
+    private void ResetShuffleToNewGame()
     {
         var shuffled = new List<LoteriaCardsData>(loteriaDeck); // create copy
         ShuffleCards(shuffled);
@@ -152,7 +131,6 @@ public class Cantador : MonoBehaviour
 
         discardLoteriaCards.Clear();
         DrawnLoteriaCardsThisTurn.Clear();
-        // OnGameStartDeckReset?.Invoke();
     }
 
 

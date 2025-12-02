@@ -1,151 +1,166 @@
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+
+
+public enum TablaWinningRuleState { ROW, COLUMNS, DIAGONAL, FULL, NULL }
+
 
 public class LoteriaRoundManager : MonoBehaviour
 {
-    private enum ROUNDSTATE{ ROUND_START, DRAW, REVEAL, ROUND_END}
 
     [Header("References")]
     [SerializeField] private List<LoteriaCardsData> allLoteriaCards;
     [SerializeField] private Cantador cantador;
-    [SerializeField] private LoteriaTable loteriaTable;
-
+    [SerializeField] private LoteriaTabla loteriaTable;
     [SerializeField] private CharmManager charmManager;
 
     [Header("Game Stats")]
-    [SerializeField] private float debt;
-    [SerializeField] private float playerCash;
+
+    private Int32 _currentLevel;
+    public Int32 CurrentLevel
+    {
+        get { return _currentLevel; }
+        private set
+        {
+            if (value < 1) { _currentLevel = 1; return; }
+
+        }
+    }
     [SerializeField] private float roundScore;
     [SerializeField] private int totalRounds = 3;
-    [SerializeField] private int reshufflesRemaining;
+
+    private Int32 _currentRound;
+    public int CurrentRound
+    {
+        get { return _currentRound; }
+
+        set
+        {
+            if (value < 1) { _currentRound = 1; return; }
+            if (value > totalRounds) { _currentRound = totalRounds; return; }
+        }
+
+    }
 
 
-    private const int MAX_SHUFFLE_CHARGES = 3;
-    private const int MAX_TURNS_PER_ROUND = 7;
-    private const int INITIAL_PLAYER_CASH = 2;
+    private TablaWinningRuleState _winTableState;
+    private int _targetLength;
+
+
+
+    [Header("Randomization")]
+
+    [SerializeField] private string currentSeed;
+
+    //const variables
+
+    private const int MIN_TOTAL_LEVELS = 1;
+    private const int MAX_TOTAL_LEVELS = 3;
+
+    private const int EAST_LEVEL_MAX = 1; // level 1 should be easiest
+
+    private const int MIDDLE_LEVEL_MAX = 2; // Middle Difficulty
+
+    private const int DIFFICULT_LEVELS_MAX = 3; // Most Difficulty
+
+    private const int INIT_TOTAL_ROUNDS = 3;
+    private const int MAX_TOTAL_ROUNDS = 9;
+    private const int INIT_GRID_SIZE = 3;
+
+
+
 
     // set game condtion to win
     // game over works
     // shows up after round is completed
-    void Awake()
+    private void Awake()
     {
-        InitializeRound();
+
     }
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<RoundEndEvent>(OnRoundEnd);
+    }
+
+
 
     void Start()
     {
         cantador = Cantador.Instance;
-        loteriaTable = LoteriaTable.Instance;
+        loteriaTable = LoteriaTabla.Instance;
         charmManager = CharmManager.Instance;
-        SetLoteriaCardReference();
-        SetupNewRound();
+        StartRun();
+
     }
-
-    #region Initialization
-    private void InitializeRound()
-    {
-        totalRounds = 0;
-        playerCash = INITIAL_PLAYER_CASH;
-        debt = 0f;
-        roundScore = 0f;
-    }
-
-    private void SetLoteriaCardReference()
-    {
-        cantador.SetLoteriaDeck(allLoteriaCards);
-        loteriaTable.SetLoteriaDeck(allLoteriaCards);
-    }
-    #endregion
-
-
-
 
     #region State Actions
-    private void SetupNewRound()
+    public void StartRun()
     {
-        totalRounds++;
-        roundScore = 0f;
-
-        cantador.Initialize();
-        loteriaTable.ResetTable();
-
-        
-        charmManager.OnRoundStart?.Invoke();
+        GenerateRandomNumber(); // Generate Random Number
+        _currentLevel = MIN_TOTAL_LEVELS;// set current level to 1
+        EventBus.Raise(new RunStartEvent(INIT_GRID_SIZE, allLoteriaCards));
     }
 
-    private void ProcessRoundEnd()
-    {
-        // Calculate final score and cash earned
-        roundScore = loteriaTable.Score;
-        playerCash += roundScore;
-        Debug.Log($"Round {totalRounds} completed! Score: {roundScore}, Total Cash: {playerCash}");
-        charmManager.OnRoundEnd?.Invoke();
-        //OpenShop();
 
+    public void SetUpNewRound()
+    {
+        _currentRound = MIN_TOTAL_LEVELS;
+        // deterime win condtion
+        (_winTableState, _targetLength) = DetermineWinningCondition();
+        EventBus.Raise(new RoundStartEvent(_currentRound, _winTableState, _targetLength));
+    }
+
+
+    private void OnRoundEnd(RoundEndEvent @event)
+    {
+        throw new NotImplementedException();
+    }
+
+    #endregion
+
+    #region Win Condition
+    private (TablaWinningRuleState, int) DetermineWinningCondition()
+    {
+        TablaWinningRuleState choosenState = (TablaWinningRuleState)DiceRoll(2) - 1; // assume it's a 3x by 3
+        int numberToComplete = DiceRoll(3); // value between 1-3
+
+        return (choosenState, numberToComplete);
     }
     #endregion
 
-    #region Public State Control
 
-    public void RestartGame()
+    #region Random Utility
+
+    private int DiceRoll(int d)
     {
-        InitializeRound();
-
+        return UnityEngine.Random.Range(1, d);
     }
-    #endregion
-
-    #region Cantador Events
-    public void HandleCardDrawn()
+    private void GenerateRandomNumber()
     {
-        loteriaTable.UpdateTabla(cantador.DrawnLoteriaCardsThisRound);
-    }
-
-
-
-    public void HandleDeckShuffleOnStart()
-    {
-        loteriaTable.ResetTable();
+        int seed = System.DateTime.Now.Date.ToLongTimeString().GetHashCode();
+        currentSeed = seed.ToString();
+        UnityEngine.Random.InitState(seed);
     }
 
-    public void HandleDeckShuffleMidRound()
+    public void SetRandomSeed(string seed = "")
     {
-        
+        currentSeed = seed;
+        int tempSeed = 0;
+        // Source - https://stackoverflow.com/a
+        // Posted by mqp, modified by community. See post 'Timeline' for change history
+        // Retrieved 2025-11-12, License - CC BY-SA 4.0
+
+        var isNumeric = int.TryParse(currentSeed, out _);
+
+        if (isNumeric)
+            tempSeed = System.Int32.Parse(seed);
+        else
+            tempSeed = currentSeed.GetHashCode();
+
+        UnityEngine.Random.InitState(tempSeed);
     }
-    #endregion
-
-    #region  Loteria Table
-
-    public void HandleLoteriaWinCondition()
-    {
-        ProcessRoundEnd();
-    }
-
-    public void HandleLoteriaLoseCondtion()
-    {
-
-    }
-    #endregion
-
-    #region Loteria Card Events
-    public void HandleOnCardSet()
-    {
-        // Card initialization complete
-    }
-
-    public void HandleCanTokenBePlaced()
-    {
-        // Token placement is now available
-    }
-
-    public void HandleWhenTokenPlaced()
-    {
-        loteriaTable.UpdateScore();
-    }
-    #endregion
-
-    #region UI Updates
     #endregion
 
 

@@ -1,12 +1,19 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class RoundStartEvent : IGameEvent
 {
 
-	public List<LoteriaCardsData> CurrentDeck { get; private set; }
-	public RoundStartEvent(List<LoteriaCardsData> currentDeck)
+	public int Round { get; private set; }
+	public TablaWinningRuleState WinTableState { get; private set; }
+	public int TargetLength { get; private set; }
+
+	public RoundStartEvent(int _round, TablaWinningRuleState _winTableState, int _targetLength)
 	{
-		CurrentDeck = currentDeck;
+		Round = _round;
+		WinTableState = _winTableState;
+		TargetLength = _targetLength;
 	}
 }

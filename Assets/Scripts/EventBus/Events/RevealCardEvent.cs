@@ -5,9 +5,9 @@ using UnityEngine;
 public class RevealCardEvent : IGameEvent
 {
 
-	
-	public RevealCardEvent()
+	public LoteriaCardsData drawnCardData{get; private set;}
+	public RevealCardEvent(LoteriaCardsData _drawnCardData)
 	{
-		
+		drawnCardData = _drawnCardData;
 	}
 }
