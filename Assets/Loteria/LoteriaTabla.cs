@@ -43,7 +43,7 @@ public class LoteriaTabla : MonoBehaviour
 		Instance = this;
 
 		if (rootCanvas == null) { rootCanvas = GetComponent<RectTransform>(); }
-		
+
 		// Initialize layout configurations
 		layout3x3 = TableLayoutConfig.Create3x3();
 		layout4x4 = TableLayoutConfig.Create4x4();
@@ -53,14 +53,14 @@ public class LoteriaTabla : MonoBehaviour
 	{
 		EventBus.Subscribe<RunStartEvent>(OnRunStart);
 		EventBus.Subscribe<RoundStartEvent>(OnRoundStart);
-		EventBus.Subscribe<RevealCardEvent>(UpdateTokenPlacement);
+		EventBus.Subscribe<RevealSingleCardEvent>(UpdateTokenPlacement);
 	}
 
 	private void OnDisable()
 	{
 		EventBus.Unsubscribe<RunStartEvent>(OnRunStart);
 		EventBus.Unsubscribe<RoundStartEvent>(OnRoundStart);
-		EventBus.Unsubscribe<RevealCardEvent>(UpdateTokenPlacement);
+		EventBus.Unsubscribe<RevealSingleCardEvent>(UpdateTokenPlacement);
 	}
 
 	#region Unity Lifecycle
@@ -79,7 +79,7 @@ public class LoteriaTabla : MonoBehaviour
 	{
 		currentGridSize = runStartEvent.GridSize;
 		loteriaDeck = runStartEvent.CurrentDeck;
-		
+
 		// Initialize table state with grid size
 		tableState = new TableState();
 		tableState.TableGridSize = currentGridSize;
@@ -98,6 +98,18 @@ public class LoteriaTabla : MonoBehaviour
 		tableState.ResetTableState();
 		ResetTokenPlacers();
 	}
+
+	private void UpdateTokenPlacement(RevealSingleCardEvent revealCardEvent)
+	{
+		LoteriaCardsData drawnCardData = revealCardEvent.drawnCardData;
+		if (!tableGrid.Contains(drawnCardData.id)) return;
+		if (loteriaSlots[drawnCardData.id].TokenPlaced()) return;
+
+		loteriaSlots[drawnCardData.id].CanPlaceToken(true);
+
+		// Update score after token placement
+		CalculateScore();
+	}
 	#endregion
 
 	#region Table Generation
@@ -105,10 +117,10 @@ public class LoteriaTabla : MonoBehaviour
 	{
 		// Configure UI Grid Layout based on grid size
 		ConfigureGridLayout(gridSize);
-		
+
 		List<LoteriaCardsData> shuffled = Shuffle();
 		int totalGridSize = gridSize * gridSize;
-		
+
 		tableGrid.Clear();
 		loteriaSlots.Clear();
 
@@ -116,7 +128,7 @@ public class LoteriaTabla : MonoBehaviour
 		{
 			GameObject currentSlot = cardPrefabs[i];
 			currentSlot.SetActive(true);
-			
+
 			LoteriaCard loteriaCard = currentSlot.GetComponent<LoteriaCard>();
 			loteriaCard.SetCardData(shuffled[i % shuffled.Count]);
 
@@ -124,7 +136,7 @@ public class LoteriaTabla : MonoBehaviour
 			tableGrid.Add(cardId);
 			loteriaSlots.Add(cardId, loteriaCard);
 		}
-		
+
 		// Deactivate unused cards
 		for (int i = totalGridSize; i < cardPrefabs.Count; i++)
 		{
@@ -145,35 +157,35 @@ public class LoteriaTabla : MonoBehaviour
 
 		// Apply layout settings to UI Grid Layout Group
 		loteriaTableGroup.cellSize = currentLayout.CellSize;
-		loteriaTableGroup.spacing = Vector2.zero;
+		loteriaTableGroup.spacing = currentLayout.Spacing;
 		loteriaTableGroup.padding = currentLayout.RectOffset;
 		loteriaTableGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
 		loteriaTableGroup.constraintCount = currentLayout.GridSize;
-		
+
 		// Set canvas size
 		if (rootCanvas != null)
 		{
 			rootCanvas.sizeDelta = currentLayout.CanvasSize;
 		}
-		
+
 		// Store current layout configuration in TablaGridLayout
 		if (gridSize == 3)
 		{
 			_grid_3x3 = new TablaGridLayout(
-				currentLayout.RectOffset, 
-				currentLayout.CellSize, 
-				Vector2.zero, 
-				cardPrefabs, 
+				currentLayout.RectOffset,
+				currentLayout.CellSize,
+				Vector2.zero,
+				cardPrefabs,
 				currentLayout.CardsActive
 			);
 		}
 		else if (gridSize == 4)
 		{
 			_grid_4x4 = new TablaGridLayout(
-				currentLayout.RectOffset, 
-				currentLayout.CellSize, 
-				Vector2.zero, 
-				cardPrefabs, 
+				currentLayout.RectOffset,
+				currentLayout.CellSize,
+				Vector2.zero,
+				cardPrefabs,
 				currentLayout.CardsActive
 			);
 		}
@@ -181,7 +193,7 @@ public class LoteriaTabla : MonoBehaviour
 		{
 			Debug.LogWarning($"Unsupported grid size: {gridSize}. Only 3x3 and 4x4 are supported.");
 		}
-		
+
 		// Force layout rebuild
 		LayoutRebuilder.ForceRebuildLayoutImmediate(loteriaTableGroup.GetComponent<RectTransform>());
 	}
@@ -203,27 +215,19 @@ public class LoteriaTabla : MonoBehaviour
 
 	public void UpgradeToFourByFour()
 	{
-		if (currentGridSize == 4) return;
-		
-		currentGridSize = 4;
-		tableState.TableGridSize = 4;
+		const int FOUR = 4;
+		if (currentGridSize == FOUR) return;
+
+		currentGridSize = FOUR;
+		tableState.TableGridSize = FOUR;
 		tableState.ResetTableState();
-		GenerateTabla(4);
+		GenerateTabla(FOUR);
+
 	}
 	#endregion
 
 	#region Game State Updates
-	private void UpdateTokenPlacement(RevealCardEvent revealCardEvent)
-	{
-		LoteriaCardsData drawnCardData = revealCardEvent.drawnCardData;
-		if (!tableGrid.Contains(drawnCardData.id)) return;
-		if (loteriaSlots[drawnCardData.id].TokenPlaced()) return;
-		
-		loteriaSlots[drawnCardData.id].CanPlaceToken(true);
-		
-		// Update score after token placement
-		CalculateScore();
-	}
+
 
 	public void UpdateScore()
 	{
@@ -244,14 +248,14 @@ public class LoteriaTabla : MonoBehaviour
 	{
 		score = 0;
 		int totalCells = currentGridSize * currentGridSize;
-		
+
 		// Initialize token states based on current grid size
 		tableState.tokenStates = new List<bool>(totalCells);
 		List<float> tokenMultipliers = new List<float>(totalCells);
-		
+
 		// Cache token states
 		int markedCount = CacheTokenState(tokenMultipliers);
-		
+
 		// Early exit if not enough tokens
 		if (markedCount < currentGridSize) return;
 
@@ -266,26 +270,26 @@ public class LoteriaTabla : MonoBehaviour
 	{
 		int markedCount = 0;
 		int totalCells = currentGridSize * currentGridSize;
-		
+
 		tableState.tokenStates.Clear();
 		tokenMultipliers.Clear();
-		
+
 		for (int i = 0; i < totalCells; i++)
 		{
 			int cardId = tableGrid[i];
 			bool hasToken = loteriaSlots[cardId].TokenPlaced();
 			float multiplier = hasToken ? loteriaSlots[cardId].TimerBonusMultiplier : 1f;
-			
+
 			tableState.tokenStates.Add(hasToken);
 			tokenMultipliers.Add(multiplier);
-			
+
 			if (hasToken)
 			{
 				markedCount++;
 				score += TablaScorePoints.SingleMultiplier * multiplier;
 			}
 		}
-		
+
 		return markedCount;
 	}
 
@@ -293,7 +297,7 @@ public class LoteriaTabla : MonoBehaviour
 	{
 		int horizontalScore = 0;
 		tableState.RowsCompleted = 0;
-		
+
 		for (int row = 0; row < currentGridSize; row++)
 		{
 			if (CheckPattern(row * currentGridSize, currentGridSize, 1))
@@ -302,7 +306,7 @@ public class LoteriaTabla : MonoBehaviour
 				tableState.RowsCompleted++;
 			}
 		}
-		
+
 		return horizontalScore;
 	}
 
@@ -310,7 +314,7 @@ public class LoteriaTabla : MonoBehaviour
 	{
 		int verticalScore = 0;
 		tableState.ColumnsCompleted = 0;
-		
+
 		for (int col = 0; col < currentGridSize; col++)
 		{
 			if (CheckPattern(col, currentGridSize, currentGridSize))
@@ -319,7 +323,7 @@ public class LoteriaTabla : MonoBehaviour
 				tableState.ColumnsCompleted++;
 			}
 		}
-		
+
 		return verticalScore;
 	}
 
@@ -327,21 +331,21 @@ public class LoteriaTabla : MonoBehaviour
 	{
 		int diagonalScore = 0;
 		tableState.DiagonalsCompleted = 0;
-		
+
 		// Left to right diagonal (top-left to bottom-right)
 		if (CheckLeftDiagonal())
 		{
 			diagonalScore += TablaScorePoints.DiagonalMultiplier;
 			tableState.DiagonalsCompleted++;
 		}
-		
+
 		// Right to left diagonal (top-right to bottom-left)
 		if (CheckRightDiagonal())
 		{
 			diagonalScore += TablaScorePoints.DiagonalMultiplier;
 			tableState.DiagonalsCompleted++;
 		}
-		
+
 		return diagonalScore;
 	}
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public struct TableState
 {
@@ -73,11 +74,13 @@ public struct TableLayoutConfig
 	public int CardsActive { get; private set; }
 	public int PaddingSize { get; private set; }
 
+	public Vector2 Spacing { get; private set; }
+
 	public Vector2 CellSize => new Vector2(CellWidth, CellHeight);
 	public Vector2 CanvasSize => new Vector2(CanvasWidth, CanvasHeight);
 	public RectOffset RectOffset => new RectOffset(PaddingSize, PaddingSize, PaddingSize, PaddingSize);
 
-	public TableLayoutConfig(int gridSize, int cellWidth, int cellHeight, int canvasWidth, int canvasHeight, int paddingSize = 5)
+	public TableLayoutConfig(int gridSize, int cellWidth, int cellHeight, int canvasWidth, int canvasHeight, int paddingSize = 5, Vector2 spacing = new())
 	{
 		GridSize = gridSize;
 		CellWidth = cellWidth;
@@ -86,6 +89,7 @@ public struct TableLayoutConfig
 		CanvasHeight = canvasHeight;
 		CardsActive = gridSize * gridSize;
 		PaddingSize = paddingSize;
+		Spacing = spacing;
 	}
 
 	// Preset configurations
@@ -97,7 +101,8 @@ public struct TableLayoutConfig
 			cellHeight: 50,
 			canvasWidth: 180,
 			canvasHeight: 180,
-			paddingSize: 5
+			paddingSize: 5,
+			spacing: new Vector2(10,10)
 		);
 	}
 
@@ -109,7 +114,8 @@ public struct TableLayoutConfig
 			cellHeight: 40,
 			canvasWidth: 170,
 			canvasHeight: 200,
-			paddingSize: 5
+			paddingSize: 5,
+			spacing: new Vector2(13,10)
 		);
 	}
 }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.Mathematics;
 using System.Collections;
+using UnityEngine.Rendering;
+using UnityEditor.ShaderGraph.Internal;
 
 public class Cantador_UI : MonoBehaviour
 {
@@ -14,31 +16,24 @@ public class Cantador_UI : MonoBehaviour
     [SerializeField] private RectTransform drawnCardsRectTransform;
     [SerializeField] private GridLayoutGroup drawnCardsGridGroup;
     [SerializeField] private TextMeshProUGUI remainingCardsText;
+    [SerializeField] private TextMeshProUGUI currentRoundText;
+    [SerializeField] private Slider revealSlider;
 
     [Header("Card Prefab")]
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private List<GameObject> displayedCardPool;
 
-    [Header("Animation Timing")]
-    [SerializeField] private float cardRevealDuration = 1f;
-    [SerializeField] private float delayBetweenCardReveals = 1f;
-    [SerializeField] private float cardDiscardDuration = 1f;
-    [SerializeField] private float delayBetweenCardDiscards = 1f;
-
     // Grid Layout Constants
-    private const float CELL_WIDTH = 60f;
-    private const float CELL_HEIGHT = 86.666f;
+    private const float CELL_WIDTH = 40f;
+    private const float CELL_HEIGHT = 57.777f;
     private static readonly Vector2 CELL_SIZE = new Vector2(CELL_WIDTH, CELL_HEIGHT);
 
     // Animation Constants
     private const float GRID_EXPANSION_DURATION = 1f;
-    private const int GRID_COMPRESSED_PADDING_RIGHT = -425;
+    private const int GRID_COMPRESSED_PADDING_RIGHT = -326;
     private const int GRID_EXPANDED_PADDING_RIGHT = 0;
-    private const float GRID_COMPRESSED_SPACING_X = -60f;
-    private const float GRID_EXPANDED_SPACING_X = 16f;
-
-    private const float DELAY_BEFORE_REVEAL = 1.5f;
-    private const float DELAY_AFTER_REVEAL_BUFFER = 6f;
+    private const float GRID_COMPRESSED_SPACING_X = -40f;
+    private const float GRID_EXPANDED_SPACING_X = 9f;
 
     private const float DISCARD_MOVE_X_OFFSET = -900f;
     private const float DISCARD_PUNCH_DURATION = 1f;
@@ -48,50 +43,62 @@ public class Cantador_UI : MonoBehaviour
     private static readonly Vector3 CARD_FACE_UP_ROTATION = Vector3.zero;
     private static readonly Vector3 DISCARD_PUNCH_ROTATION = new Vector3(2f, 0f, 2f);
 
-    // Events
-    public static event Action<LoteriaCardsData> OnCardRevealed;
+    // Slider state
+    private Coroutine sliderCountdownCoroutine;
 
     private void Awake()
     {
         InitializeComponents();
         ConfigureGridLayout();
         DeactivateAllCardsInPool();
+
+        // Initialize slider
+        if (revealSlider != null)
+        {
+            revealSlider.gameObject.SetActive(false);
+            revealSlider.minValue = 0f;
+            revealSlider.maxValue = 1f;
+            revealSlider.value = 1f;
+        }
     }
 
     private void OnEnable()
     {
         EventBus.Subscribe<RunStartEvent>(OnRunStart);
         EventBus.Subscribe<RoundStartEvent>(OnRoundStart);
-        EventBus.Subscribe<DrawCardEvent>(OnAddCardsToDisplay);
-
-
+        EventBus.Subscribe<DrawCardsEvent>(OnDrawCards);
+        EventBus.Subscribe<RevealDrawnCardsEvent>(OnRevealCards);
+        EventBus.Subscribe<DiscardCardEvent>(OnDiscardCards);
     }
-
 
     private void OnDisable()
     {
-        EventBus.Subscribe<RunStartEvent>(OnRunStart);
+        EventBus.Unsubscribe<RunStartEvent>(OnRunStart);
         EventBus.Unsubscribe<RoundStartEvent>(OnRoundStart);
-        EventBus.Unsubscribe<DrawCardEvent>(OnAddCardsToDisplay);
+        EventBus.Unsubscribe<DrawCardsEvent>(OnDrawCards);
+        EventBus.Unsubscribe<RevealDrawnCardsEvent>(OnRevealCards);
+        EventBus.Unsubscribe<DiscardCardEvent>(OnDiscardCards);
 
+        // Clean up coroutine if running
+        if (sliderCountdownCoroutine != null)
+        {
+            StopCoroutine(sliderCountdownCoroutine);
+        }
     }
 
     private void InitializeComponents()
     {
         if (drawnCardsRectTransform == null)
-        {
             drawnCardsRectTransform = GetComponent<RectTransform>();
-        }
 
         if (drawnCardsGridGroup == null)
-        {
             drawnCardsGridGroup = GetComponent<GridLayoutGroup>();
-        }
 
         if (remainingCardsText == null)
-        {
             remainingCardsText = GameObject.Find("RemainingCardText").GetComponent<TextMeshProUGUI>();
-        }
+
+        if (currentRoundText == null)
+            currentRoundText = GameObject.Find("CurrentRoundText").GetComponent<TextMeshProUGUI>();
     }
 
     private void ConfigureGridLayout()
@@ -112,26 +119,7 @@ public class Cantador_UI : MonoBehaviour
         remainingCardsText.text = $"{remainingCards} / {totalCards}";
     }
 
-    // private void UpdateCardDisplay(List<LoteriaCardsData> drawnCards)
-    // {
-    //     Sequence masterSequence = DOTween.Sequence();
-
-    //     masterSequence.AppendCallback(() => AddCardsToDisplay(drawnCards));
-    //     masterSequence.AppendInterval(DELAY_BEFORE_REVEAL);
-    //     masterSequence.AppendCallback(() => RevealCards());
-
-    //     float totalRevealTime = CalculateTotalRevealTime();
-    //     masterSequence.AppendInterval(totalRevealTime);
-
-    //     masterSequence.AppendCallback(() => DiscardCards());
-    // }
-
-    private float CalculateTotalRevealTime()
-    {
-        return (delayBetweenCardReveals * displayedCardPool.Count) +
-               cardRevealDuration +
-               DELAY_AFTER_REVEAL_BUFFER;
-    }
+    #region Event Handling
 
     private void OnRunStart(RunStartEvent runStartEvent)
     {
@@ -141,90 +129,137 @@ public class Cantador_UI : MonoBehaviour
 
     private void OnRoundStart(RoundStartEvent roundStartEvent)
     {
-        // reset cards to remaining
-        // update upper ui button to say current round
+        currentRoundText.text = $"Round: {roundStartEvent.Round}";
 
+        // Hide slider at round start
+        if (revealSlider != null)
+        {
+            revealSlider.gameObject.SetActive(false);
+        }
     }
 
-
-    private void OnAddCardsToDisplay(DrawCardEvent drawCardEvent)
+    private void OnDrawCards(DrawCardsEvent drawCardEvent)
     {
-        bool ValidateDrawnCards(List<LoteriaCardsData> drawnCards)
-        {
-            if (drawnCards == null)
-            {
-                return false;
-            }
-
-            if (drawnCards.Count > displayedCardPool.Count || drawnCards.Count == 0)
-            {
-                Debug.LogError($"Invalid drawn cards count: {drawnCards.Count}. Must be between 1 and {displayedCardPool.Count}");
-                return false;
-            }
-
-            return true;
-        }
-
-        void SetGridToCompressedState()
-        {
-            var padding = drawnCardsGridGroup.padding;
-            padding.right = GRID_COMPRESSED_PADDING_RIGHT;
-            drawnCardsGridGroup.padding = padding;
-
-            drawnCardsGridGroup.spacing = new Vector2(GRID_COMPRESSED_SPACING_X, 0);
-        }
-
-
-        void AnimateGridExpansion(float animationDuration)
-        {
-            Sequence layoutSequence = DOTween.Sequence();
-
-            // Animate padding expansion
-            layoutSequence.Append(
-                DOTween.To(
-                    () => drawnCardsGridGroup.padding.right,
-                    paddingValue =>
-                    {
-                        var padding = drawnCardsGridGroup.padding;
-                        padding.right = (int)paddingValue;
-                        drawnCardsGridGroup.padding = padding;
-                    },
-                    GRID_EXPANDED_PADDING_RIGHT,
-                    animationDuration
-                ).SetEase(Ease.OutQuad)
-            );
-
-            // Animate spacing expansion (simultaneously)
-            layoutSequence.Join(
-                DOTween.To(
-                    () => drawnCardsGridGroup.spacing.x,
-                    spacingValue =>
-                    {
-                        drawnCardsGridGroup.spacing = new Vector2(spacingValue, drawnCardsGridGroup.spacing.y);
-                    },
-                    GRID_EXPANDED_SPACING_X,
-                    animationDuration
-                ).SetEase(Ease.OutQuad)
-            );
-        }
-
+        int drawnAmount = drawCardEvent.DrawnAmount;
         float displayAnimationDuration = drawCardEvent.DrawTime;
-        List<LoteriaCardsData> drawnCards = drawCardEvent.DrawnCards;
-        if (!ValidateDrawnCards(drawnCards))
+
+        if (drawnAmount > displayedCardPool.Count || drawnAmount == 0)
         {
+            Debug.LogError($"Invalid drawn cards count: {drawnAmount}. Must be between 1 and {displayedCardPool.Count}");
             return;
         }
 
+        // Hide slider during draw
+        if (revealSlider != null)
+        {
+            revealSlider.gameObject.SetActive(false);
+        }
+
+        // Animate the draw phase (expand grid, activate cards face-down)
         SetGridToCompressedState();
-
-        int cardCount = drawnCards.Count;
-        ActivateDisplayCardsInPool(drawnCards, cardCount);
-        DeactivateUnusedCards(cardCount);
-
+        ActivateDisplayCardsInPool(drawnAmount);
+        DeactivateUnusedCards(drawnAmount);
         AnimateGridExpansion(displayAnimationDuration);
     }
 
-    public void RevealCards()
+    private void OnRevealCards(RevealDrawnCardsEvent revealDrawnCardsEvent)
+    {
+        float delayBetweenReveal = revealDrawnCardsEvent.DelayTimeBetweenIntervals;
+        float cardRotationSpeed = revealDrawnCardsEvent.CardRotationSpeed;
+        List<LoteriaCardsData> drawnCards = revealDrawnCardsEvent.drawnCardsData;
+
+        // Hide slider during reveal
+        if (revealSlider != null)
+        {
+            revealSlider.gameObject.SetActive(false);
+        }
+
+        // Set card data for each active card
+        for (int i = 0; i < drawnCards.Count; i++)
+        {
+            if (i >= displayedCardPool.Count) break;
+
+            LoteriaCard card = displayedCardPool[i].GetComponent<LoteriaCard>();
+            card.SetCardData(drawnCards[i]);
+        }
+
+        // Play reveal animation sequence
+        RevealCardsSequence(delayBetweenReveal, cardRotationSpeed);
+    }
+
+    private void OnDiscardCards(DiscardCardEvent discardCardEvent)
+    {
+        float discardTime = discardCardEvent.DiscardTime;
+
+        // Show and initialize slider
+        if (revealSlider != null)
+        {
+            revealSlider.gameObject.SetActive(true);
+            revealSlider.value = 1f; // Start at full
+        }
+
+        // Start slider countdown
+        if (sliderCountdownCoroutine != null)
+        {
+            StopCoroutine(sliderCountdownCoroutine);
+        }
+        sliderCountdownCoroutine = StartCoroutine(AnimateSliderCountdown(discardTime));
+
+        // Play discard animation
+        DiscardCardsSequence(discardTime);
+    }
+
+    #endregion
+
+    #region Draw Animation
+
+    private void SetGridToCompressedState()
+    {
+        var padding = drawnCardsGridGroup.padding;
+        padding.right = GRID_COMPRESSED_PADDING_RIGHT;
+        drawnCardsGridGroup.padding = padding;
+
+        drawnCardsGridGroup.spacing = new Vector2(GRID_COMPRESSED_SPACING_X, 0);
+    }
+
+    private void AnimateGridExpansion(float animationDuration)
+    {
+        Sequence layoutSequence = DOTween.Sequence();
+
+        // Animate padding expansion
+        layoutSequence.Append(
+            DOTween.To(
+                () => drawnCardsGridGroup.padding.right,
+                paddingValue =>
+                {
+                    var padding = drawnCardsGridGroup.padding;
+                    padding.right = (int)paddingValue;
+                    drawnCardsGridGroup.padding = padding;
+                },
+                GRID_EXPANDED_PADDING_RIGHT,
+                animationDuration
+            ).SetEase(Ease.OutQuad)
+        );
+
+        // Animate spacing expansion (simultaneously)
+        layoutSequence.Join(
+            DOTween.To(
+                () => drawnCardsGridGroup.spacing.x,
+                spacingValue =>
+                {
+                    drawnCardsGridGroup.spacing = new Vector2(spacingValue, drawnCardsGridGroup.spacing.y);
+                },
+                GRID_EXPANDED_SPACING_X,
+                animationDuration
+            ).SetEase(Ease.OutQuad)
+        );
+    }
+
+    #endregion
+
+    #region Reveal Animation
+
+    private void RevealCardsSequence(float delayBetweenCardReveals, float cardRotationSpeed)
     {
         Sequence revealSequence = DOTween.Sequence();
 
@@ -235,20 +270,47 @@ public class Cantador_UI : MonoBehaviour
             RectTransform cardRectTransform = card.GetComponent<RectTransform>();
             LoteriaCardsData cardData = card.GetComponent<LoteriaCard>().CurrentLoteriaCardData;
 
+            // Delay before revealing this card
             revealSequence.AppendInterval(delayBetweenCardReveals);
+
+            // Rotate card face-up
             revealSequence.Append(
                 cardRectTransform.DOLocalRotateQuaternion(
                     Quaternion.Euler(CARD_FACE_UP_ROTATION),
-                    cardRevealDuration
+                    cardRotationSpeed
                 )
             );
-            revealSequence.AppendCallback(() => EventBus.Raise(new RevealCardEvent(cardData)));
+
+            // Raise event for LoteriaTable to check this card
+            revealSequence.AppendCallback(() =>
+            {
+                EventBus.Raise(new RevealSingleCardEvent(cardData));
+            });
         }
+
+        // After all cards are revealed, notify Cantador
+        revealSequence.OnComplete(() =>
+        {
+            EventBus.Raise(new RevealDrawnCardsCompleteEvent());
+        });
     }
 
-    public void DiscardCards()
+    #endregion
+
+    #region Discard Animation
+
+    private void DiscardCardsSequence(float totalDiscardTime)
     {
         Sequence discardSequence = DOTween.Sequence();
+
+        // Calculate time per card for the discard animation
+        int activeCardCount = 0;
+        foreach (GameObject card in displayedCardPool)
+        {
+            if (card.activeSelf) activeCardCount++;
+        }
+
+        float discardTimePerCard = activeCardCount > 0 ? totalDiscardTime / activeCardCount : totalDiscardTime;
 
         foreach (GameObject card in displayedCardPool)
         {
@@ -260,15 +322,51 @@ public class Cantador_UI : MonoBehaviour
                 cardRectTransform.DOPunchRotation(DISCARD_PUNCH_ROTATION, DISCARD_PUNCH_DURATION)
             );
             discardSequence.Append(
-                cardRectTransform.DOLocalMoveX(DISCARD_MOVE_X_OFFSET, cardDiscardDuration, true)
+                cardRectTransform.DOLocalMoveX(DISCARD_MOVE_X_OFFSET, discardTimePerCard, true)
             );
         }
 
         discardSequence.OnComplete(() =>
         {
             DeactivateAllCardsInPool();
+
+            // Hide slider when discard is complete
+            if (revealSlider != null)
+            {
+                revealSlider.gameObject.SetActive(false);
+            }
+
+            // Notify Cantador that discard is complete
+            EventBus.Raise(new DiscardCardsCompleteEvent());
         });
     }
+
+    /// <summary>
+    /// Animates the slider counting down from 1 to 0 over the specified duration
+    /// </summary>
+    private IEnumerator AnimateSliderCountdown(float duration)
+    {
+        if (revealSlider == null) yield break;
+
+        float elapsedTime = 0f;
+        revealSlider.value = 1f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = elapsedTime / duration;
+
+            // Countdown from 1 to 0
+            revealSlider.value = 1f - normalizedTime;
+
+            yield return null;
+        }
+
+        // Ensure it ends at 0
+        revealSlider.value = 0f;
+    }
+
+    #endregion
 
     #region Utility Methods
 
@@ -280,15 +378,11 @@ public class Cantador_UI : MonoBehaviour
         }
     }
 
-    private void ActivateDisplayCardsInPool(List<LoteriaCardsData> drawnCards, int cardCount)
+    private void ActivateDisplayCardsInPool(int cardCount)
     {
         for (int i = 0; i < cardCount; i++)
         {
             GameObject displayedCard = displayedCardPool[i];
-
-            // Set card data
-            LoteriaCard loteriaCard = displayedCard.GetComponent<LoteriaCard>();
-            loteriaCard.SetCardData(drawnCards[i]);
 
             // Set initial appearance (face down)
             RectTransform cardRectTransform = displayedCard.GetComponent<RectTransform>();

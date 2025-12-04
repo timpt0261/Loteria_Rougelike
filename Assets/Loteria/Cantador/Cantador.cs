@@ -6,6 +6,7 @@ using TMPro;
 using System;
 using System.Collections;
 using System.Xml.Schema;
+using System.Linq;
 
 
 public class Cantador : MonoBehaviour
@@ -16,8 +17,7 @@ public class Cantador : MonoBehaviour
     public int DrawAmount { get { return drawAmount; } set { drawAmount = value; } }
 
     [Header("Card Data")]
-
-    private int _initalTotal;
+    private int _initialTotal;
     [SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
     [SerializeField] private List<LoteriaCardsData> deckLoteriaCards = new();
     [SerializeField] private List<LoteriaCardsData> discardLoteriaCards = new();
@@ -26,31 +26,19 @@ public class Cantador : MonoBehaviour
     public List<LoteriaCardsData> DrawnLoteriaCardsThisTurn = new();
 
     [Header("Timer Settings")]
-    [SerializeField] private Slider timeSlot;
-    [SerializeField] private float drawTime = 3f;   // duration between draws
-    [SerializeField] private float refillSpeed = 2f;
+    [SerializeField] private float drawTime = 5f;
+    [SerializeField] private float revealTimeDelay = .5f;
+    [SerializeField] private float cardRotationSpeed = 2.5f;
+    [SerializeField] private float discardTime = 5f;
 
     // states
     private float timer;
     private bool isDrawingCard;
     private bool isReady = true;
+    private bool IsDeckEmpty = false;
+    private bool isProcessingDraw = false; // Prevent overlapping draws
 
-    [SerializeField] private Transform drawingCardTransform;
-
-    [SerializeField] private TextMeshProUGUI turnUI;
-
-
-
-
-    [Header("Events")]
-    public UnityEvent OnCardDrawn;
-    public UnityEvent OnGameStartDeckReset;
-    public UnityEvent OnMidRoundDeckReShuffle;
-
-    public static event Action<int, int> OnUpdateRemainingCards;
-    public static event Action<List<LoteriaCardsData>> OnDrawingCards;
-
-    void Awake()
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -60,82 +48,209 @@ public class Cantador : MonoBehaviour
         Instance = this;
     }
 
+    private void Update()
+    {
+        if (IsDeckEmpty || isProcessingDraw)
+        {
+            return;
+        }
+
+        // Check if deck is empty
+        if (deckLoteriaCards.Count == 0)
+        {
+            EventBus.Raise(new RoundEndEvent());
+            IsDeckEmpty = true;
+            return;
+        }
+
+        if (CanDraw())
+        {
+            StartCoroutine(ProcessDrawRevealDiscardSequence());
+        }
+    }
+
     private void OnEnable()
     {
         EventBus.Subscribe<RunStartEvent>(OnRunStart);
         EventBus.Subscribe<RoundStartEvent>(OnRoundStart);
+        EventBus.Subscribe<RevealDrawnCardsCompleteEvent>(OnRevealDrawnCardsComplete);
+        EventBus.Subscribe<DiscardCardsCompleteEvent>(OnDiscardCardsComplete);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<RunStartEvent>(OnRunStart);
         EventBus.Unsubscribe<RoundStartEvent>(OnRoundStart);
+        EventBus.Unsubscribe<RevealDrawnCardsCompleteEvent>(OnRevealDrawnCardsComplete);
+        EventBus.Unsubscribe<DiscardCardsCompleteEvent>(OnDiscardCardsComplete);
     }
 
     private void OnRunStart(RunStartEvent runStartEvent)
     {
         loteriaDeck = runStartEvent.CurrentDeck;
+        _initialTotal = loteriaDeck.Count;
     }
-
 
     private void OnRoundStart(RoundStartEvent roundStartEvent)
     {
-
-        _initalTotal = this.loteriaDeck.Count;
-        ResetShuffleToNewGame();
+        IsDeckEmpty = false;
+        isProcessingDraw = false;
+        ShuffleEntireDeck();
+        // StartTimer();
     }
 
-    public void DrawCards()
+    #region Draw-Reveal-Discard Sequence
+
+    private IEnumerator ProcessDrawRevealDiscardSequence()
     {
-        DrawnLoteriaCardsThisTurn.Clear();
+        isProcessingDraw = true;
+        isReady = false;
+
+        // STEP 1: DRAW
+        yield return StartCoroutine(DrawCards());
+
+        // STEP 2: REVEAL (waits for completion via event)
+        yield return StartCoroutine(RevealCards());
+
+        // STEP 3: DISCARD (waits for completion via event)
+        yield return StartCoroutine(DiscardCards());
+
+        // Ready for next draw
+        isProcessingDraw = false;
+        //StartTimer();
+    }
+
+    private IEnumerator DrawCards()
+    {
+        // Calculate how many cards to draw
         int remainingCards = deckLoteriaCards.Count;
         int drawnCount = drawAmount > remainingCards ? remainingCards : drawAmount;
 
+        // Raise event to animate the drawing of cards (UI handles animation)
+        EventBus.Raise(new DrawCardsEvent(drawnCount, drawTime));
 
-        OnUpdateRemainingCards?.Invoke(remainingCards - drawAmount, _initalTotal);
+        // Wait for draw animation duration
+        yield return new WaitForSeconds(drawTime);
+    }
+
+    private IEnumerator RevealCards()
+    {
+        // Calculate how many cards to reveal
+        int remainingCards = deckLoteriaCards.Count;
+        int drawnCount = drawAmount > remainingCards ? remainingCards : drawAmount;
+
+        // Choose which cards are being revealed
+        List<LoteriaCardsData> drawnCards = ChooseCards(drawnCount);
+        
+        // Add to round tracking
+        DrawnLoteriaCardsThisRound.AddRange(drawnCards);
+
+        // Raise event with the actual card data to be revealed
+        EventBus.Raise(new RevealDrawnCardsEvent(revealTimeDelay, cardRotationSpeed, drawnCards));
+
+        // Wait for reveal to complete (triggered by Cantador_UI finishing animations)
+        yield return new WaitUntil(() => revealComplete);
+        
+        revealComplete = false; // Reset flag
+    }
+
+    private IEnumerator DiscardCards()
+    {
+        // Raise event to discard cards
+        EventBus.Raise(new DiscardCardEvent(discardTime));
+
+        // Wait for discard to complete (triggered by Cantador_UI finishing animations)
+        yield return new WaitUntil(() => discardComplete);
+        
+        discardComplete = false; // Reset flag
+    }
+
+    #endregion
+
+    #region Card Selection
+
+    private List<LoteriaCardsData> ChooseCards(int drawnCount)
+    {
+        List<LoteriaCardsData> data = new();
 
         for (int i = 0; i < drawnCount; i++)
         {
             // Draw a random card
             int index = UnityEngine.Random.Range(0, deckLoteriaCards.Count);
             LoteriaCardsData cardData = deckLoteriaCards[index];
+            data.Add(cardData);
 
-            // update decks respectively
+            // Update decks respectively
             deckLoteriaCards.RemoveAt(index);
             discardLoteriaCards.Add(cardData);
-
-            DrawnLoteriaCardsThisTurn.Add(cardData);
-            DrawnLoteriaCardsThisRound.Add(cardData);
-
         }
 
-        OnDrawingCards?.Invoke(DrawnLoteriaCardsThisTurn); // call display to drawn selected card
+        return data;
+    }
 
+    #endregion
+
+    #region Event Completion Handlers
+
+    private bool revealComplete = false;
+    private bool discardComplete = false;
+
+    private void OnRevealDrawnCardsComplete(RevealDrawnCardsCompleteEvent evt)
+    {
+        revealComplete = true;
+    }
+
+    private void OnDiscardCardsComplete(DiscardCardsCompleteEvent evt)
+    {
+        discardComplete = true;
+    }
+
+    #endregion
+
+    #region Timer Management
+
+    private void StartTimer()
+    {
+        isDrawingCard = true;
+        isReady = false;
+        timer = drawTime;
+    }
+
+    private void HandleTimer()
+    {
+        if (isDrawingCard)
+        {
+            timer -= Time.deltaTime;
+
+            if (timer <= 0f)
+            {
+                isDrawingCard = false;
+                isReady = true;
+            }
+        }
     }
 
     private bool CanDraw()
     {
         if (isDrawingCard) return false;
         if (!isReady) return false;
-        if (deckLoteriaCards.Count < 1) ResetShuffleToNewGame();
         return true;
     }
 
+    #endregion
 
-    // shuffles the entire deck when round starts
-    private void ResetShuffleToNewGame()
+    #region Deck Handling
+
+    private void ShuffleEntireDeck()
     {
-        var shuffled = new List<LoteriaCardsData>(loteriaDeck); // create copy
+        var shuffled = new List<LoteriaCardsData>(loteriaDeck);
         ShuffleCards(shuffled);
-        deckLoteriaCards = shuffled; // set current deck to loteria deck
+        deckLoteriaCards = shuffled;
 
         discardLoteriaCards.Clear();
         DrawnLoteriaCardsThisTurn.Clear();
     }
 
-
-
-    // shuffles undrawn cards in deck
     private static void ShuffleCards(List<LoteriaCardsData> shuffled)
     {
         for (int i = 0; i < shuffled.Count; i++)
@@ -145,4 +260,5 @@ public class Cantador : MonoBehaviour
         }
     }
 
+    #endregion
 }

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public enum TablaWinningRuleState { ROW, COLUMNS, DIAGONAL, FULL, NULL }
@@ -8,6 +11,11 @@ public enum TablaWinningRuleState { ROW, COLUMNS, DIAGONAL, FULL, NULL }
 
 public class LoteriaRoundManager : MonoBehaviour
 {
+
+    [Header("UI")]
+    [SerializeField] private Image BackGroundImage;
+    [SerializeField] private TextMeshProUGUI CurrentRound_UI;
+    [SerializeField] private Button startRound_Button;
 
     [Header("References")]
     [SerializeField] private List<LoteriaCardsData> allLoteriaCards;
@@ -76,7 +84,7 @@ public class LoteriaRoundManager : MonoBehaviour
     // shows up after round is completed
     private void Awake()
     {
-
+        // BackGroundImage.enabled = false;
     }
 
     private void OnEnable()
@@ -85,6 +93,11 @@ public class LoteriaRoundManager : MonoBehaviour
     }
 
 
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<RoundEndEvent>(OnRoundEnd);
+
+    }
 
     void Start()
     {
@@ -101,6 +114,7 @@ public class LoteriaRoundManager : MonoBehaviour
         GenerateRandomNumber(); // Generate Random Number
         _currentLevel = MIN_TOTAL_LEVELS;// set current level to 1
         EventBus.Raise(new RunStartEvent(INIT_GRID_SIZE, allLoteriaCards));
+
     }
 
 
@@ -109,13 +123,19 @@ public class LoteriaRoundManager : MonoBehaviour
         _currentRound = MIN_TOTAL_LEVELS;
         // deterime win condtion
         (_winTableState, _targetLength) = DetermineWinningCondition();
+        Sequence sequence = DOTween.Sequence();
+        CurrentRound_UI.text = $"Round {CurrentRound}";
+        Vector2 currentSize = BackGroundImage.rectTransform.sizeDelta;
+        BackGroundImage.rectTransform.position = new Vector3(-currentSize.x, 0, 0);
+        sequence.Append(BackGroundImage.rectTransform.DOAnchorPos3D(new Vector3(currentSize.x, 0, 0), 5, true));
+        startRound_Button.interactable = false;
         EventBus.Raise(new RoundStartEvent(_currentRound, _winTableState, _targetLength));
     }
 
 
-    private void OnRoundEnd(RoundEndEvent @event)
+    private void OnRoundEnd(RoundEndEvent roundEndEvent)
     {
-        throw new NotImplementedException();
+
     }
 
     #endregion
