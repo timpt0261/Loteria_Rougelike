@@ -105,15 +105,15 @@ public class RevealSingleCardEvent : IGameEvent
 // RevealDrawnCardsCompleteEvent.cs
 public class RevealDrawnCardsCompleteEvent : IGameEvent
 {
-    public RevealDrawnCardsCompleteEvent()
-    {
-    }
+	public RevealDrawnCardsCompleteEvent()
+	{
+	}
 }
 
 // DiscardCardsCompleteEvent.cs
 public class DiscardCardsCompleteEvent : IGameEvent
 {
-    public DiscardCardsCompleteEvent()
-    {
-    }
+	public DiscardCardsCompleteEvent()
+	{
+	}
 }

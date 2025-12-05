@@ -14,11 +14,16 @@ public class Cantador_UI : MonoBehaviour
     [SerializeField] private GridLayoutGroup drawnCardsGridGroup;
     [SerializeField] private TextMeshProUGUI remainingCardsText;
     [SerializeField] private TextMeshProUGUI currentRoundText;
+
+    [SerializeField] private TextMeshProUGUI winCondition;
     [SerializeField] private Slider revealSlider;
 
     [Header("Card Prefab")]
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private List<GameObject> displayedCardPool;
+
+    private int remainingCards;
+    private int totalRemainingCards;
 
     // Grid Layout Constants
     private const float CELL_WIDTH = 40f;
@@ -43,11 +48,13 @@ public class Cantador_UI : MonoBehaviour
     // Slider state
     private Coroutine sliderCountdownCoroutine;
 
-    private void Awake()
+    private void Start()
     {
         InitializeComponents();
         ConfigureGridLayout();
         DeactivateAllCardsInPool();
+
+        winCondition.text = "";
 
         // Initialize slider
         if (revealSlider != null)
@@ -85,6 +92,9 @@ public class Cantador_UI : MonoBehaviour
 
     private void InitializeComponents()
     {
+        if (cardDeckTransform == null)
+            cardDeckTransform = GetComponent<RectTransform>();
+
         if (drawnCardsRectTransform == null)
             drawnCardsRectTransform = GetComponent<RectTransform>();
 
@@ -96,6 +106,12 @@ public class Cantador_UI : MonoBehaviour
 
         if (currentRoundText == null)
             currentRoundText = GameObject.Find("CurrentRoundText").GetComponent<TextMeshProUGUI>();
+
+        if (winCondition == null)
+            winCondition = GameObject.Find("WinConditionText").GetComponent<TextMeshProUGUI>();
+
+        if (revealSlider == null)
+            revealSlider = GameObject.Find("RevealTimer").GetComponent<Slider>();
     }
 
     private void ConfigureGridLayout()
@@ -103,13 +119,7 @@ public class Cantador_UI : MonoBehaviour
         drawnCardsGridGroup.cellSize = CELL_SIZE;
     }
 
-    private void DeactivateAllCardsInPool()
-    {
-        foreach (GameObject card in displayedCardPool)
-        {
-            card.SetActive(false);
-        }
-    }
+
 
     private void UpdateRemainingCardsText(int remainingCards, int totalCards)
     {
@@ -121,12 +131,32 @@ public class Cantador_UI : MonoBehaviour
     private void OnRunStart(RunStartEvent runStartEvent)
     {
         int total = runStartEvent.CurrentDeck.Count;
-        UpdateRemainingCardsText(total, total);
+        remainingCards = total;
+        totalRemainingCards = total;
+        UpdateRemainingCardsText(remainingCards, totalRemainingCards);
     }
 
     private void OnRoundStart(RoundStartEvent roundStartEvent)
     {
         currentRoundText.text = $"Round: {roundStartEvent.Round}";
+        int winNumber = roundStartEvent.TargetLength;
+        string condition = "";
+        switch (roundStartEvent.WinTableState)
+        {
+            case TablaWinningRuleState.ROW:
+                condition = "Rows";
+                break;
+            case TablaWinningRuleState.COLUMNS:
+                condition = "Columns";
+                break;
+            case TablaWinningRuleState.DIAGONAL:
+                condition = "Diagonals";
+                break;
+            case TablaWinningRuleState.FULL:
+                condition = "Full";
+                break;
+        }
+        winCondition.text = $"{winNumber} {condition}";
 
         // Hide slider at round start
         if (revealSlider != null)
@@ -153,6 +183,9 @@ public class Cantador_UI : MonoBehaviour
         }
 
         // Animate the draw phase (expand grid, activate cards face-down)
+        remainingCards -= drawnAmount;
+
+        UpdateRemainingCardsText(remainingCards, totalRemainingCards);
         SetGridToCompressedState();
         ActivateDisplayCardsInPool(drawnAmount);
         DeactivateUnusedCards(drawnAmount);
@@ -372,6 +405,14 @@ public class Cantador_UI : MonoBehaviour
         for (int i = activeCardCount; i < displayedCardPool.Count; i++)
         {
             displayedCardPool[i].SetActive(false);
+        }
+    }
+
+    private void DeactivateAllCardsInPool()
+    {
+        foreach (GameObject card in displayedCardPool)
+        {
+            card.SetActive(false);
         }
     }
 
