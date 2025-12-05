@@ -1,13 +1,10 @@
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
-using Unity.Mathematics;
 using System.Collections;
-using UnityEngine.Rendering;
-using UnityEditor.ShaderGraph.Internal;
+
 
 public class Cantador_UI : MonoBehaviour
 {

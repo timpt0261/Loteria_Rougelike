@@ -1,12 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.Events;
-using TMPro;
-using System;
 using System.Collections;
-using System.Xml.Schema;
-using System.Linq;
+
 
 
 public class Cantador : MonoBehaviour
