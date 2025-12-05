@@ -123,12 +123,12 @@ public class LoteriaRoundManager : MonoBehaviour
         _currentRound = MIN_TOTAL_LEVELS;
         // deterime win condtion
         (_winTableState, _targetLength) = DetermineWinningCondition();
-        Sequence sequence = DOTween.Sequence();
-        CurrentRound_UI.text = $"Round {CurrentRound}";
-        Vector2 currentSize = BackGroundImage.rectTransform.sizeDelta;
-        BackGroundImage.rectTransform.position = new Vector3(-currentSize.x, 0, 0);
-        sequence.Append(BackGroundImage.rectTransform.DOAnchorPos3D(new Vector3(currentSize.x, 0, 0), 5, true));
-        startRound_Button.interactable = false;
+        // Sequence sequence = DOTween.Sequence();
+        // CurrentRound_UI.text = $"Round {CurrentRound}";
+        // Vector2 currentSize = BackGroundImage.rectTransform.sizeDelta;
+        // BackGroundImage.rectTransform.position = new Vector3(-currentSize.x, 0, 0);
+        // sequence.Append(BackGroundImage.rectTransform.DOAnchorPos3D(new Vector3(currentSize.x, 0, 0), 5, true));
+        // startRound_Button.interactable = false;
         EventBus.Raise(new RoundStartEvent(_currentRound, _winTableState, _targetLength));
     }
 
@@ -159,7 +159,7 @@ public class LoteriaRoundManager : MonoBehaviour
     }
     private void GenerateRandomNumber()
     {
-        int seed = System.DateTime.Now.Date.ToLongTimeString().GetHashCode();
+        int seed = Mathf.Abs(System.DateTime.Now.Date.ToLongTimeString().GetHashCode());
         currentSeed = seed.ToString();
         UnityEngine.Random.InitState(seed);
     }

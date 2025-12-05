@@ -2,10 +2,8 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FPS_Controller : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-
-
     [SerializeField] private float speed = 10f;
 
     [Header("Assest References")]
@@ -67,20 +65,13 @@ public class FPS_Controller : MonoBehaviour
     #endregion
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+
 
         if (rigidBody == null) { rigidBody = GetComponent<Rigidbody>(); }
         if (capsuleCollider == null) { capsuleCollider = GetComponent<CapsuleCollider>(); }
         if (audioSource == null) { audioSource = GetComponent<AudioSource>(); }
         if (animator == null) { animator = GetComponent<Animator>(); }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
     }
 
     void FixedUpdate()

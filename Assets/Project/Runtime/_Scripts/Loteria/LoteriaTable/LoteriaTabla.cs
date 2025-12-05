@@ -9,8 +9,6 @@ public class LoteriaTabla : MonoBehaviour
 	[Header("Table Configuration")]
 	[SerializeField] private RectTransform rootCanvas;
 	[SerializeField] private GridLayoutGroup loteriaTableGroup;
-	private TablaGridLayout _grid_3x3;
-	private TablaGridLayout _grid_4x4;
 	[SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
 	[SerializeField] private List<GameObject> cardPrefabs = new();
 
@@ -100,13 +98,14 @@ public class LoteriaTabla : MonoBehaviour
 	private void UpdateTokenPlacement(RevealSingleCardEvent revealCardEvent)
 	{
 		LoteriaCardsData drawnCardData = revealCardEvent.drawnCardData;
-		if (!tableGrid.Contains(drawnCardData.id)) return;
-		if (loteriaSlots[drawnCardData.id].TokenPlaced()) return;
 
-		loteriaSlots[drawnCardData.id].CanPlaceToken(true);
+		if (!loteriaSlots.TryGetValue(drawnCardData.id, out LoteriaCard loteriaCard)) return;
+		if (loteriaCard.TokenPlaced()) return;
+
+		loteriaCard.CanPlaceToken(true);
 
 		// Update score after token placement
-		CalculateScore();
+		//CalculateScore();
 	}
 	#endregion
 
@@ -167,30 +166,30 @@ public class LoteriaTabla : MonoBehaviour
 		}
 
 		// Store current layout configuration in TablaGridLayout
-		if (gridSize == 3)
-		{
-			_grid_3x3 = new TablaGridLayout(
-				currentLayout.RectOffset,
-				currentLayout.CellSize,
-				Vector2.zero,
-				cardPrefabs,
-				currentLayout.CardsActive
-			);
-		}
-		else if (gridSize == 4)
-		{
-			_grid_4x4 = new TablaGridLayout(
-				currentLayout.RectOffset,
-				currentLayout.CellSize,
-				Vector2.zero,
-				cardPrefabs,
-				currentLayout.CardsActive
-			);
-		}
-		else
-		{
-			Debug.LogWarning($"Unsupported grid size: {gridSize}. Only 3x3 and 4x4 are supported.");
-		}
+		// if (gridSize == 3)
+		// {
+		// 	_grid_3x3 = new TablaGridLayout(
+		// 		currentLayout.RectOffset,
+		// 		currentLayout.CellSize,
+		// 		Vector2.zero,
+		// 		cardPrefabs,
+		// 		currentLayout.CardsActive
+		// 	);
+		// }
+		// else if (gridSize == 4)
+		// {
+		// 	_grid_4x4 = new TablaGridLayout(
+		// 		currentLayout.RectOffset,
+		// 		currentLayout.CellSize,
+		// 		Vector2.zero,
+		// 		cardPrefabs,
+		// 		currentLayout.CardsActive
+		// 	);
+		// }
+		// else
+		// {
+		// 	Debug.LogWarning($"Unsupported grid size: {gridSize}. Only 3x3 and 4x4 are supported.");
+		// }
 
 		// Force layout rebuild
 		LayoutRebuilder.ForceRebuildLayoutImmediate(loteriaTableGroup.GetComponent<RectTransform>());

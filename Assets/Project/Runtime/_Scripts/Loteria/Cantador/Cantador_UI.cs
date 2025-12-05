@@ -315,9 +315,9 @@ public class Cantador_UI : MonoBehaviour
 
             RectTransform cardRectTransform = card.GetComponent<RectTransform>();
 
-            discardSequence.Append(
-                cardRectTransform.DOPunchRotation(DISCARD_PUNCH_ROTATION, DISCARD_PUNCH_DURATION)
-            );
+            // discardSequence.Append(
+            //     cardRectTransform.DOPunchRotation(DISCARD_PUNCH_ROTATION, DISCARD_PUNCH_DURATION)
+            // );
             discardSequence.Append(
                 cardRectTransform.DOLocalMoveX(DISCARD_MOVE_X_OFFSET, discardTimePerCard, true)
             );

@@ -33,6 +33,9 @@ public class Cantador : MonoBehaviour
     private bool IsDeckEmpty = false;
     private bool isProcessingDraw = false; // Prevent overlapping draws
 
+    private bool revealComplete = false;
+    private bool discardComplete = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -91,7 +94,6 @@ public class Cantador : MonoBehaviour
         IsDeckEmpty = false;
         isProcessingDraw = false;
         ShuffleEntireDeck();
-        // StartTimer();
     }
 
     #region Draw-Reveal-Discard Sequence
@@ -112,7 +114,7 @@ public class Cantador : MonoBehaviour
 
         // Ready for next draw
         isProcessingDraw = false;
-        //StartTimer();
+        isReady = true;
     }
 
     private IEnumerator DrawCards()
@@ -136,7 +138,7 @@ public class Cantador : MonoBehaviour
 
         // Choose which cards are being revealed
         List<LoteriaCardsData> drawnCards = ChooseCards(drawnCount);
-        
+
         // Add to round tracking
         DrawnLoteriaCardsThisRound.AddRange(drawnCards);
 
@@ -145,7 +147,7 @@ public class Cantador : MonoBehaviour
 
         // Wait for reveal to complete (triggered by Cantador_UI finishing animations)
         yield return new WaitUntil(() => revealComplete);
-        
+
         revealComplete = false; // Reset flag
     }
 
@@ -156,7 +158,7 @@ public class Cantador : MonoBehaviour
 
         // Wait for discard to complete (triggered by Cantador_UI finishing animations)
         yield return new WaitUntil(() => discardComplete);
-        
+
         discardComplete = false; // Reset flag
     }
 
@@ -187,8 +189,7 @@ public class Cantador : MonoBehaviour
 
     #region Event Completion Handlers
 
-    private bool revealComplete = false;
-    private bool discardComplete = false;
+
 
     private void OnRevealDrawnCardsComplete(RevealDrawnCardsCompleteEvent evt)
     {

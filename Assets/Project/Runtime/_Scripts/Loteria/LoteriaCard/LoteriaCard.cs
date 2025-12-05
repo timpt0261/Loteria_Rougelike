@@ -9,7 +9,7 @@ public class LoteriaCard : MonoBehaviour
 	[SerializeField] private LoteriaCardsData currentLoteriaCardData;
 	public LoteriaCardsData CurrentLoteriaCardData
 	{
-		get;
+		get { return currentLoteriaCardData; }
 	}
 
 
