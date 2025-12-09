@@ -32,8 +32,6 @@ public class RoundStartEvent : IGameEvent
 
 public class RoundEndEvent : IGameEvent
 {
-
-
 	public RoundEndEvent()
 	{
 

@@ -144,7 +144,7 @@ public class LoteriaRoundManager : MonoBehaviour
     private (TablaWinningRuleState, int) DetermineWinningCondition()
     {
         TablaWinningRuleState choosenState = (TablaWinningRuleState)DiceRoll(2) - 1; // assume it's a 3x by 3
-        int numberToComplete = DiceRoll(3); // value between 1-3
+        int numberToComplete = 1; // value between 1-3
 
         return (choosenState, numberToComplete);
     }

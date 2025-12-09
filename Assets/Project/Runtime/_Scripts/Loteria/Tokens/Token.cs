@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
 
-public class Token : MonoBehaviour
+public class Token : TimerBehavior
 {
 
     [SerializeField] private Image tokenImage;
@@ -11,14 +11,8 @@ public class Token : MonoBehaviour
 
     [SerializeField] private EffectData effectData;
 
-
-    public void PerformEffect()
-    {
-        foreach (EffectSO effect in effectData.effects)
-        {
-            effect.Perform();
-        }
-    }
-
+    [Header("Timer")]
+    [SerializeField] private float timerDuration;
+    [SerializeField] TimerBehavior tokenTimer;
 
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 
 
@@ -73,7 +74,9 @@ public class Cantador : MonoBehaviour
         EventBus.Subscribe<RoundStartEvent>(OnRoundStart);
         EventBus.Subscribe<RevealDrawnCardsCompleteEvent>(OnRevealDrawnCardsComplete);
         EventBus.Subscribe<DiscardCardsCompleteEvent>(OnDiscardCardsComplete);
+        EventBus.Subscribe<RoundEndEvent>(OnRoundEnd);
     }
+
 
     private void OnDisable()
     {
@@ -81,6 +84,7 @@ public class Cantador : MonoBehaviour
         EventBus.Unsubscribe<RoundStartEvent>(OnRoundStart);
         EventBus.Unsubscribe<RevealDrawnCardsCompleteEvent>(OnRevealDrawnCardsComplete);
         EventBus.Unsubscribe<DiscardCardsCompleteEvent>(OnDiscardCardsComplete);
+        EventBus.Unsubscribe<RoundEndEvent>(OnRoundEnd);
     }
 
     private void OnRunStart(RunStartEvent runStartEvent)
@@ -94,6 +98,14 @@ public class Cantador : MonoBehaviour
         IsDeckEmpty = false;
         isProcessingDraw = false;
         ShuffleEntireDeck();
+    }
+
+
+    private void OnRoundEnd(RoundEndEvent @event)
+    {
+        StopAllCoroutines();
+        StartCoroutine(DiscardCards());
+
     }
 
     #region Draw-Reveal-Discard Sequence

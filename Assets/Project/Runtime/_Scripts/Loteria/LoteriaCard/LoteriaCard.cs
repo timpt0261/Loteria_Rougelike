@@ -12,7 +12,6 @@ public class LoteriaCard : MonoBehaviour
 		get { return currentLoteriaCardData; }
 	}
 
-
 	private const float HUNDRED = 100f;
 	[SerializeField] private int id;
 	[SerializeField] private float priceValue;

@@ -566,7 +566,6 @@ GameObject:
   - component: {fileID: 224179407788888464}
   - component: {fileID: 8412107738255465804}
   - component: {fileID: 586494114750786926}
-  - component: {fileID: 1710579767194898532}
   m_Layer: 5
   m_Name: LoteriaCardPrefab
   m_TagString: Untagged
@@ -629,7 +628,7 @@ MonoBehaviour:
   maxBonusTime: 2
   minBonusTime: 1
   baseMultiplier: 1
-  cardAnimator: {fileID: 1710579767194898532}
+  cardAnimator: {fileID: 0}
   OnCardSet:
     m_PersistentCalls:
       m_Calls: []
@@ -651,28 +650,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!95 &1710579767194898532
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6092780588953907730}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 33faa92f9fd81794eb5c2841eaf49d67, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6421557425174603596
 GameObject:
   m_ObjectHideFlags: 0

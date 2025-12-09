@@ -59,17 +59,6 @@ public class LoteriaTabla : MonoBehaviour
 		EventBus.Unsubscribe<RevealSingleCardEvent>(UpdateTokenPlacement);
 	}
 
-	#region Unity Lifecycle
-	private void Update()
-	{
-		if (IsWinConditionMet())
-		{
-			EventBus.Raise(new RoundEndEvent());
-			tableState.ResetTableState();
-		}
-	}
-	#endregion
-
 	#region Event Bus
 	private void OnRunStart(RunStartEvent runStartEvent)
 	{
@@ -104,8 +93,7 @@ public class LoteriaTabla : MonoBehaviour
 
 		loteriaCard.CanPlaceToken(true);
 
-		// Update score after token placement
-		//CalculateScore();
+
 	}
 	#endregion
 
@@ -165,32 +153,6 @@ public class LoteriaTabla : MonoBehaviour
 			rootCanvas.sizeDelta = currentLayout.CanvasSize;
 		}
 
-		// Store current layout configuration in TablaGridLayout
-		// if (gridSize == 3)
-		// {
-		// 	_grid_3x3 = new TablaGridLayout(
-		// 		currentLayout.RectOffset,
-		// 		currentLayout.CellSize,
-		// 		Vector2.zero,
-		// 		cardPrefabs,
-		// 		currentLayout.CardsActive
-		// 	);
-		// }
-		// else if (gridSize == 4)
-		// {
-		// 	_grid_4x4 = new TablaGridLayout(
-		// 		currentLayout.RectOffset,
-		// 		currentLayout.CellSize,
-		// 		Vector2.zero,
-		// 		cardPrefabs,
-		// 		currentLayout.CardsActive
-		// 	);
-		// }
-		// else
-		// {
-		// 	Debug.LogWarning($"Unsupported grid size: {gridSize}. Only 3x3 and 4x4 are supported.");
-		// }
-
 		// Force layout rebuild
 		LayoutRebuilder.ForceRebuildLayoutImmediate(loteriaTableGroup.GetComponent<RectTransform>());
 	}
@@ -229,6 +191,12 @@ public class LoteriaTabla : MonoBehaviour
 	public void UpdateScore()
 	{
 		CalculateScore();
+		if (IsWinConditionMet())
+		{
+			Debug.Log("Win Condtion Met");
+			EventBus.Raise(new LoteiaCallEvent()); 
+			tableState.ResetTableState();
+		}
 	}
 
 	private void ResetTokenPlacers()
