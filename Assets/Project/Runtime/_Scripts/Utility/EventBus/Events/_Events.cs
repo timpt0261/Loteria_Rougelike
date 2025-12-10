@@ -32,9 +32,10 @@ public class RoundStartEvent : IGameEvent
 
 public class RoundEndEvent : IGameEvent
 {
-	public RoundEndEvent()
+	public bool Win { get; private set; }
+	public RoundEndEvent(bool winState)
 	{
-
+		Win = winState;
 	}
 }
 

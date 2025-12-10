@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public enum TablaWinningRuleState { ROW, COLUMNS, DIAGONAL, FULL, NULL }
 
-
+public enum ROUND_STATE { START, CANTADOR_DRAW, PLAYER_DRAW, END };
 public class LoteriaRoundManager : MonoBehaviour
 {
 
@@ -25,15 +25,11 @@ public class LoteriaRoundManager : MonoBehaviour
 
     [Header("Game Stats")]
 
-    private Int32 _currentLevel;
+    [SerializeField] private AnimationCurve levelProgression;
+    [SerializeField] private Int32 currentLevel;
     public Int32 CurrentLevel
     {
-        get { return _currentLevel; }
-        private set
-        {
-            if (value < 1) { _currentLevel = 1; return; }
-
-        }
+        get { return currentLevel; }
     }
     [SerializeField] private float roundScore;
     [SerializeField] private int totalRounds = 3;
@@ -51,18 +47,13 @@ public class LoteriaRoundManager : MonoBehaviour
 
     }
 
-
     private TablaWinningRuleState _winTableState;
     private int _targetLength;
 
-
-
     [Header("Randomization")]
-
     [SerializeField] private string currentSeed;
 
     //const variables
-
     private const int MIN_TOTAL_LEVELS = 1;
     private const int MAX_TOTAL_LEVELS = 3;
 
@@ -112,7 +103,7 @@ public class LoteriaRoundManager : MonoBehaviour
     public void StartRun()
     {
         GenerateRandomNumber(); // Generate Random Number
-        _currentLevel = MIN_TOTAL_LEVELS;// set current level to 1
+        currentLevel = (int)levelProgression.Evaluate(0);
         EventBus.Raise(new RunStartEvent(INIT_GRID_SIZE, allLoteriaCards));
 
     }
@@ -135,7 +126,14 @@ public class LoteriaRoundManager : MonoBehaviour
 
     private void OnRoundEnd(RoundEndEvent roundEndEvent)
     {
+        bool winState = roundEndEvent.Win;
+		if (winState)
+		{
+			// pop-up store to buy stuff
+            return;
+		}
 
+        // make x pop in 
     }
 
     #endregion

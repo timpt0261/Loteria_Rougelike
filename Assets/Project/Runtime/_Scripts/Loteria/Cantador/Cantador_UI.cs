@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System;
 
 
 public class Cantador_UI : MonoBehaviour
@@ -14,9 +15,11 @@ public class Cantador_UI : MonoBehaviour
     [SerializeField] private GridLayoutGroup drawnCardsGridGroup;
     [SerializeField] private TextMeshProUGUI remainingCardsText;
     [SerializeField] private TextMeshProUGUI currentRoundText;
-
     [SerializeField] private TextMeshProUGUI winCondition;
     [SerializeField] private Slider revealSlider;
+    [SerializeField] private List<Image> winIcons = new(3);
+
+    private int currentRound;
 
     [Header("Card Prefab")]
     [SerializeField] private GameObject cardPrefab;
@@ -64,6 +67,12 @@ public class Cantador_UI : MonoBehaviour
             revealSlider.maxValue = 1f;
             revealSlider.value = 1f;
         }
+
+        foreach (var icon in winIcons)
+        {
+            icon.color = Color.red;
+            icon.fillAmount = 0;
+        }
     }
 
     private void OnEnable()
@@ -73,7 +82,10 @@ public class Cantador_UI : MonoBehaviour
         EventBus.Subscribe<DrawCardsEvent>(OnDrawCards);
         EventBus.Subscribe<RevealDrawnCardsEvent>(OnRevealCards);
         EventBus.Subscribe<DiscardCardEvent>(OnDiscardCards);
+        EventBus.Subscribe<RoundEndEvent>(OnRoundEnd);
     }
+
+
 
     private void OnDisable()
     {
@@ -82,6 +94,7 @@ public class Cantador_UI : MonoBehaviour
         EventBus.Unsubscribe<DrawCardsEvent>(OnDrawCards);
         EventBus.Unsubscribe<RevealDrawnCardsEvent>(OnRevealCards);
         EventBus.Unsubscribe<DiscardCardEvent>(OnDiscardCards);
+        EventBus.Unsubscribe<RoundEndEvent>(OnRoundEnd);
 
         // Clean up coroutine if running
         if (sliderCountdownCoroutine != null)
@@ -138,7 +151,8 @@ public class Cantador_UI : MonoBehaviour
 
     private void OnRoundStart(RoundStartEvent roundStartEvent)
     {
-        currentRoundText.text = $"Round: {roundStartEvent.Round}";
+        currentRound = roundStartEvent.Round;
+        currentRoundText.text = $"Round: {currentRound}";
         int winNumber = roundStartEvent.TargetLength;
         string condition = "";
         switch (roundStartEvent.WinTableState)
@@ -396,6 +410,26 @@ public class Cantador_UI : MonoBehaviour
         revealSlider.value = 0f;
     }
 
+    #endregion
+
+    #region Round End
+
+    private void OnRoundEnd(RoundEndEvent roundEndEvent)
+    {
+        int index = currentRound - 1;
+        bool win = roundEndEvent.Win;
+
+
+        if (win)
+        {
+            winIcons[index].DOColor(Color.green, 0.5f);
+            winIcons[index].DOFillAmount(1, .5f);
+            return;
+        }
+
+        winIcons[index].DOColor(Color.red, 0.5f);
+        winIcons[index].DOFillAmount(1, .5f);
+    }
     #endregion
 
     #region Utility Methods

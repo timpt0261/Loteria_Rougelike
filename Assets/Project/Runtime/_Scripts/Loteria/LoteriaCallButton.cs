@@ -47,7 +47,7 @@ public class LoteriaCallButton : MonoBehaviour
 
     public void RoundEnd()
     {
-        EventBus.Raise(new RoundEndEvent());
+        EventBus.Raise(new RoundEndEvent(winState: true));
     }
 
 

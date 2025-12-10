@@ -27,6 +27,10 @@ public class Cantador : MonoBehaviour
     [SerializeField] private float cardRotationSpeed = 2.5f;
     [SerializeField] private float discardTime = 5f;
 
+    
+
+    private int currentRound;
+
     // states
     private float timer;
     private bool isDrawingCard;
@@ -56,8 +60,8 @@ public class Cantador : MonoBehaviour
 
         // Check if deck is empty
         if (deckLoteriaCards.Count == 0)
-        {
-            EventBus.Raise(new RoundEndEvent());
+        {   // player loses
+            EventBus.Raise(new RoundEndEvent(winState: false));
             IsDeckEmpty = true;
             return;
         }
@@ -95,17 +99,17 @@ public class Cantador : MonoBehaviour
 
     private void OnRoundStart(RoundStartEvent roundStartEvent)
     {
+        currentRound = roundStartEvent.Round;
         IsDeckEmpty = false;
         isProcessingDraw = false;
         ShuffleEntireDeck();
     }
 
 
-    private void OnRoundEnd(RoundEndEvent @event)
+    private void OnRoundEnd(RoundEndEvent roundEndEvent)
     {
         StopAllCoroutines();
         StartCoroutine(DiscardCards());
-
     }
 
     #region Draw-Reveal-Discard Sequence
