@@ -19,22 +19,22 @@ public abstract class Charm : MonoBehaviour
     protected const int minimumChanceRange = 0;
     protected const int maximumChanceRange = 1;
 
-    [Header("Effects(Buffs/De-Buffs)")]
-    [SerializeField] protected EffectData charmData;
+    // [Header("Effects(Buffs/De-Buffs)")]
+    // [SerializeField] protected EffectData charmData;
 
 
     [SerializeField] protected UnityEvent OnActivateEffect;
     [SerializeField] protected UnityEvent OnDestroyEffect;
 
 
-    protected virtual void PerformEfect()
-    {
-        Debug.Log($"{gameObject}'s effect");
-        foreach (var effect in charmData.effects)
-        {
-            effect.Perform();
-        }
-    }
+    // protected virtual void PerformEfect()
+    // {
+    //     Debug.Log($"{gameObject}'s effect");
+    //     foreach (var effect in charmData.effects)
+    //     {
+    //         effect.Perform();
+    //     }
+    // }
 
     #region  Chance/Probability
     protected virtual bool ActivateCondition() { return true; }

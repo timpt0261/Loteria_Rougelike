@@ -47,20 +47,20 @@ public class LoteriaTabla : MonoBehaviour
 
 	private void OnEnable()
 	{
-		EventBus.Subscribe<RunStartEvent>(OnRunStart);
+		EventBus.Subscribe<RunStartEvent<LoteriaCardsData>>(OnRunStart);
 		EventBus.Subscribe<RoundStartEvent>(OnRoundStart);
-		EventBus.Subscribe<RevealSingleCardEvent>(UpdateTokenPlacement);
+		EventBus.Subscribe<RevealSingleCardEvent<LoteriaCardsData>>(UpdateTokenPlacement);
 	}
 
 	private void OnDisable()
 	{
-		EventBus.Unsubscribe<RunStartEvent>(OnRunStart);
+		EventBus.Unsubscribe<RunStartEvent<LoteriaCardsData>>(OnRunStart);
 		EventBus.Unsubscribe<RoundStartEvent>(OnRoundStart);
-		EventBus.Unsubscribe<RevealSingleCardEvent>(UpdateTokenPlacement);
+		EventBus.Unsubscribe<RevealSingleCardEvent<LoteriaCardsData>>(UpdateTokenPlacement);
 	}
 
 	#region Event Bus
-	private void OnRunStart(RunStartEvent runStartEvent)
+	private void OnRunStart(RunStartEvent<LoteriaCardsData> runStartEvent)
 	{
 		currentGridSize = runStartEvent.GridSize;
 		loteriaDeck = runStartEvent.CurrentDeck;
@@ -84,9 +84,9 @@ public class LoteriaTabla : MonoBehaviour
 		ResetTokenPlacers();
 	}
 
-	private void UpdateTokenPlacement(RevealSingleCardEvent revealCardEvent)
+	private void UpdateTokenPlacement(RevealSingleCardEvent<LoteriaCardsData> revealCardEvent)
 	{
-		LoteriaCardsData drawnCardData = revealCardEvent.drawnCardData;
+		LoteriaCardsData drawnCardData = revealCardEvent.DrawnCardData;
 
 		if (!loteriaSlots.TryGetValue(drawnCardData.id, out LoteriaCard loteriaCard)) return;
 		if (loteriaCard.TokenPlaced()) return;
@@ -194,7 +194,7 @@ public class LoteriaTabla : MonoBehaviour
 		if (IsWinConditionMet())
 		{
 			Debug.Log("Win Condtion Met");
-			EventBus.Raise(new LoteiaCallEvent()); 
+			EventBus.Raise(new LoteiaCallEvent());
 			tableState.ResetTableState();
 		}
 	}

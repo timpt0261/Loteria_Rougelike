@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameEvent { }
+// Base constraint for all card data types
+public interface ICardData { }
 
-public class RunStartEvent : IGameEvent
+public class RunStartEvent<T> : IGameEvent where T : ScriptableObject
 {
-	public List<LoteriaCardsData> CurrentDeck { get; private set; }
+	public List<T> CurrentDeck { get; private set; }
 	public int GridSize { get; private set; }
 
-	public RunStartEvent(int _gridSize, List<LoteriaCardsData> _currentDeck)
+	public RunStartEvent(int _gridSize, List<T> _currentDeck)
 	{
 		GridSize = _gridSize;
 		CurrentDeck = _currentDeck;
 	}
-
 }
 
 public class RoundStartEvent : IGameEvent
@@ -39,11 +39,11 @@ public class RoundEndEvent : IGameEvent
 	}
 }
 
-
 public class DrawCardsEvent : IGameEvent
 {
 	public int DrawnAmount { get; private set; }
 	public float DrawTime { get; private set; }
+	
 	public DrawCardsEvent(int drawnAmount, float drawTime)
 	{
 		DrawnAmount = drawnAmount;
@@ -53,8 +53,8 @@ public class DrawCardsEvent : IGameEvent
 
 public class DiscardCardEvent : IGameEvent
 {
-
 	public float DiscardTime { get; private set; }
+	
 	public DiscardCardEvent(float discardTime)
 	{
 		DiscardTime = discardTime;
@@ -63,45 +63,35 @@ public class DiscardCardEvent : IGameEvent
 
 public class LoteiaCallEvent : IGameEvent
 {
-
 	public LoteiaCallEvent()
 	{
-
 	}
 }
 
-
-public class RevealDrawnCardsEvent : IGameEvent
+public class RevealDrawnCardsEvent<T> : IGameEvent where T : ScriptableObject
 {
-	public float DelayTimeBetweenIntervals
-	{
-		get; private set;
-	}
-
+	public float DelayTimeBetweenIntervals { get; private set; }
 	public float CardRotationSpeed { get; private set; }
-	public List<LoteriaCardsData> drawnCardsData
-	{
-		get; private set;
-	}
-	public RevealDrawnCardsEvent(float _delayTimeBetweenIntervals, float _cardRotationSpeed, List<LoteriaCardsData> _drawnCardsData)
+	public List<T> DrawnCardsData { get; private set; }
+	
+	public RevealDrawnCardsEvent(float _delayTimeBetweenIntervals, float _cardRotationSpeed, List<T> _drawnCardsData)
 	{
 		DelayTimeBetweenIntervals = _delayTimeBetweenIntervals;
 		CardRotationSpeed = _cardRotationSpeed;
-		drawnCardsData = _drawnCardsData;
-
+		DrawnCardsData = _drawnCardsData;
 	}
 }
 
-public class RevealSingleCardEvent : IGameEvent
+public class RevealSingleCardEvent<T> : IGameEvent where T : ScriptableObject
 {
-	public LoteriaCardsData drawnCardData { get; private set; }
-	public RevealSingleCardEvent(LoteriaCardsData _drawnCardData)
+	public T DrawnCardData { get; private set; }
+	
+	public RevealSingleCardEvent(T _drawnCardData)
 	{
-		drawnCardData = _drawnCardData;
+		DrawnCardData = _drawnCardData;
 	}
 }
 
-// RevealDrawnCardsCompleteEvent.cs
 public class RevealDrawnCardsCompleteEvent : IGameEvent
 {
 	public RevealDrawnCardsCompleteEvent()
@@ -109,7 +99,6 @@ public class RevealDrawnCardsCompleteEvent : IGameEvent
 	}
 }
 
-// DiscardCardsCompleteEvent.cs
 public class DiscardCardsCompleteEvent : IGameEvent
 {
 	public DiscardCardsCompleteEvent()

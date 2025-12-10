@@ -6,12 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public enum TablaWinningRuleState { ROW, COLUMNS, DIAGONAL, FULL, NULL }
-
-public enum ROUND_STATE { START, CANTADOR_DRAW, PLAYER_DRAW, END };
 public class LoteriaRoundManager : MonoBehaviour
 {
-
+    private enum ROUND_STATE { START, CANTADOR_DRAW, PLAYER_DRAW, END };
     [Header("UI")]
     [SerializeField] private Image BackGroundImage;
     [SerializeField] private TextMeshProUGUI CurrentRound_UI;
@@ -104,7 +101,7 @@ public class LoteriaRoundManager : MonoBehaviour
     {
         GenerateRandomNumber(); // Generate Random Number
         currentLevel = (int)levelProgression.Evaluate(0);
-        EventBus.Raise(new RunStartEvent(INIT_GRID_SIZE, allLoteriaCards));
+        EventBus.Raise(new RunStartEvent<LoteriaCardsData>(INIT_GRID_SIZE, allLoteriaCards));
 
     }
 
@@ -127,11 +124,11 @@ public class LoteriaRoundManager : MonoBehaviour
     private void OnRoundEnd(RoundEndEvent roundEndEvent)
     {
         bool winState = roundEndEvent.Win;
-		if (winState)
-		{
-			// pop-up store to buy stuff
+        if (winState)
+        {
+            // pop-up store to buy stuff
             return;
-		}
+        }
 
         // make x pop in 
     }

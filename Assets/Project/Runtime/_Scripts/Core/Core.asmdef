@@ -1,10 +1,7 @@
 {
-    "name": "project.runtime.scripts",
+    "name": "Core",
     "rootNamespace": "",
-    "references": [
-        "GUID:f89b8b0426f4e7e4cbb29e2bcae3423d",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

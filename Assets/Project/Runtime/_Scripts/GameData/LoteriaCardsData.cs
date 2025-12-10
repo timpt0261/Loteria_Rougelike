@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,4 +8,9 @@ public class LoteriaCardsData : ScriptableObject
 	public int id;
 	public float chance;
 	public Sprite sprite;
+
+	public static explicit operator LoteriaCardsData(List<ScriptableObject> v)
+	{
+		throw new NotImplementedException();
+	}
 }

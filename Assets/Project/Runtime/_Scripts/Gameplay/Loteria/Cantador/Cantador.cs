@@ -27,7 +27,7 @@ public class Cantador : MonoBehaviour
     [SerializeField] private float cardRotationSpeed = 2.5f;
     [SerializeField] private float discardTime = 5f;
 
-    
+
 
     private int currentRound;
 
@@ -74,7 +74,7 @@ public class Cantador : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.Subscribe<RunStartEvent>(OnRunStart);
+        EventBus.Subscribe<RunStartEvent<LoteriaCardsData>>(OnRunStart);
         EventBus.Subscribe<RoundStartEvent>(OnRoundStart);
         EventBus.Subscribe<RevealDrawnCardsCompleteEvent>(OnRevealDrawnCardsComplete);
         EventBus.Subscribe<DiscardCardsCompleteEvent>(OnDiscardCardsComplete);
@@ -84,14 +84,14 @@ public class Cantador : MonoBehaviour
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe<RunStartEvent>(OnRunStart);
+        EventBus.Unsubscribe<RunStartEvent<LoteriaCardsData>>(OnRunStart);
         EventBus.Unsubscribe<RoundStartEvent>(OnRoundStart);
         EventBus.Unsubscribe<RevealDrawnCardsCompleteEvent>(OnRevealDrawnCardsComplete);
         EventBus.Unsubscribe<DiscardCardsCompleteEvent>(OnDiscardCardsComplete);
         EventBus.Unsubscribe<RoundEndEvent>(OnRoundEnd);
     }
 
-    private void OnRunStart(RunStartEvent runStartEvent)
+    private void OnRunStart(RunStartEvent<LoteriaCardsData> runStartEvent)
     {
         loteriaDeck = runStartEvent.CurrentDeck;
         _initialTotal = loteriaDeck.Count;
@@ -159,7 +159,7 @@ public class Cantador : MonoBehaviour
         DrawnLoteriaCardsThisRound.AddRange(drawnCards);
 
         // Raise event with the actual card data to be revealed
-        EventBus.Raise(new RevealDrawnCardsEvent(revealTimeDelay, cardRotationSpeed, drawnCards));
+        EventBus.Raise(new RevealDrawnCardsEvent<LoteriaCardsData>(revealTimeDelay, cardRotationSpeed, drawnCards));
 
         // Wait for reveal to complete (triggered by Cantador_UI finishing animations)
         yield return new WaitUntil(() => revealComplete);

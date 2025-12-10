@@ -1,9 +1,12 @@
 {
-    "name": "project.runtime.scripts",
+    "name": "Managers",
     "rootNamespace": "",
     "references": [
-        "GUID:f89b8b0426f4e7e4cbb29e2bcae3423d",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:a5a075da16ecd3647b03d0a5450a9cbf",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:8b756edba540f4c4e9755ea50f005c5b",
+        "GUID:84148880a720838429941fad6ecef710",
+        "GUID:06f50e949dbd54c4bb4d49d8acc24ba1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

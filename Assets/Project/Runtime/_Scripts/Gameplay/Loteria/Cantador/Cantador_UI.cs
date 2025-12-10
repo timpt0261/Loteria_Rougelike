@@ -77,10 +77,10 @@ public class Cantador_UI : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.Subscribe<RunStartEvent>(OnRunStart);
+        EventBus.Subscribe<RunStartEvent<LoteriaCardsData>>(OnRunStart);
         EventBus.Subscribe<RoundStartEvent>(OnRoundStart);
         EventBus.Subscribe<DrawCardsEvent>(OnDrawCards);
-        EventBus.Subscribe<RevealDrawnCardsEvent>(OnRevealCards);
+        EventBus.Subscribe<RevealDrawnCardsEvent<LoteriaCardsData>>(OnRevealCards);
         EventBus.Subscribe<DiscardCardEvent>(OnDiscardCards);
         EventBus.Subscribe<RoundEndEvent>(OnRoundEnd);
     }
@@ -89,10 +89,10 @@ public class Cantador_UI : MonoBehaviour
 
     private void OnDisable()
     {
-        EventBus.Unsubscribe<RunStartEvent>(OnRunStart);
+        EventBus.Unsubscribe<RunStartEvent<LoteriaCardsData>>(OnRunStart);
         EventBus.Unsubscribe<RoundStartEvent>(OnRoundStart);
         EventBus.Unsubscribe<DrawCardsEvent>(OnDrawCards);
-        EventBus.Unsubscribe<RevealDrawnCardsEvent>(OnRevealCards);
+        EventBus.Unsubscribe<RevealDrawnCardsEvent<LoteriaCardsData>>(OnRevealCards);
         EventBus.Unsubscribe<DiscardCardEvent>(OnDiscardCards);
         EventBus.Unsubscribe<RoundEndEvent>(OnRoundEnd);
 
@@ -141,7 +141,7 @@ public class Cantador_UI : MonoBehaviour
 
     #region Event Handling
 
-    private void OnRunStart(RunStartEvent runStartEvent)
+    private void OnRunStart(RunStartEvent<LoteriaCardsData> runStartEvent)
     {
         int total = runStartEvent.CurrentDeck.Count;
         remainingCards = total;
@@ -206,11 +206,11 @@ public class Cantador_UI : MonoBehaviour
         AnimateGridExpansion(displayAnimationDuration);
     }
 
-    private void OnRevealCards(RevealDrawnCardsEvent revealDrawnCardsEvent)
+    private void OnRevealCards(RevealDrawnCardsEvent<LoteriaCardsData> revealDrawnCardsEvent)
     {
         float delayBetweenReveal = revealDrawnCardsEvent.DelayTimeBetweenIntervals;
         float cardRotationSpeed = revealDrawnCardsEvent.CardRotationSpeed;
-        List<LoteriaCardsData> drawnCards = revealDrawnCardsEvent.drawnCardsData;
+        List<LoteriaCardsData> drawnCards = revealDrawnCardsEvent.DrawnCardsData;
 
         // Hide slider during reveal
         if (revealSlider != null)
@@ -328,7 +328,7 @@ public class Cantador_UI : MonoBehaviour
             // Raise event for LoteriaTable to check this card
             revealSequence.AppendCallback(() =>
             {
-                EventBus.Raise(new RevealSingleCardEvent(cardData));
+                EventBus.Raise(new RevealSingleCardEvent<LoteriaCardsData>(cardData));
             });
         }
 

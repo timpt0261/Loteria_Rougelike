@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class LoteriaCallButton : MonoBehaviour
 {
+    // hello
     [SerializeField] private float duration = 0.5f;
     [SerializeField] private Color inactiveColor;
     [SerializeField] private Color activeColor;
