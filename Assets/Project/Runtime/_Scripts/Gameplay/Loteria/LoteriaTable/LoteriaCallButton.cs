@@ -14,6 +14,8 @@ public class LoteriaCallButton : MonoBehaviour
     [SerializeField] private Renderer cubeRender;
     [SerializeField] private Button loteriaButton;
 
+    
+
     private void Awake()
     {
 

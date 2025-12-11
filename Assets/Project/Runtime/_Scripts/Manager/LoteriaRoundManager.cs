@@ -1,19 +1,11 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-
+// get current round to increment by 1 in setup new round, must be within range of ( min round to max). if increment by max then reset to 0
 public class LoteriaRoundManager : MonoBehaviour
 {
     private enum ROUND_STATE { START, CANTADOR_DRAW, PLAYER_DRAW, END };
-    [Header("UI")]
-    [SerializeField] private Image BackGroundImage;
-    [SerializeField] private TextMeshProUGUI CurrentRound_UI;
-    [SerializeField] private Button startRound_Button;
-
     [Header("References")]
     [SerializeField] private List<LoteriaCardsData> allLoteriaCards;
     [SerializeField] private Cantador cantador;
@@ -31,21 +23,23 @@ public class LoteriaRoundManager : MonoBehaviour
     [SerializeField] private float roundScore;
     [SerializeField] private int totalRounds = 3;
 
-    private Int32 _currentRound;
+    [SerializeField] private Int32 currentRound = 0;
     public int CurrentRound
     {
-        get { return _currentRound; }
+        get { return currentRound; }
 
         set
         {
-            if (value < 1) { _currentRound = 1; return; }
-            if (value > totalRounds) { _currentRound = totalRounds; return; }
+            if (value < 0) { currentRound = 0; return; }
+            if (value > totalRounds) { currentRound = 0; return; }
+            currentRound = value;
         }
 
     }
 
-    private TablaWinningRuleState _winTableState;
-    private int _targetLength;
+    [Header("Round Win Condition")]
+    [SerializeField] private TablaWinningRuleState winTableState;
+    [SerializeField] private int targetLength;
 
     [Header("Randomization")]
     [SerializeField] private string currentSeed;
@@ -64,17 +58,9 @@ public class LoteriaRoundManager : MonoBehaviour
     private const int MAX_TOTAL_ROUNDS = 9;
     private const int INIT_GRID_SIZE = 3;
 
-
-
-
     // set game condtion to win
     // game over works
     // shows up after round is completed
-    private void Awake()
-    {
-        // BackGroundImage.enabled = false;
-    }
-
     private void OnEnable()
     {
         EventBus.Subscribe<RoundEndEvent>(OnRoundEnd);
@@ -108,16 +94,10 @@ public class LoteriaRoundManager : MonoBehaviour
 
     public void SetUpNewRound()
     {
-        _currentRound = MIN_TOTAL_LEVELS;
+        CurrentRound++;
         // deterime win condtion
-        (_winTableState, _targetLength) = DetermineWinningCondition();
-        // Sequence sequence = DOTween.Sequence();
-        // CurrentRound_UI.text = $"Round {CurrentRound}";
-        // Vector2 currentSize = BackGroundImage.rectTransform.sizeDelta;
-        // BackGroundImage.rectTransform.position = new Vector3(-currentSize.x, 0, 0);
-        // sequence.Append(BackGroundImage.rectTransform.DOAnchorPos3D(new Vector3(currentSize.x, 0, 0), 5, true));
-        // startRound_Button.interactable = false;
-        EventBus.Raise(new RoundStartEvent(_currentRound, _winTableState, _targetLength));
+        (winTableState, targetLength) = DetermineWinningCondition();
+        EventBus.Raise(new RoundStartEvent(CurrentRound, winTableState, targetLength));
     }
 
 

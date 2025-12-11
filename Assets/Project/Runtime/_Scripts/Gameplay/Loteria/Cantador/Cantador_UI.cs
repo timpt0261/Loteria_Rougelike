@@ -68,7 +68,7 @@ public class Cantador_UI : MonoBehaviour
             revealSlider.value = 1f;
         }
 
-        foreach (var icon in winIcons)
+        foreach (Image icon in winIcons)
         {
             icon.color = Color.red;
             icon.fillAmount = 0;
@@ -418,17 +418,22 @@ public class Cantador_UI : MonoBehaviour
     {
         int index = currentRound - 1;
         bool win = roundEndEvent.Win;
-
-
+        if (index < 0 || index > winIcons.Count)
+        {
+            Debug.Log("Index out of Range");
+            return;
+        }
+        Sequence winIconSequence = DOTween.Sequence();
         if (win)
         {
-            winIcons[index].DOColor(Color.green, 0.5f);
-            winIcons[index].DOFillAmount(1, .5f);
+            winIconSequence.Append(winIcons[index].DOFillAmount(1, 1.5f));
+            winIconSequence.Join(winIcons[index].DOColor(Color.green, 0.5f));
+
             return;
         }
 
-        winIcons[index].DOColor(Color.red, 0.5f);
-        winIcons[index].DOFillAmount(1, .5f);
+        winIconSequence.Append(winIcons[index].DOFillAmount(1, 1.5f));
+        winIconSequence.Join(winIcons[index].DOColor(Color.red, 0.5f));
     }
     #endregion
 

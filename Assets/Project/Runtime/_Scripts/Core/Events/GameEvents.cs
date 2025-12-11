@@ -43,7 +43,7 @@ public class DrawCardsEvent : IGameEvent
 {
 	public int DrawnAmount { get; private set; }
 	public float DrawTime { get; private set; }
-	
+
 	public DrawCardsEvent(int drawnAmount, float drawTime)
 	{
 		DrawnAmount = drawnAmount;
@@ -54,7 +54,7 @@ public class DrawCardsEvent : IGameEvent
 public class DiscardCardEvent : IGameEvent
 {
 	public float DiscardTime { get; private set; }
-	
+
 	public DiscardCardEvent(float discardTime)
 	{
 		DiscardTime = discardTime;
@@ -73,7 +73,7 @@ public class RevealDrawnCardsEvent<T> : IGameEvent where T : ScriptableObject
 	public float DelayTimeBetweenIntervals { get; private set; }
 	public float CardRotationSpeed { get; private set; }
 	public List<T> DrawnCardsData { get; private set; }
-	
+
 	public RevealDrawnCardsEvent(float _delayTimeBetweenIntervals, float _cardRotationSpeed, List<T> _drawnCardsData)
 	{
 		DelayTimeBetweenIntervals = _delayTimeBetweenIntervals;
@@ -85,7 +85,7 @@ public class RevealDrawnCardsEvent<T> : IGameEvent where T : ScriptableObject
 public class RevealSingleCardEvent<T> : IGameEvent where T : ScriptableObject
 {
 	public T DrawnCardData { get; private set; }
-	
+
 	public RevealSingleCardEvent(T _drawnCardData)
 	{
 		DrawnCardData = _drawnCardData;

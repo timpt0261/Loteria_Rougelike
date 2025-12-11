@@ -32,11 +32,10 @@ public class Cantador : MonoBehaviour
     private int currentRound;
 
     // states
-    private float timer;
     private bool isDrawingCard;
     private bool isReady = true;
     private bool IsDeckEmpty = false;
-    private bool isProcessingDraw = false; // Prevent overlapping draws
+    private bool IsProcessingDraw = false; // Prevent overlapping draws
 
     private bool revealComplete = false;
     private bool discardComplete = false;
@@ -53,7 +52,7 @@ public class Cantador : MonoBehaviour
 
     private void Update()
     {
-        if (IsDeckEmpty || isProcessingDraw)
+        if (IsDeckEmpty || IsProcessingDraw)
         {
             return;
         }
@@ -101,7 +100,7 @@ public class Cantador : MonoBehaviour
     {
         currentRound = roundStartEvent.Round;
         IsDeckEmpty = false;
-        isProcessingDraw = false;
+        IsProcessingDraw = false;
         ShuffleEntireDeck();
     }
 
@@ -116,7 +115,7 @@ public class Cantador : MonoBehaviour
 
     private IEnumerator ProcessDrawRevealDiscardSequence()
     {
-        isProcessingDraw = true;
+        IsProcessingDraw = true;
         isReady = false;
 
         // STEP 1: DRAW
@@ -129,7 +128,7 @@ public class Cantador : MonoBehaviour
         yield return StartCoroutine(DiscardCards());
 
         // Ready for next draw
-        isProcessingDraw = false;
+        IsProcessingDraw = false;
         isReady = true;
     }
 
@@ -220,28 +219,6 @@ public class Cantador : MonoBehaviour
     #endregion
 
     #region Timer Management
-
-    private void StartTimer()
-    {
-        isDrawingCard = true;
-        isReady = false;
-        timer = drawTime;
-    }
-
-    private void HandleTimer()
-    {
-        if (isDrawingCard)
-        {
-            timer -= Time.deltaTime;
-
-            if (timer <= 0f)
-            {
-                isDrawingCard = false;
-                isReady = true;
-            }
-        }
-    }
-
     private bool CanDraw()
     {
         if (isDrawingCard) return false;
