@@ -157,14 +157,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe8eb3444b8f0c4d85bdd06aac52793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Gameplay::ElevatorDoor
-  leftDoor: {fileID: 6774743625903736261}
-  rightDoor: {fileID: 2008484294094967233}
-  initalLeftTransform: {x: 0, y: 0, z: 0}
-  initalRightTransform: {x: 0, y: 0, z: 0}
-  target: 3.333
+  leftDoor: {fileID: 4141957552090219394}
+  rightDoor: {fileID: 4965148598358545110}
+  doorSeparation: 2
   openSpeed: 2.5
   closeSpeed: 0.5
-  waitBeforeTransition: 3
+  delayBeforeMoving: 3
+  openCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  closeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6774743625903736261
 GameObject:
   m_ObjectHideFlags: 0
