@@ -9,22 +9,28 @@ public class InteractionPrompt : MonoBehaviour
     [Header("Text")]
     [SerializeField] private TMP_Text label;
     [SerializeField] private string keyHint = "[E]";
-    [SerializeField] private float textSpeed;
+
+    private string displayLine;
+
+
+    [Header("TypeWriter Settings")]
+    [SerializeField] private float textSpeed = 0.5f;
 
     [Header("TextBoxDisplay")]
     [SerializeField] private RectTransform textBoxDisplayRect;
     [SerializeField] private float displaySpeed = 0.5f;
     [SerializeField] private AnimationCurve displaySize = AnimationCurve.EaseInOut(0, 0, 1, 1); // depending on text size stretch text box
-    private Vector2 initialSize;
+    private Vector2 _initialSize;
 
     private void Awake()
     {
+        StopAllCoroutines();
         if (textBoxDisplayRect == null)
             textBoxDisplayRect = GameObject.Find("TextBoxDisplay").GetComponent<RectTransform>();
 
 
-        initialSize = textBoxDisplayRect.sizeDelta;
-        textBoxDisplayRect.sizeDelta = new Vector2(0, initialSize.y);
+        _initialSize = textBoxDisplayRect.sizeDelta;
+        textBoxDisplayRect.sizeDelta = new Vector2(0, _initialSize.y);
         textBoxDisplayRect.gameObject.SetActive(false);
 
 
@@ -32,17 +38,19 @@ public class InteractionPrompt : MonoBehaviour
             label = textBoxDisplayRect.GetComponentInChildren<TMP_Text>();
         label.text = "";
 
-
-        // Hide();
     }
     public void Hide()
     {
-        label.text = "";
-        if (textBoxDisplayRect.sizeDelta.x > 0)
+        Sequence hideSequence = DOTween.Sequence();
+        hideSequence.OnStart(() =>
         {
-            DOTween.To(() => textBoxDisplayRect.sizeDelta, x => textBoxDisplayRect.sizeDelta = x, new Vector2(0, initialSize.y), displaySpeed).SetEase(displaySize)
-                            .OnComplete(() => { textBoxDisplayRect.gameObject.SetActive(false); });
-        }
+            label.text = "";
+        });
+        hideSequence.Append(
+            DOTween.To(() => textBoxDisplayRect.sizeDelta, x => textBoxDisplayRect.sizeDelta = x, new Vector2(0, _initialSize.y), displaySpeed).SetEase(displaySize)
+        );
+
+        hideSequence.OnComplete(() => { textBoxDisplayRect.gameObject.SetActive(false); });
 
     }
     public void Show(IInteractable interactable)
@@ -62,20 +70,31 @@ public class InteractionPrompt : MonoBehaviour
         });
 
         showSequence.Append(
-            DOTween.To(() => textBoxDisplayRect.sizeDelta, x => textBoxDisplayRect.sizeDelta = x, initialSize, displaySpeed).SetEase(displaySize)
+            DOTween.To(() => textBoxDisplayRect.sizeDelta, x => textBoxDisplayRect.sizeDelta = x, _initialSize, displaySpeed).SetEase(displaySize)
         );
 
-        showSequence.JoinCallback(() =>
-        {
+        showSequence.AppendInterval(.1f);
 
-            label.text = $"{keyHint} {interactable.DisplayName}";
+        showSequence.AppendCallback(() =>
+        {
+            displayLine = $"{keyHint} {interactable.DisplayName}";
+            StartDisplayText();
         });
 
 
     }
 
-    IEnumerable DisplayText(float duration)
+    private void StartDisplayText()
     {
-        yield return new WaitForSeconds(duration);
+        label.text = "";
+        StartCoroutine(DisplayText());
+    }
+    IEnumerator DisplayText()
+    {
+        foreach (char c in displayLine.ToCharArray())
+        {
+            label.text += c;
+            yield return new WaitForSeconds(textSpeed);
+        }
     }
 }

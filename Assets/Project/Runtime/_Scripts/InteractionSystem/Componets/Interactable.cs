@@ -39,6 +39,7 @@ public class Interactable : MonoBehaviour, IInteractable
         }
         renderer.material.SetColor(_shader_ref_outline_color, outlineColor);
         renderer.material.SetFloat(_shader_ref_outline_scale, ZERO);
+        if (displayName == "") displayName = gameObject.name;
     }
 
     public void Interact(GameObject interactor)
