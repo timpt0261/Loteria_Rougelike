@@ -232,7 +232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3236433627554590028
 Transform:
   m_ObjectHideFlags: 0
@@ -480,20 +480,28 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5cd4841c8366ce42964485345d2db02, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FPS_Controller
-  speed: 3
+  m_EditorClassIdentifier: Player::PlayerController
+  speed: 10
   capsuleCollider: {fileID: 3106464095561953980}
   rigidBody: {fileID: 1006274596978692359}
   animator: {fileID: 825386293330391356}
   mainCamera: {fileID: 2373276545124853490}
   cameraRoot: {fileID: 2237152037281101470}
-  audioSource: {fileID: 0}
+  playerWalkAudioEvent:
+    Guid:
+      Data1: 842719257
+      Data2: 1160691442
+      Data3: -776916852
+      Data4: -1898355809
+    Path: event:/PlayerFootSteps
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
   interact: 0
   pause: 0
   nextPressed: 0
   previousPressed: 0
+  fanAngle: 50
+  fanSticks: 15
   interactionRadius: 5
   interactionLayer:
     serializedVersion: 2
@@ -785,7 +793,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Action with Display Name
+  m_text: 'Hello
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c88db7c2ba0c1b041b6ac4c178a8b917, type: 2}
   m_sharedMaterial: {fileID: 4648529456887438795, guid: c88db7c2ba0c1b041b6ac4c178a8b917, type: 2}
@@ -974,7 +984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: project.runtime.scripts::InteractionPrompt
   label: {fileID: 2573283138625338343}
   keyHint: '[E]'
-  textSpeed: 0
+  textSpeed: 0.1
   textBoxDisplayRect: {fileID: 5471387990943587369}
   displaySpeed: 0.5
   displaySize:

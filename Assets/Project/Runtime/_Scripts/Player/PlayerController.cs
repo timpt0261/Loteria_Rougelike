@@ -23,10 +23,8 @@ public class PlayerController : MonoBehaviour
     [field: Header("Input Values")]
     [field: SerializeField] private Vector2 move;
     [field: SerializeField] private Vector2 look;
-    [field: SerializeField] private bool interact;
+    [field: SerializeField] private bool interactThisFrame;
     [field: SerializeField] private bool pause;
-    [field: SerializeField] private bool nextPressed;
-    [field: SerializeField] private bool previousPressed;
     private PlayerInput playerInput;
 
     [field: Header("Interaction Handling")]
@@ -56,7 +54,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Interact();
+        interactThisFrame = false; // Reset the interact flag after processing
     }
+
     void FixedUpdate()
     {
         Move();
@@ -72,8 +72,6 @@ public class PlayerController : MonoBehaviour
         rigidBody.MovePosition(
             rigidBody.position + targetDirection.normalized * speed * Time.fixedDeltaTime
         );
-        // rigidBody.Move(targetDirection * speed * Time.fixedDeltaTime);
-
     }
 
     #region Interaction Handling
@@ -81,12 +79,14 @@ public class PlayerController : MonoBehaviour
     {
         IInteractable nearest = FindNearestInteractble();
         UpdateFocus(nearest);
-        if (focus != null && interact)
+
+        // Changed: only interact if the button was pressed this frame
+        if (focus != null && interactThisFrame)
         {
             focus.Interact(this.gameObject);
         }
-
     }
+
     private IInteractable FindNearestInteractble()
     {
         IInteractable nearest = null;
@@ -135,10 +135,9 @@ public class PlayerController : MonoBehaviour
         focus?.OnFocusGained();
         prompt.Show(focus);
         return;
-
-
     }
     #endregion
+
     private void Pause()
     {
 
@@ -158,28 +157,24 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext value)
     {
-        interact = value.action.triggered;
+
+        if (value.performed)
+        {
+            interactThisFrame = true;
+        }
     }
 
     public void OnPause(InputAction.CallbackContext value)
     {
-        interact = value.action.triggered;
-    }
-
-    public void OnNext(InputAction.CallbackContext value)
-    {
-        nextPressed = value.action.triggered;
-    }
-
-    public void OnPrevious(InputAction.CallbackContext value)
-    {
-        previousPressed = value.action.triggered;
+        pause = value.action.triggered; // Fixed: was setting 'interact' instead of 'pause'
     }
 
     #endregion
 
     void OnDrawGizmos()
     {
+        if (mainCamera == null) return; // Safety check
+
         Gizmos.color = Color.yellow;
 
         Vector3 forward = mainCamera.transform.forward;
@@ -193,5 +188,4 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawRay(mainCamera.transform.position, direction * interactionRadius);
         }
     }
-
 }
