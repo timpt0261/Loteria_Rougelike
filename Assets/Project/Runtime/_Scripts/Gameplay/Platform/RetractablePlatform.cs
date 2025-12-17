@@ -3,31 +3,31 @@ using DG.Tweening;
 
 public class RetractablePlatform : MonoBehaviour
 {
-    [Header("Door References")]
-    [SerializeField] private Transform leftDoor;
-    [SerializeField] private Transform rightDoor;
+    [field: Header("Door References")]
+    [field: SerializeField] private Transform leftDoor;
+    [field: SerializeField] private Transform rightDoor;
 
     private enum Axis { X, Y, Z, Vector3 }
     private enum TweenType { Position, Rotation, Scale }
 
-    [Header("3D Orientation")]
-    [SerializeField] private Axis tweenAxis = Axis.X;
-    [SerializeField] private TweenType tweenType = TweenType.Position;
+    [field: Header("3D Orientation")]
+    [field: SerializeField] private Axis tweenAxis = Axis.X;
+    [field: SerializeField] private TweenType tweenType = TweenType.Position;
 
-    [Header("Animation Settings")]
-    [SerializeField] private float doorSeparation = 2f;
-    [SerializeField] private float openSpeed = 2.5f;
-    [SerializeField] private float closeSpeed = 0.5f;
-    [SerializeField] private float delayBeforeMoving = 3f;
-    [SerializeField] private bool snapToTarget = false;
+    [field: Header("Animation Settings")]
+    [field: SerializeField] private float doorSeparation = 2f;
+    [field: SerializeField] private float openSpeed = 2.5f;
+    [field: SerializeField] private float closeSpeed = 0.5f;
+    [field: SerializeField] private float delayBeforeMoving = 3f;
+    [field: SerializeField] private bool snapToTarget = false;
 
-    [Header("Vector3 Mode (only used when Axis = Vector3)")]
-    [SerializeField] private Vector3 leftDoorOpenOffset = new Vector3(-2f, 0f, 0f);
-    [SerializeField] private Vector3 rightDoorOpenOffset = new Vector3(2f, 0f, 0f);
+    [field: Header("Vector3 Mode (only used when Axis = Vector3)")]
+    [field: SerializeField] private Vector3 leftDoorOpenOffset = new Vector3(-2f, 0f, 0f);
+    [field: SerializeField] private Vector3 rightDoorOpenOffset = new Vector3(2f, 0f, 0f);
 
-    [Header("Animation Curves")]
-    [SerializeField] private AnimationCurve openCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    [SerializeField] private AnimationCurve closeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [field: Header("Animation Curves")]
+    [field: SerializeField] private AnimationCurve openCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [field: SerializeField] private AnimationCurve closeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private Vector3 leftDoorInitialValue;
     private Vector3 rightDoorInitialValue;
@@ -103,7 +103,7 @@ public class RetractablePlatform : MonoBehaviour
                 if (tweenAxis == Axis.Vector3)
                     return target.DOLocalMove(endValue, duration, snapToTarget);
                 else
-                    return CreateAxisTween(target, endValue, duration, 
+                    return CreateAxisTween(target, endValue, duration,
                         (t, v, d, s) => t.DOLocalMoveX(v, d, s),
                         (t, v, d, s) => t.DOLocalMoveY(v, d, s),
                         (t, v, d, s) => t.DOLocalMoveZ(v, d, s));

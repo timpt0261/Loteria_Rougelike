@@ -7,24 +7,24 @@ public abstract class Charm : MonoBehaviour
 {
     protected enum RarityType { COMMON, UNCOMMON, RARE, LEGENDARY }
 
-    [Header("Charm Stats")]
-    [SerializeField] public Sprite charmSprite;
-    [SerializeField] protected int charmID;
-    [SerializeField] protected RarityType rarity;
-    [SerializeField] protected int uses = 1;  // how many times it can be used 
-    [SerializeField] protected float chanceOfActivation = 1f;
-    [SerializeField] protected int buyPrice = 2;
-    [SerializeField] protected int sellPrice = 1;
+    [field: Header("Charm Stats")]
+    [field: SerializeField] public Sprite charmSprite;
+    [field: SerializeField] protected int charmID;
+    [field: SerializeField] protected RarityType rarity;
+    [field: SerializeField] protected int uses = 1;  // how many times it can be used 
+    [field: SerializeField] protected float chanceOfActivation = 1f;
+    [field: SerializeField] protected int buyPrice = 2;
+    [field: SerializeField] protected int sellPrice = 1;
 
     protected const int minimumChanceRange = 0;
     protected const int maximumChanceRange = 1;
 
-    // [Header("Effects(Buffs/De-Buffs)")]
-    // [SerializeField] protected EffectData charmData;
+    // [field: Header("Effects(Buffs/De-Buffs)")]
+    // [field:SerializeField] protected EffectData charmData;
 
 
-    [SerializeField] protected UnityEvent OnActivateEffect;
-    [SerializeField] protected UnityEvent OnDestroyEffect;
+    [field: SerializeField] protected UnityEvent OnActivateEffect;
+    [field: SerializeField] protected UnityEvent OnDestroyEffect;
 
 
     // protected virtual void PerformEfect()

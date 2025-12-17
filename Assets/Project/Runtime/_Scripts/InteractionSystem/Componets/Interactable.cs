@@ -4,19 +4,19 @@ using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour, IInteractable
 {
-    [SerializeField] private string displayName = "";
-    [SerializeField] private bool isEnabled = true;
+    [field: SerializeField] private string displayName = "";
+    [field: SerializeField] private bool isEnabled = true;
 
 
-    [Header("Interaction Outline")]
-    [SerializeField] private Renderer renderer;
-    [SerializeField] private Ease outlineScaleEase = Ease.OutQuad;
-    [SerializeField] private Color outlineColor;
-    [SerializeField] private float outlineScale = 1.1f;
-    [SerializeField] private float outlineDuration = 0.5f;
+    [field: Header("Interaction Outline")]
+    [field: SerializeField] private Renderer renderer;
+    [field: SerializeField] private Ease outlineScaleEase = Ease.OutQuad;
+    [field: SerializeField] private Color outlineColor;
+    [field: SerializeField] private float outlineScale = 1.1f;
+    [field: SerializeField] private float outlineDuration = 0.5f;
     private const int ZERO = 0;
-    private string _shader_ref_outline_scale = "_Outline_Scale";
-    private string _shader_ref_outline_color = "_Outline_Color";
+    private int _shader_ref_outline_scale = Shader.PropertyToID("_Outline_Scale");
+    private int _shader_ref_outline_color = Shader.PropertyToID("_Outline_Color");
 
     public string DisplayName => displayName;
 
@@ -29,7 +29,7 @@ public class Interactable : MonoBehaviour, IInteractable
 
     public bool CanInteract() => isEnabled;
 
-    [SerializeField] private UnityEvent OnInteraction;
+    [field: SerializeField] private UnityEvent OnInteraction;
 
     void Start()
     {

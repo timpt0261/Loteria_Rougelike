@@ -1,37 +1,41 @@
-using System;
 using Unity.Cinemachine;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
+using FMODUnity;
+using DG.Tweening;
+using DG.Tweening.Core.Easing;
+
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
+    [field: SerializeField] private float speed = 10f;
 
-    [Header("Assest References")]
-    [SerializeField] private CapsuleCollider capsuleCollider;
-    [SerializeField] private Rigidbody rigidBody;
-    [SerializeField] private Animator animator;
-    [SerializeField] private CinemachineCamera mainCamera;
-    [SerializeField] private Transform cameraRoot;
-    [SerializeField] private AudioSource audioSource;
+    [field: Header("Assest References")]
+    [field: SerializeField] private CapsuleCollider capsuleCollider;
+    [field: SerializeField] private Rigidbody rigidBody;
+    [field: SerializeField] private Animator animator;
+    [field: SerializeField] private CinemachineCamera mainCamera;
+    [field: SerializeField] private Transform cameraRoot;
 
-    [Header("Input Values")]
-    [SerializeField] private Vector2 move;
-    [SerializeField] private Vector2 look;
-    [SerializeField] private bool interact;
-    [SerializeField] private bool pause;
-    [SerializeField] private bool nextPressed;
-    [SerializeField] private bool previousPressed;
+    [field: Header("Audio")]
+    [field: SerializeField] private EventReference playerWalkAudioEvent;
+
+    [field: Header("Input Values")]
+    [field: SerializeField] private Vector2 move;
+    [field: SerializeField] private Vector2 look;
+    [field: SerializeField] private bool interact;
+    [field: SerializeField] private bool pause;
+    [field: SerializeField] private bool nextPressed;
+    [field: SerializeField] private bool previousPressed;
     private PlayerInput playerInput;
 
-    [Header("Interaction Handling")]
-
-    [SerializeField] private float interactionRadius = 2f;
-    [SerializeField] private LayerMask interactionLayer;
-    [SerializeField] private InteractionPrompt prompt;
-    [SerializeField] private Collider[] buffer = new Collider[32];
+    [field: Header("Interaction Handling")]
+    [field: SerializeField] private float fanAngle = 90f; // Total angle of the fan in degrees
+    [field: SerializeField] private int fanSticks = 5;
+    [field: SerializeField] private float interactionRadius = 2f;
+    [field: SerializeField] private LayerMask interactionLayer;
+    [field: SerializeField] private InteractionPrompt prompt;
+    [field: SerializeField] private Collider[] buffer = new Collider[32];
     private IInteractable focus;
 
     private void Awake()
@@ -44,7 +48,6 @@ public class PlayerController : MonoBehaviour
     {
         if (rigidBody == null) { rigidBody = GetComponent<Rigidbody>(); }
         if (capsuleCollider == null) { capsuleCollider = GetComponent<CapsuleCollider>(); }
-        if (audioSource == null) { audioSource = GetComponent<AudioSource>(); }
         if (animator == null) { animator = GetComponent<Animator>(); }
         if (playerInput == null) { playerInput = GetComponent<PlayerInput>(); }
         if (prompt == null) { prompt = GetComponentInChildren<InteractionPrompt>(); }
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviour
             rigidBody.position + targetDirection.normalized * speed * Time.fixedDeltaTime
         );
         // rigidBody.Move(targetDirection * speed * Time.fixedDeltaTime);
+
     }
 
     #region Interaction Handling
@@ -85,24 +89,36 @@ public class PlayerController : MonoBehaviour
     }
     private IInteractable FindNearestInteractble()
     {
-        int count = Physics.OverlapSphereNonAlloc(transform.position, interactionRadius, buffer, interactionLayer, QueryTriggerInteraction.Collide);
         IInteractable nearest = null;
         float bestDistSq = float.MaxValue;
 
-        for (int i = 0; i < count; i++)
+        Vector3 forward = mainCamera.transform.forward;
+        float halfAngle = fanAngle * 0.5f;
+
+        for (int i = 0; i < fanSticks; i++)
         {
-            Collider col = buffer[i];
-            if (col == null) continue;
-            IInteractable interactable = col.GetComponentInParent<IInteractable>();
-            if (interactable == null) continue;
-            if (!interactable.CanInteract()) continue;
-            float distSq = (col.transform.position - transform.position).sqrMagnitude;
-            if (distSq < bestDistSq)
+            float t = fanSticks > 1 ? (float)i / (fanSticks - 1) : 0.5f;
+            // Map t from [0,1] to [-halfAngle, halfAngle]
+            float angle = Mathf.Lerp(-halfAngle, halfAngle, t);
+
+            Vector3 direction = Quaternion.AngleAxis(angle, transform.up) * forward;
+
+            RaycastHit hit;
+            if (Physics.Raycast(mainCamera.transform.position, direction, out hit, interactionRadius, interactionLayer, QueryTriggerInteraction.Collide))
             {
-                bestDistSq = distSq;
-                nearest = interactable;
+                IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
+                if (interactable != null && interactable.CanInteract())
+                {
+                    float distSq = (hit.point - mainCamera.transform.position).sqrMagnitude;
+                    if (distSq < bestDistSq)
+                    {
+                        bestDistSq = distSq;
+                        nearest = interactable;
+                    }
+                }
             }
         }
+
         return nearest;
     }
 
@@ -165,7 +181,17 @@ public class PlayerController : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, interactionRadius);
+
+        Vector3 forward = mainCamera.transform.forward;
+        float halfAngle = fanAngle * 0.5f;
+
+        for (int i = 0; i < fanSticks; i++)
+        {
+            float t = fanSticks > 1 ? (float)i / (fanSticks - 1) : 0.5f;
+            float angle = Mathf.Lerp(-halfAngle, halfAngle, t);
+            Vector3 direction = Quaternion.AngleAxis(angle, transform.up) * forward;
+            Gizmos.DrawRay(mainCamera.transform.position, direction * interactionRadius);
+        }
     }
 
 }

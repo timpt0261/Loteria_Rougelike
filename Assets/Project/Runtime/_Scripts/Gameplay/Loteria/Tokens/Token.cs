@@ -5,14 +5,14 @@ using UnityEngine.UIElements.Experimental;
 public class Token : TimerBehavior
 {
 
-    [SerializeField] private Image tokenImage;
-    [SerializeField] private AudioBehaviour tokenSFX;
-    [SerializeField] private float price;
+    [field: SerializeField] private Image tokenImage;
+    [field: SerializeField] private AudioBehaviour tokenSFX;
+    [field: SerializeField] private float price;
 
-    [SerializeField] private EffectData effectData;
+    [field: SerializeField] private EffectData effectData;
 
-    [Header("Timer")]
-    [SerializeField] private float timerDuration;
-    [SerializeField] TimerBehavior tokenTimer;
+    [field: Header("Timer")]
+    [field: SerializeField] private float timerDuration;
+    [field: SerializeField] TimerBehavior tokenTimer;
 
 }

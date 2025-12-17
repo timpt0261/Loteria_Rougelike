@@ -9,24 +9,24 @@ public class CharmManager : MonoBehaviour
     // there should only be on instance of this
     public static CharmManager Instance { get; private set; }
     // contains all charms in field
-    [SerializeField] private List<Charm> activeCharms;
-    [SerializeField] private int charmLimit = 3;
+    [field: SerializeField] private List<Charm> activeCharms;
+    [field: SerializeField] private int charmLimit = 3;
 
     // activates charms in accordance to their effect
 
-    [Header("Events")]
-    [SerializeField] public UnityEvent OnRunStart;
-    [SerializeField] public UnityEvent OnRunEnd;
-    [SerializeField] public UnityEvent OnRoundStart;
-    [SerializeField] public UnityEvent OnRoundEnd;
-    [SerializeField] public UnityEvent OnDraw;
-    [SerializeField] public UnityEvent OnReveal;
-    [SerializeField] public UnityEvent OnDestroy;
-    [SerializeField] public UnityEvent OnBuy;
-    [SerializeField] public UnityEvent OnSell;
+    [field: Header("Events")]
+    [field: SerializeField] public UnityEvent OnRunStart;
+    [field: SerializeField] public UnityEvent OnRunEnd;
+    [field: SerializeField] public UnityEvent OnRoundStart;
+    [field: SerializeField] public UnityEvent OnRoundEnd;
+    [field: SerializeField] public UnityEvent OnDraw;
+    [field: SerializeField] public UnityEvent OnReveal;
+    [field: SerializeField] public UnityEvent OnDestroy;
+    [field: SerializeField] public UnityEvent OnBuy;
+    [field: SerializeField] public UnityEvent OnSell;
 
-    [Header("UI")]
-    [SerializeField] private List<Image> charmSlots;
+    [field: Header("UI")]
+    [field: SerializeField] private List<Image> charmSlots;
 
 
     private void Awake()

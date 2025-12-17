@@ -6,17 +6,17 @@ public class Contestant : MonoBehaviour
 
     // stats 
     private int level;
-    private int money; 
+    private int money;
     private int wins;
     private int losses;
     private int luck;
     private int longestStreak;
 
-    [Header("GameObject References")]
-    [SerializeField] private int contestantID;
-    [SerializeField] private List<LoteriaCardsData> contestantDeck = new();
-    [SerializeField] private LoteriaTabla contestantTabla;
-    [SerializeField] private List<Charm> contestantOwnedCharms;
+    [field: Header("GameObject References")]
+    [field: SerializeField] private int contestantID;
+    [field: SerializeField] private List<LoteriaCardsData> contestantDeck = new();
+    [field: SerializeField] private LoteriaTabla contestantTabla;
+    [field: SerializeField] private List<Charm> contestantOwnedCharms;
     public int ContestantID { get { return contestantID; } }
     public List<LoteriaCardsData> LoteriaDeck { get { return contestantDeck; } }
     public LoteriaTabla LoteriaTabla { get { return contestantTabla; } }

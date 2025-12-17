@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class TimerBehavior : MonoBehaviour
 {
-    [SerializeField] private float duration;
-    [SerializeField] private UnityEvent onTimerStart = null;
-    [SerializeField] private UnityEvent onTimerEnd = null;
+    [field: SerializeField] private float duration;
+    [field: SerializeField] private UnityEvent onTimerStart = null;
+    [field: SerializeField] private UnityEvent onTimerEnd = null;
 
     private Timer timer;
     void Start()
@@ -18,7 +18,7 @@ public class TimerBehavior : MonoBehaviour
 
     }
 
-    
+
 
     private void HandleTimerStart()
     {

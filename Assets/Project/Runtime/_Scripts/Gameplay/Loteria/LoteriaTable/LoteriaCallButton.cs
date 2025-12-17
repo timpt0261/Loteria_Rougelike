@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class LoteriaCallButton : MonoBehaviour
 {
     // hello
-    [SerializeField] private float duration = 0.5f;
-    [SerializeField] private Color inactiveColor;
-    [SerializeField] private Color activeColor;
-    [SerializeField] private GameObject cubeButton;
-    [SerializeField] private Renderer cubeRender;
-    [SerializeField] private Button loteriaButton;
+    [field: SerializeField] private float duration = 0.5f;
+    [field: SerializeField] private Color inactiveColor;
+    [field: SerializeField] private Color activeColor;
+    [field: SerializeField] private GameObject cubeButton;
+    [field: SerializeField] private Renderer cubeRender;
+    [field: SerializeField] private Button loteriaButton;
 
-    
+
 
     private void Awake()
     {

@@ -10,42 +10,42 @@ public class Cantador : MonoBehaviour
 {
     public static Cantador Instance { get; private set; }
 
-    [Header("Game Settings")]
+    [field: Header("Game Settings")]
 
     // draw amount should be within range of 1 to LoteriaCard.Count
-    [SerializeField] private int drawAmount = 4;
+    [field: SerializeField] private int drawAmount = 4;
 
-    [Header("Card Data")]
-    [SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
-    [SerializeField] private List<LoteriaCardsData> deckLoteriaCards = new();
-    [SerializeField] private List<LoteriaCardsData> discardLoteriaCards = new();
+    [field: Header("Card Data")]
+    [field: SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
+    [field: SerializeField] private List<LoteriaCardsData> deckLoteriaCards = new();
+    [field: SerializeField] private List<LoteriaCardsData> discardLoteriaCards = new();
     public List<LoteriaCardsData> DrawnLoteriaCardsThisRound { get { return discardLoteriaCards; } }
 
-    [Header("Draw Animation Settings")]
-    [SerializeField] private float drawTime = 5f;
-    [SerializeField] private Ease gridExpansionEase;
+    [field: Header("Draw Animation Settings")]
+    [field: SerializeField] private float drawTime = 5f;
+    [field: SerializeField] private Ease gridExpansionEase;
 
 
-    [Header("Reveal Animation Setting")]
-    [SerializeField] private float revealTimeDelay = 0.5f;
-    [SerializeField] private float cardRotationSpeed = 2.5f;
+    [field: Header("Reveal Animation Setting")]
+    [field: SerializeField] private float revealTimeDelay = 0.5f;
+    [field: SerializeField] private float cardRotationSpeed = 2.5f;
 
-    [Header("Discard Animation Setting")]
-    [SerializeField] private float discardTime = 5f;
+    [field: Header("Discard Animation Setting")]
+    [field: SerializeField] private float discardTime = 5f;
 
-    [Header("UI References")]
-    [SerializeField] private RectTransform cardDeckTransform;
-    [SerializeField] private RectTransform drawnCardsRectTransform;
-    [SerializeField] private GridLayoutGroup drawnCardsGridGroup;
-    [SerializeField] private TextMeshProUGUI remainingCardsText;
-    [SerializeField] private TextMeshProUGUI currentRoundText;
-    [SerializeField] private TextMeshProUGUI winCondition;
-    [SerializeField] private Slider revealSlider;
-    [SerializeField] private List<Image> winIcons = new(3);
+    [field: Header("UI References")]
+    [field: SerializeField] private RectTransform cardDeckTransform;
+    [field: SerializeField] private RectTransform drawnCardsRectTransform;
+    [field: SerializeField] private GridLayoutGroup drawnCardsGridGroup;
+    [field: SerializeField] private TextMeshProUGUI remainingCardsText;
+    [field: SerializeField] private TextMeshProUGUI currentRoundText;
+    [field: SerializeField] private TextMeshProUGUI winCondition;
+    [field: SerializeField] private Slider revealSlider;
+    [field: SerializeField] private List<Image> winIcons = new(3);
 
-    [Header("Card Prefab")]
-    [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private List<GameObject> displayedCardPool;
+    [field: Header("Card Prefab")]
+    [field: SerializeField] private GameObject cardPrefab;
+    [field: SerializeField] private List<GameObject> displayedCardPool;
 
     // Game State
     private int currentRound;

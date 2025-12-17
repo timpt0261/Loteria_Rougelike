@@ -5,42 +5,42 @@ using UnityEngine.UI;
 
 public class LoteriaCard : MonoBehaviour
 {
-	[Header("Loteria Card Data")]
-	[SerializeField] private LoteriaCardsData currentLoteriaCardData;
+	[field: Header("Loteria Card Data")]
+	[field: SerializeField] private LoteriaCardsData currentLoteriaCardData;
 	public LoteriaCardsData CurrentLoteriaCardData
 	{
 		get { return currentLoteriaCardData; }
 	}
 
 	private const float HUNDRED = 100f;
-	[SerializeField] private int id;
-	[SerializeField] private float priceValue;
-	[SerializeField] private float chance;
+	[field: SerializeField] private int id;
+	[field: SerializeField] private float priceValue;
+	[field: SerializeField] private float chance;
 
 	public int ID => id;
 	public float Chance => chance;
 	public bool TokenPlaced() => this.loteriaCard_TokenMarker.enabled;
 
-	[Header("UI Components")]
-	[SerializeField] private TextMeshProUGUI loteriaCard_ID;
-	[SerializeField] private Image loteriaCard_Artwork;
-	[SerializeField] private Image loteriaCard_TokenMarker;
-	[SerializeField] private Button loteriaCard_TokenButton;
+	[field: Header("UI Components")]
+	[field: SerializeField] private TextMeshProUGUI loteriaCard_ID;
+	[field: SerializeField] private Image loteriaCard_Artwork;
+	[field: SerializeField] private Image loteriaCard_TokenMarker;
+	[field: SerializeField] private Button loteriaCard_TokenButton;
 
-	[Header("Token Timer Settings")]
-	[SerializeField] private float maxBonusTime = 2f;
-	[SerializeField] private float minBonusTime = 1f;
-	[SerializeField] private float baseMultiplier = 1f;
+	[field: Header("Token Timer Settings")]
+	[field: SerializeField] private float maxBonusTime = 2f;
+	[field: SerializeField] private float minBonusTime = 1f;
+	[field: SerializeField] private float baseMultiplier = 1f;
 
 	private float tokenTimerStart;
 	private bool isTimerActive = false;
 
 	public float TimerBonusMultiplier { get; private set; }
 
-	[Header("Animator")]
-	[SerializeField] private Animator cardAnimator;
+	[field: Header("Animator")]
+	[field: SerializeField] private Animator cardAnimator;
 
-	[Header("Loteria Card Events")]
+	[field: Header("Loteria Card Events")]
 	public UnityEvent OnCardSet;
 	public UnityEvent OnCanPlaceToken;
 	public UnityEvent OnTokenPlaced;

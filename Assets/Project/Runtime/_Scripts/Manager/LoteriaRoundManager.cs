@@ -6,24 +6,24 @@ using UnityEngine;
 public class LoteriaRoundManager : MonoBehaviour
 {
     private enum ROUND_STATE { START, CANTADOR_DRAW, PLAYER_DRAW, END };
-    [Header("References")]
-    [SerializeField] private List<LoteriaCardsData> allLoteriaCards;
-    [SerializeField] private Cantador cantador;
-    [SerializeField] private LoteriaTabla loteriaTable;
-    [SerializeField] private CharmManager charmManager;
+    [field: Header("References")]
+    [field: SerializeField] private List<LoteriaCardsData> allLoteriaCards;
+    [field: SerializeField] private Cantador cantador;
+    [field: SerializeField] private LoteriaTabla loteriaTable;
+    [field: SerializeField] private CharmManager charmManager;
 
-    [Header("Game Stats")]
+    [field: Header("Game Stats")]
 
-    [SerializeField] private AnimationCurve levelProgression;
-    [SerializeField] private Int32 currentLevel;
+    [field: SerializeField] private AnimationCurve levelProgression;
+    [field: SerializeField] private Int32 currentLevel;
     public Int32 CurrentLevel
     {
         get { return currentLevel; }
     }
-    [SerializeField] private float roundScore;
-    [SerializeField] private int totalRounds = 3;
+    [field: SerializeField] private float roundScore;
+    [field: SerializeField] private int totalRounds = 3;
 
-    [SerializeField] private Int32 currentRound = 0;
+    [field: SerializeField] private Int32 currentRound = 0;
     public int CurrentRound
     {
         get { return currentRound; }
@@ -37,12 +37,12 @@ public class LoteriaRoundManager : MonoBehaviour
 
     }
 
-    [Header("Round Win Condition")]
-    [SerializeField] private TablaWinningRuleState winTableState;
-    [SerializeField] private int targetLength;
+    [field: Header("Round Win Condition")]
+    [field: SerializeField] private TablaWinningRuleState winTableState;
+    [field: SerializeField] private int targetLength;
 
-    [Header("Randomization")]
-    [SerializeField] private string currentSeed;
+    [field: Header("Randomization")]
+    [field: SerializeField] private string currentSeed;
 
     //const variables
     private const int MIN_TOTAL_LEVELS = 1;

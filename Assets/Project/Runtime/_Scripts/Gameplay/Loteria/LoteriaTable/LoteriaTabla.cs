@@ -6,11 +6,11 @@ public class LoteriaTabla : MonoBehaviour
 {
 	public static LoteriaTabla Instance { get; private set; }
 
-	[Header("Table Configuration")]
-	[SerializeField] private RectTransform rootCanvas;
-	[SerializeField] private GridLayoutGroup loteriaTableGroup;
-	[SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
-	[SerializeField] private List<GameObject> cardPrefabs = new();
+	[field: Header("Table Configuration")]
+	[field: SerializeField] private RectTransform rootCanvas;
+	[field: SerializeField] private GridLayoutGroup loteriaTableGroup;
+	[field: SerializeField] private List<LoteriaCardsData> loteriaDeck = new();
+	[field: SerializeField] private List<GameObject> cardPrefabs = new();
 
 	// Layout configurations
 	private TableLayoutConfig layout3x3;

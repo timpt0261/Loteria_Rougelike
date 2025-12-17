@@ -11,7 +11,7 @@ using System.Reflection;
 public class ReadmeEditor : Editor
 {
     static string s_ShowedReadmeSessionStateName = "ReadmeEditor.showedReadme";
-    
+
     static string s_ReadmeSourceDirectory = "Assets/TutorialInfo";
 
     const float k_Space = 16f;
@@ -24,7 +24,7 @@ public class ReadmeEditor : Editor
     static void RemoveTutorial()
     {
         if (EditorUtility.DisplayDialog("Remove Readme Assets",
-            
+
             $"All contents under {s_ReadmeSourceDirectory} will be removed, are you sure you want to proceed?",
             "Proceed",
             "Cancel"))
@@ -161,7 +161,7 @@ public class ReadmeEditor : Editor
         get { return m_LinkStyle; }
     }
 
-    [SerializeField]
+    [field: SerializeField]
     GUIStyle m_LinkStyle;
 
     GUIStyle TitleStyle
@@ -169,7 +169,7 @@ public class ReadmeEditor : Editor
         get { return m_TitleStyle; }
     }
 
-    [SerializeField]
+    [field: SerializeField]
     GUIStyle m_TitleStyle;
 
     GUIStyle HeadingStyle
@@ -177,7 +177,7 @@ public class ReadmeEditor : Editor
         get { return m_HeadingStyle; }
     }
 
-    [SerializeField]
+    [field: SerializeField]
     GUIStyle m_HeadingStyle;
 
     GUIStyle BodyStyle
@@ -185,7 +185,7 @@ public class ReadmeEditor : Editor
         get { return m_BodyStyle; }
     }
 
-    [SerializeField]
+    [field: SerializeField]
     GUIStyle m_BodyStyle;
 
     GUIStyle ButtonStyle
@@ -193,7 +193,7 @@ public class ReadmeEditor : Editor
         get { return m_ButtonStyle; }
     }
 
-    [SerializeField]
+    [field: SerializeField]
     GUIStyle m_ButtonStyle;
 
     void Init()

@@ -5,7 +5,7 @@ namespace Utility
 {
 	public abstract class StateMachine : MonoBehaviour
 	{
-		[SerializeField]
+		[field: SerializeField]
 		protected State currentState;
 
 		protected void ChangeState(State newState)

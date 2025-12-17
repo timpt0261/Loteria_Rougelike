@@ -6,20 +6,20 @@ using UnityEngine.UI;
 
 public class InteractionPrompt : MonoBehaviour
 {
-    [Header("Text")]
-    [SerializeField] private TMP_Text label;
-    [SerializeField] private string keyHint = "[E]";
+    [field: Header("Text")]
+    [field: SerializeField] private TMP_Text label;
+    [field: SerializeField] private string keyHint = "[E]";
 
     private string displayLine;
 
 
-    [Header("TypeWriter Settings")]
-    [SerializeField] private float textSpeed = 0.5f;
+    [field: Header("TypeWriter Settings")]
+    [field: SerializeField] private float textSpeed = 0.5f;
 
-    [Header("TextBoxDisplay")]
-    [SerializeField] private RectTransform textBoxDisplayRect;
-    [SerializeField] private float displaySpeed = 0.5f;
-    [SerializeField] private AnimationCurve displaySize = AnimationCurve.EaseInOut(0, 0, 1, 1); // depending on text size stretch text box
+    [field: Header("TextBoxDisplay")]
+    [field: SerializeField] private RectTransform textBoxDisplayRect;
+    [field: SerializeField] private float displaySpeed = 0.5f;
+    [field: SerializeField] private AnimationCurve displaySize = AnimationCurve.EaseInOut(0, 0, 1, 1); // depending on text size stretch text box
     private Vector2 _initialSize;
 
     private void Awake()
@@ -55,7 +55,7 @@ public class InteractionPrompt : MonoBehaviour
     }
     public void Show(IInteractable interactable)
     {
-        if (interactable == null)
+        if (interactable == null || interactable.DisplayName == "")
         {
             Hide();
             return;
