@@ -1,16 +1,27 @@
+using FMODUnity;
 using UnityEngine;
 
 public class FMODEvents : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public static FMODEvents Instance { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    [field: Header("Elevator")]
+    [field: SerializeField] public EventReference ElevatorOpen { get; private set; }
+    [field: SerializeField] public EventReference ElevatorClose { get; private set; }
+
+    [field: Header("Token")]
+    [field: SerializeField] public EventReference TokenPlacement { get; private set; }
+
+    [field: Header("Player")]
+    [field: SerializeField] public EventReference PlayerFootSteps { get; private set; }
+    private void Awake()
     {
-        
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        Instance = this;
+
     }
 }

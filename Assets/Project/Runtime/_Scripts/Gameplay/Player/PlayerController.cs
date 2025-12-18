@@ -1,9 +1,8 @@
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FMOD.Studio;
 using FMODUnity;
-using DG.Tweening;
-using DG.Tweening.Core.Easing;
 
 
 public class PlayerController : MonoBehaviour
@@ -16,9 +15,12 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] private Animator animator;
     [field: SerializeField] private CinemachineCamera mainCamera;
     [field: SerializeField] private Transform cameraRoot;
+    public CinemachineCamera MainCamera => mainCamera;
+    private bool disableMovement;
+
 
     [field: Header("Audio")]
-    [field: SerializeField] private EventReference playerWalkAudioEvent;
+    [field: SerializeField] private EventInstance playerFootSteps;
 
     [field: Header("Input Values")]
     [field: SerializeField] private Vector2 move;
@@ -29,11 +31,11 @@ public class PlayerController : MonoBehaviour
 
     [field: Header("Interaction Handling")]
     [field: SerializeField] private float fanAngle = 90f; // Total angle of the fan in degrees
-    [field: SerializeField] private int fanSticks = 5;
+    [field: SerializeField] private int fanLines = 5;
     [field: SerializeField] private float interactionRadius = 2f;
     [field: SerializeField] private LayerMask interactionLayer;
     [field: SerializeField] private InteractionPrompt prompt;
-    [field: SerializeField] private Collider[] buffer = new Collider[32];
+    private bool disableInteraction;
     private IInteractable focus;
 
     private void Awake()
@@ -51,15 +53,35 @@ public class PlayerController : MonoBehaviour
         if (prompt == null) { prompt = GetComponentInChildren<InteractionPrompt>(); }
     }
 
+    private void Start()
+    {
+        playerFootSteps = AudioManager.Instance.CreateEventInstance(FMODEvents.Instance.PlayerFootSteps);
+
+    }
+
     private void Update()
     {
+        if (disableInteraction)
+        {
+            focus = null;
+            interactThisFrame = false;
+            return;
+        }
         Interact();
-        interactThisFrame = false; // Reset the interact flag after processing
+        interactThisFrame = false;
     }
 
     void FixedUpdate()
     {
+        if (disableMovement)
+        {
+            playerInput.enabled = false;
+            rigidBody.linearVelocity = Vector3.zero;
+            UpdateSound();
+            return;
+        }
         Move();
+        UpdateSound();
     }
 
     private void Move()
@@ -72,6 +94,26 @@ public class PlayerController : MonoBehaviour
         rigidBody.MovePosition(
             rigidBody.position + targetDirection.normalized * speed * Time.fixedDeltaTime
         );
+    }
+    private void UpdateSound()
+    {
+        playerFootSteps.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        // start footsteps event if the player has an x velocity and is on the ground
+        if (move != Vector2.zero)
+        {
+            // get the playback state
+            PLAYBACK_STATE playbackState;
+            playerFootSteps.getPlaybackState(out playbackState);
+            if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+            {
+                playerFootSteps.start();
+            }
+        }
+        // otherwise, stop the footsteps event
+        else
+        {
+            playerFootSteps.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
     }
 
     #region Interaction Handling
@@ -95,9 +137,9 @@ public class PlayerController : MonoBehaviour
         Vector3 forward = mainCamera.transform.forward;
         float halfAngle = fanAngle * 0.5f;
 
-        for (int i = 0; i < fanSticks; i++)
+        for (int i = 0; i < fanLines; i++)
         {
-            float t = fanSticks > 1 ? (float)i / (fanSticks - 1) : 0.5f;
+            float t = fanLines > 1 ? (float)i / (fanLines - 1) : 0.5f;
             // Map t from [0,1] to [-halfAngle, halfAngle]
             float angle = Mathf.Lerp(-halfAngle, halfAngle, t);
 
@@ -138,9 +180,21 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    private void Pause()
+    public void EnablePlayerMovement()
     {
+        HandlePlayerActivation(true);
+    }
 
+    public void DisablePlayerMovement()
+    {
+        HandlePlayerActivation(false);
+    }
+
+    private void HandlePlayerActivation(bool activation)
+    {
+        disableMovement = activation;
+        disableInteraction = activation;
+        playerInput.enabled = activation;
     }
 
     #region Player Input Events
@@ -166,7 +220,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPause(InputAction.CallbackContext value)
     {
-        pause = value.action.triggered; // Fixed: was setting 'interact' instead of 'pause'
+        pause = value.action.triggered;
     }
 
     #endregion
@@ -180,9 +234,9 @@ public class PlayerController : MonoBehaviour
         Vector3 forward = mainCamera.transform.forward;
         float halfAngle = fanAngle * 0.5f;
 
-        for (int i = 0; i < fanSticks; i++)
+        for (int i = 0; i < fanLines; i++)
         {
-            float t = fanSticks > 1 ? (float)i / (fanSticks - 1) : 0.5f;
+            float t = fanLines > 1 ? (float)i / (fanLines - 1) : 0.5f;
             float angle = Mathf.Lerp(-halfAngle, halfAngle, t);
             Vector3 direction = Quaternion.AngleAxis(angle, transform.up) * forward;
             Gizmos.DrawRay(mainCamera.transform.position, direction * interactionRadius);

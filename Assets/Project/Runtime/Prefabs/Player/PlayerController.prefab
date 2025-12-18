@@ -487,59 +487,17 @@ MonoBehaviour:
   animator: {fileID: 825386293330391356}
   mainCamera: {fileID: 2373276545124853490}
   cameraRoot: {fileID: 2237152037281101470}
-  playerWalkAudioEvent:
-    Guid:
-      Data1: 842719257
-      Data2: 1160691442
-      Data3: -776916852
-      Data4: -1898355809
-    Path: event:/PlayerFootSteps
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
-  interact: 0
-  pause: 0
-  nextPressed: 0
-  previousPressed: 0
+  interactThisFrame: 0
+  pause: 1
   fanAngle: 50
-  fanSticks: 15
+  fanLines: 5
   interactionRadius: 5
   interactionLayer:
     serializedVersion: 2
     m_Bits: 128
   prompt: {fileID: 5489982879043091738}
-  buffer:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &4881746083744961707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,38 +571,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 852140f2-7766-474d-8707-702459ba45f3
     m_ActionName: 'Player/Interact[/Keyboard/e]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8263536606912060045}
-        m_TargetAssemblyTypeName: FPS_Controller, Assembly-CSharp
-        m_MethodName: OnPrevious
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2776c80d-3c14-4091-8c56-d04ced07a2b0
-    m_ActionName: 'Player/Previous[/Keyboard/1]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8263536606912060045}
-        m_TargetAssemblyTypeName: FPS_Controller, Assembly-CSharp
-        m_MethodName: OnNext
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
-    m_ActionName: 'Player/Next[/Keyboard/2]'
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
