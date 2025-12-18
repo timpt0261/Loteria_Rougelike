@@ -136,10 +136,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6195315194603155660}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.7729053, y: 3.1842105, z: 19.8154}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4141957552090219394}
   - {fileID: 4965148598358545110}
@@ -159,10 +159,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Gameplay::ElevatorDoor
   leftDoor: {fileID: 4141957552090219394}
   rightDoor: {fileID: 4965148598358545110}
+  tweenAxis: 0
   doorSeparation: 2
   openSpeed: 2.5
   closeSpeed: 0.5
-  delayBeforeMoving: 3
+  delayBeforeMoving: 0
+  snapToTarget: 0
+  leftDoorOpenOffset: {x: -2, y: 0, z: 0}
+  rightDoorOpenOffset: {x: 2, y: 0, z: 0}
   openCurve:
     serializedVersion: 2
     m_Curve:
@@ -211,6 +215,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <IsElevatorOpen>k__BackingField: 0
 --- !u!1 &6774743625903736261
 GameObject:
   m_ObjectHideFlags: 0

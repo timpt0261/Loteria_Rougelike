@@ -1,18 +1,18 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class RetractablePlatform : MonoBehaviour
 {
+
     [field: Header("Door References")]
     [field: SerializeField] private Transform leftDoor;
     [field: SerializeField] private Transform rightDoor;
 
     private enum Axis { X, Y, Z, Vector3 }
-    private enum TweenType { Position, Rotation, Scale }
 
     [field: Header("3D Orientation")]
     [field: SerializeField] private Axis tweenAxis = Axis.X;
-    [field: SerializeField] private TweenType tweenType = TweenType.Position;
 
     [field: Header("Animation Settings")]
     [field: SerializeField] private float doorSeparation = 2f;
@@ -29,138 +29,100 @@ public class RetractablePlatform : MonoBehaviour
     [field: SerializeField] private AnimationCurve openCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [field: SerializeField] private AnimationCurve closeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    private Vector3 leftDoorInitialValue;
-    private Vector3 rightDoorInitialValue;
+    private static Sequence doorSequence;
+    private Vector3 leftDoorInitialPosition;
+    private Vector3 rightDoorInitialPosition;
+
+    [field: SerializeField] public bool IsElevatorOpen { get; private set; }
 
     private void Start()
     {
-        CacheInitialValues();
+        CacheInitialPositions();
     }
 
-    private void CacheInitialValues()
+    private void CacheInitialPositions()
     {
+        doorSequence = DOTween.Sequence();
         if (leftDoor == null || rightDoor == null) return;
 
-        leftDoorInitialValue = GetTransformValue(leftDoor, tweenType);
-        rightDoorInitialValue = GetTransformValue(rightDoor, tweenType);
+        leftDoorInitialPosition = leftDoor.localPosition;
+        rightDoorInitialPosition = rightDoor.localPosition;
+
     }
+
 
     public void OpenDoor()
     {
-        Vector3 leftTarget = CalculateTargetValue(leftDoorInitialValue, -doorSeparation, leftDoorOpenOffset);
-        Vector3 rightTarget = CalculateTargetValue(rightDoorInitialValue, doorSeparation, rightDoorOpenOffset);
+        Vector3 leftTarget = CalculateTargetPosition(leftDoorInitialPosition, -doorSeparation, leftDoorOpenOffset);
+        Vector3 rightTarget = CalculateTargetPosition(rightDoorInitialPosition, doorSeparation, rightDoorOpenOffset);
 
         AnimateDoors(leftTarget, rightTarget, openSpeed, openCurve);
+        IsElevatorOpen = true;
     }
 
     public void CloseDoor()
     {
-        AnimateDoors(leftDoorInitialValue, rightDoorInitialValue, closeSpeed, closeCurve);
+        AnimateDoors(leftDoorInitialPosition, rightDoorInitialPosition, closeSpeed, closeCurve);
+        IsElevatorOpen = false;
     }
 
-    private Vector3 CalculateTargetValue(Vector3 initialValue, float separation, Vector3 vector3Offset)
+    private Vector3 CalculateTargetPosition(Vector3 initialPosition, float separation, Vector3 vector3Offset)
     {
         switch (tweenAxis)
         {
             case Axis.X:
-                return new Vector3(initialValue.x + separation, initialValue.y, initialValue.z);
+                return new Vector3(initialPosition.x + separation, initialPosition.y, initialPosition.z);
             case Axis.Y:
-                return new Vector3(initialValue.x, initialValue.y + separation, initialValue.z);
+                return new Vector3(initialPosition.x, initialPosition.y + separation, initialPosition.z);
             case Axis.Z:
-                return new Vector3(initialValue.x, initialValue.y, initialValue.z + separation);
+                return new Vector3(initialPosition.x, initialPosition.y, initialPosition.z + separation);
             case Axis.Vector3:
-                return initialValue + vector3Offset;
+                return initialPosition + vector3Offset;
             default:
-                return initialValue;
+                return initialPosition;
         }
     }
 
     private void AnimateDoors(Vector3 leftTarget, Vector3 rightTarget, float duration, AnimationCurve curve)
     {
-        Sequence doorSequence = DOTween.Sequence();
+        if (doorSequence != null)
+            doorSequence.Kill();
+
+        doorSequence = DOTween.Sequence();
         doorSequence.AppendInterval(delayBeforeMoving);
 
         // Animate left door
-        Tweener leftTween = CreateTween(leftDoor, leftTarget, duration, tweenType);
+        Tweener leftTween = CreatePositionTween(leftDoor, leftTarget, duration);
         if (leftTween != null)
         {
             doorSequence.Append(leftTween.SetEase(curve));
         }
 
         // Animate right door
-        Tweener rightTween = CreateTween(rightDoor, rightTarget, duration, tweenType);
+        Tweener rightTween = CreatePositionTween(rightDoor, rightTarget, duration);
         if (rightTween != null)
         {
             doorSequence.Join(rightTween.SetEase(curve));
         }
     }
 
-    private Tweener CreateTween(Transform target, Vector3 endValue, float duration, TweenType type)
+    private Tweener CreatePositionTween(Transform target, Vector3 endPosition, float duration)
     {
-        switch (type)
+        if (tweenAxis == Axis.Vector3)
         {
-            case TweenType.Position:
-                if (tweenAxis == Axis.Vector3)
-                    return target.DOLocalMove(endValue, duration, snapToTarget);
-                else
-                    return CreateAxisTween(target, endValue, duration,
-                        (t, v, d, s) => t.DOLocalMoveX(v, d, s),
-                        (t, v, d, s) => t.DOLocalMoveY(v, d, s),
-                        (t, v, d, s) => t.DOLocalMoveZ(v, d, s));
-
-            case TweenType.Rotation:
-                if (tweenAxis == Axis.Vector3)
-                    return target.DOLocalRotate(endValue, duration);
-                else
-                    return CreateAxisTween(target, endValue, duration,
-                        (t, v, d, s) => t.DOLocalRotate(new Vector3(v, 0, 0), d),
-                        (t, v, d, s) => t.DOLocalRotate(new Vector3(0, v, 0), d),
-                        (t, v, d, s) => t.DOLocalRotate(new Vector3(0, 0, v), d));
-
-            case TweenType.Scale:
-                if (tweenAxis == Axis.Vector3)
-                    return target.DOScale(endValue, duration);
-                else
-                    return CreateAxisTween(target, endValue, duration,
-                        (t, v, d, s) => target.DOScaleX(v, d),
-                        (t, v, d, s) => target.DOScaleY(v, d),
-                        (t, v, d, s) => target.DOScaleZ(v, d));
-
-            default:
-                return null;
+            return target.DOLocalMove(endPosition, duration, snapToTarget);
         }
-    }
 
-    private Tweener CreateAxisTween(Transform target, Vector3 endValue, float duration,
-        System.Func<Transform, float, float, bool, Tweener> xTween,
-        System.Func<Transform, float, float, bool, Tweener> yTween,
-        System.Func<Transform, float, float, bool, Tweener> zTween)
-    {
         switch (tweenAxis)
         {
             case Axis.X:
-                return xTween(target, endValue.x, duration, snapToTarget);
+                return target.DOLocalMoveX(endPosition.x, duration, snapToTarget);
             case Axis.Y:
-                return yTween(target, endValue.y, duration, snapToTarget);
+                return target.DOLocalMoveY(endPosition.y, duration, snapToTarget);
             case Axis.Z:
-                return zTween(target, endValue.z, duration, snapToTarget);
+                return target.DOLocalMoveZ(endPosition.z, duration, snapToTarget);
             default:
                 return null;
-        }
-    }
-
-    private Vector3 GetTransformValue(Transform target, TweenType type)
-    {
-        switch (type)
-        {
-            case TweenType.Position:
-                return target.localPosition;
-            case TweenType.Rotation:
-                return target.localEulerAngles;
-            case TweenType.Scale:
-                return target.localScale;
-            default:
-                return Vector3.zero;
         }
     }
 }
