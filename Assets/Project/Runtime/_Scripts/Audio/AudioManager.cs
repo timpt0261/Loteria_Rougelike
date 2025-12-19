@@ -8,7 +8,22 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
+    [Header("Volume")]
+    [Range(0, 1)]
+    public float masterVolume = 1;
+
+    [Range(0, 1)]
+    public float musicVolume = 1;
+
+    [Range(0, 1)]
+    public float sfxVolume = 1;
+
+    private Bus masterBus;
+    private Bus musicBus;
+    private Bus sfxBus;
+
     [field: SerializeField] private List<EventInstance> eventInstances;
+    [field: SerializeField] private List<StudioEventEmitter> eventEmitters;
 
     private void Awake()
     {
@@ -20,6 +35,18 @@ public class AudioManager : MonoBehaviour
         Instance = this;
 
         eventInstances = new();
+        eventEmitters = new();
+
+        masterBus = RuntimeManager.GetBus("bus:/");
+        musicBus = RuntimeManager.GetBus("bus:/Music");
+        sfxBus = RuntimeManager.GetBus("bus:/SFX");
+    }
+
+    private void Update()
+    {
+        masterBus.setVolume(masterVolume);
+        musicBus.setVolume(musicVolume);
+        sfxBus.setVolume(sfxVolume);
     }
 
     public void PlayOneShot(EventReference sound, Vector3 worldPosition)
@@ -35,6 +62,14 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
+    public StudioEventEmitter IntializeEventEmitter(EventReference eventReference, GameObject gameObjectEmitter)
+    {
+        StudioEventEmitter eventEmitter = gameObjectEmitter.GetComponent<StudioEventEmitter>();
+        eventEmitter.EventReference = eventReference;
+        eventEmitters.Add(eventEmitter);
+        return eventEmitter;
+    }
+
 
     private void CleanUp()
     {
@@ -42,6 +77,11 @@ public class AudioManager : MonoBehaviour
         {
             eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             eventInstance.release();
+        }
+
+        foreach (StudioEventEmitter emitter in eventEmitters)
+        {
+            emitter.Stop();
         }
     }
 
