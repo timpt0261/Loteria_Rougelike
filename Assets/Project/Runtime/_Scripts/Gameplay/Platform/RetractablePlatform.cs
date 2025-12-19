@@ -1,6 +1,9 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using FMOD.Studio;
+using FMODUnity;
+using System.Data.Common;
 
 public class RetractablePlatform : MonoBehaviour
 {
@@ -33,10 +36,16 @@ public class RetractablePlatform : MonoBehaviour
     private Vector3 leftDoorInitialPosition;
     private Vector3 rightDoorInitialPosition;
 
+    [field: Header("Audio")]
+    [field: SerializeField] private EventInstance openElevatorAudio;
+    [field: SerializeField] private EventInstance closeElevatorAudio;
+
     [field: SerializeField] public bool IsElevatorOpen { get; private set; }
 
     private void Start()
     {
+        openElevatorAudio = AudioManager.Instance.CreateEventInstance(FMODEvents.Instance.ElevatorOpen);
+        closeElevatorAudio = AudioManager.Instance.CreateEventInstance(FMODEvents.Instance.ElevatorClose);
         CacheInitialPositions();
     }
 
@@ -55,14 +64,18 @@ public class RetractablePlatform : MonoBehaviour
     {
         Vector3 leftTarget = CalculateTargetPosition(leftDoorInitialPosition, -doorSeparation, leftDoorOpenOffset);
         Vector3 rightTarget = CalculateTargetPosition(rightDoorInitialPosition, doorSeparation, rightDoorOpenOffset);
-
-        AnimateDoors(leftTarget, rightTarget, openSpeed, openCurve);
+        if (!IsElevatorOpen)
+            UpdateAudio(true);
+        AnimateDoorSequence(leftTarget, rightTarget, openSpeed, openCurve);
         IsElevatorOpen = true;
+
     }
 
     public void CloseDoor()
     {
-        AnimateDoors(leftDoorInitialPosition, rightDoorInitialPosition, closeSpeed, closeCurve);
+        if (IsElevatorOpen)
+            UpdateAudio(false);
+        AnimateDoorSequence(leftDoorInitialPosition, rightDoorInitialPosition, closeSpeed, closeCurve);
         IsElevatorOpen = false;
     }
 
@@ -83,12 +96,11 @@ public class RetractablePlatform : MonoBehaviour
         }
     }
 
-    private void AnimateDoors(Vector3 leftTarget, Vector3 rightTarget, float duration, AnimationCurve curve)
+    private void AnimateDoorSequence(Vector3 leftTarget, Vector3 rightTarget, float duration, AnimationCurve curve)
     {
         if (doorSequence != null)
             doorSequence.Kill();
 
-        doorSequence = DOTween.Sequence();
         doorSequence.AppendInterval(delayBeforeMoving);
 
         // Animate left door
@@ -105,6 +117,7 @@ public class RetractablePlatform : MonoBehaviour
             doorSequence.Join(rightTween.SetEase(curve));
         }
     }
+
 
     private Tweener CreatePositionTween(Transform target, Vector3 endPosition, float duration)
     {
@@ -125,4 +138,45 @@ public class RetractablePlatform : MonoBehaviour
                 return null;
         }
     }
+
+    private void UpdateAudio(bool elevatorState)
+    {
+        PLAYBACK_STATE playbackStateOfOpen;
+        PLAYBACK_STATE playbackStateOfClose;
+
+        openElevatorAudio.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        closeElevatorAudio.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+
+        openElevatorAudio.getPlaybackState(out playbackStateOfOpen);
+        closeElevatorAudio.getPlaybackState(out playbackStateOfClose);
+
+        // if door is opening
+        if (elevatorState)
+        {
+            // check is closeing audio is play 
+            if (playbackStateOfClose.Equals(PLAYBACK_STATE.PLAYING))
+            {
+                closeElevatorAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            }
+
+            if (playbackStateOfOpen.Equals(PLAYBACK_STATE.STOPPED))
+            {
+                openElevatorAudio.start();
+            }
+            return;
+        }
+
+
+        if (playbackStateOfOpen.Equals(PLAYBACK_STATE.PLAYING))
+        {
+            openElevatorAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+
+        if (playbackStateOfClose.Equals(PLAYBACK_STATE.STOPPED))
+        {
+            closeElevatorAudio.start();
+        }
+
+    }
+
 }

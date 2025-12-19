@@ -3,6 +3,8 @@ using TMPro;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
+using TMPEffects.Components;
+using System.Linq;
 
 public class InteractionPrompt : MonoBehaviour
 {
@@ -12,16 +14,14 @@ public class InteractionPrompt : MonoBehaviour
 
     private string displayLine;
 
-
     [Header("TypeWriter Settings")]
-    [SerializeField] private float textSpeed = 0.5f;
+    [SerializeField] private TMPWriter typeWriter;
 
     [Header("TextBoxDisplay")]
     [SerializeField] private RectTransform textBoxDisplayRect;
     [SerializeField] private float displaySpeed = 0.5f;
     [SerializeField] private AnimationCurve displaySize = AnimationCurve.EaseInOut(0, 0, 1, 1); // depending on text size stretch text box
     private Vector2 _initialSize;
-
     private void Awake()
     {
         StopAllCoroutines();
@@ -37,7 +37,6 @@ public class InteractionPrompt : MonoBehaviour
         if (label == null)
             label = textBoxDisplayRect.GetComponentInChildren<TMP_Text>();
         label.text = "";
-
     }
     public void Hide()
     {
@@ -60,7 +59,6 @@ public class InteractionPrompt : MonoBehaviour
             Hide();
             return;
         }
-        float size =
         displaySpeed = interactable.OutlineDuration;
 
         Sequence showSequence = DOTween.Sequence();
@@ -77,24 +75,9 @@ public class InteractionPrompt : MonoBehaviour
 
         showSequence.AppendCallback(() =>
         {
-            displayLine = $"{keyHint} {interactable.DisplayName}";
-            StartDisplayText();
+            label.text = $"{keyHint} {interactable.DisplayName}";
         });
 
-
     }
 
-    private void StartDisplayText()
-    {
-        label.text = "";
-        StartCoroutine(DisplayText());
-    }
-    IEnumerator DisplayText()
-    {
-        foreach (char c in displayLine.ToCharArray())
-        {
-            label.text += c;
-            yield return new WaitForSeconds(textSpeed);
-        }
-    }
 }

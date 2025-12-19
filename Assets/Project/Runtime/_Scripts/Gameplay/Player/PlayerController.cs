@@ -77,11 +77,11 @@ public class PlayerController : MonoBehaviour
         {
             playerInput.enabled = false;
             rigidBody.linearVelocity = Vector3.zero;
-            UpdateSound();
+            UpdateAudio();
             return;
         }
         Move();
-        UpdateSound();
+        UpdateAudio();
     }
 
     private void Move()
@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
             rigidBody.position + targetDirection.normalized * speed * Time.fixedDeltaTime
         );
     }
-    private void UpdateSound()
+    void UpdateAudio()
     {
         playerFootSteps.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
         // start footsteps event if the player has an x velocity and is on the ground
@@ -242,4 +242,5 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawRay(mainCamera.transform.position, direction * interactionRadius);
         }
     }
+
 }
