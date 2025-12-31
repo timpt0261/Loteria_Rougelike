@@ -4,9 +4,18 @@ using UnityEngine.UI;
 using FMOD.Studio;
 using FMODUnity;
 using System.Data.Common;
+using Codice.Utils;
 
 public class RetractablePlatform : MonoBehaviour
 {
+
+    private enum PLATFORMTYPE
+    {
+        ELEVATOR,
+        PLATFORM
+    }
+
+    [field: SerializeField] private PLATFORMTYPE platfromType = PLATFORMTYPE.PLATFORM;
 
     [field: Header("Door References")]
     [field: SerializeField] private Transform leftDoor;
@@ -37,15 +46,20 @@ public class RetractablePlatform : MonoBehaviour
     private Vector3 rightDoorInitialPosition;
 
     [field: Header("Audio")]
-    [field: SerializeField] private EventInstance openElevatorAudio;
-    [field: SerializeField] private EventInstance closeElevatorAudio;
+    [field: SerializeField] private EventInstance openAudio;
+    [field: SerializeField] private EventInstance closeAudio;
+
 
     [field: SerializeField] public bool IsElevatorOpen { get; private set; }
 
     private void Start()
     {
-        openElevatorAudio = AudioManager.Instance.CreateEventInstance(FMODEvents.Instance.ElevatorOpen);
-        closeElevatorAudio = AudioManager.Instance.CreateEventInstance(FMODEvents.Instance.ElevatorClose);
+        // Determine type of platform to select event reference
+        EventReference openEventReference = platfromType == PLATFORMTYPE.PLATFORM ? FMODEvents.Instance.PlatformSFX.PlatformOpen : FMODEvents.Instance.ElevatorSFX.ElevatorOpen;
+        EventReference closeEventReference = platfromType == PLATFORMTYPE.PLATFORM ? FMODEvents.Instance.PlatformSFX.PlatformClose : FMODEvents.Instance.ElevatorSFX.ElevatorClose;
+
+        openAudio = AudioManager.Instance.CreateEventInstance(openEventReference);
+        closeAudio = AudioManager.Instance.CreateEventInstance(closeEventReference);
         CacheInitialPositions();
     }
 
@@ -144,11 +158,11 @@ public class RetractablePlatform : MonoBehaviour
         PLAYBACK_STATE playbackStateOfOpen;
         PLAYBACK_STATE playbackStateOfClose;
 
-        openElevatorAudio.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
-        closeElevatorAudio.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        openAudio.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        closeAudio.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
 
-        openElevatorAudio.getPlaybackState(out playbackStateOfOpen);
-        closeElevatorAudio.getPlaybackState(out playbackStateOfClose);
+        openAudio.getPlaybackState(out playbackStateOfOpen);
+        closeAudio.getPlaybackState(out playbackStateOfClose);
 
         // if door is opening
         if (elevatorState)
@@ -156,12 +170,12 @@ public class RetractablePlatform : MonoBehaviour
             // check is closeing audio is play 
             if (playbackStateOfClose.Equals(PLAYBACK_STATE.PLAYING))
             {
-                closeElevatorAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                closeAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
 
             if (playbackStateOfOpen.Equals(PLAYBACK_STATE.STOPPED))
             {
-                openElevatorAudio.start();
+                openAudio.start();
             }
             return;
         }
@@ -169,12 +183,12 @@ public class RetractablePlatform : MonoBehaviour
 
         if (playbackStateOfOpen.Equals(PLAYBACK_STATE.PLAYING))
         {
-            openElevatorAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            openAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
 
         if (playbackStateOfClose.Equals(PLAYBACK_STATE.STOPPED))
         {
-            closeElevatorAudio.start();
+            closeAudio.start();
         }
 
     }

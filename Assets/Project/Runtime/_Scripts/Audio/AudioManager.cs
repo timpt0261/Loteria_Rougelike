@@ -22,6 +22,7 @@ public class AudioManager : MonoBehaviour
     private Bus musicBus;
     private Bus sfxBus;
 
+    private EventInstance musicEventInstance;
     [field: SerializeField] private List<EventInstance> eventInstances;
     [field: SerializeField] private List<StudioEventEmitter> eventEmitters;
 
@@ -42,6 +43,8 @@ public class AudioManager : MonoBehaviour
         sfxBus = RuntimeManager.GetBus("bus:/SFX");
     }
 
+    private void Start() => InitializeBackgroundMusic(FMODEvents.Instance.BackGroundMusic);
+
     private void Update()
     {
         masterBus.setVolume(masterVolume);
@@ -49,11 +52,7 @@ public class AudioManager : MonoBehaviour
         sfxBus.setVolume(sfxVolume);
     }
 
-    public void PlayOneShot(EventReference sound, Vector3 worldPosition)
-    {
-        RuntimeManager.PlayOneShot(sound.Guid, worldPosition);
-
-    }
+    public void PlayOneShot(EventReference sound, Vector3 worldPosition) => RuntimeManager.PlayOneShot(sound.Guid, worldPosition);
 
     public EventInstance CreateEventInstance(EventReference eventReference)
     {
@@ -62,13 +61,21 @@ public class AudioManager : MonoBehaviour
         return eventInstance;
     }
 
-    public StudioEventEmitter IntializeEventEmitter(EventReference eventReference, GameObject gameObjectEmitter)
+    public StudioEventEmitter InitializeEventEmitter(EventReference eventReference, GameObject gameObjectEmitter)
     {
         StudioEventEmitter eventEmitter = gameObjectEmitter.GetComponent<StudioEventEmitter>();
         eventEmitter.EventReference = eventReference;
         eventEmitters.Add(eventEmitter);
         return eventEmitter;
     }
+
+    private void InitializeBackgroundMusic(EventReference backGroundMusicEventReference)
+    {
+        musicEventInstance = CreateEventInstance(backGroundMusicEventReference);
+        musicEventInstance.start();
+    }
+
+
 
 
     private void CleanUp()
